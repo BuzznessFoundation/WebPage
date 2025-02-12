@@ -1,40 +1,131 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Título de la página</title>
-</head>
-<body>
-    <header>
-        <h1>Bienvenidos a mi página web</h1>
-        <nav>
-            <ul>
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#sobre">Sobre mí</a></li>
-                <li><a href="#contacto">Contacto</a></li>
-            </ul>
-        </nav>
-    </header>
+<!doctype html>
+<html lang="en">
+  <head>
 
-    <section id="inicio">
-        <h2>Bienvenidos</h2>
-        <p>Este es el inicio de nuestra página web.</p>
-    </section>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <section id="sobre">
-        <h2>Sobre mí</h2>
-        <p>Información sobre mí o el propósito de la página.</p>
-    </section>
+    <title>Buzzness - integradoras de TI</title>
 
-    <section id="contacto">
-        <h2>Contacto</h2>
-        <p>Detalles de contacto aquí.</p>
-    </section>
+    <link rel="icon" href="images/icon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="css/styles.css">
 
-    <footer>
-        <p>&copy; 2025 Mi Página Web</p>
-    </footer>
-</body>
+  </head>
+
+  <body>
+    
+    <nav class="navbar navbar-expand-lg bg-white shadow-sm py-3">
+      <div class="container">
+          <a class="navbar-brand fw-bolder fs-3" href="#">Buzz<span class="fw-normal">ness.</span></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+              <ul class="navbar-nav">
+                  <li class="nav-item">
+                      <a class="nav-link text-dark" href="#">Nosotros</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link text-dark" href="#">Servicios</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link text-dark" href="#">Proyectos</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link text-dark" href="#">Certificaciones</a>
+                  </li>
+              </ul>
+              <a class="btn ms-3" href="#">Contactanos</a>
+          </div>
+      </div>
+    </nav>
+
+    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="container hero-section">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <h1>Servicio 1</h1>
+                            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam rhoncus egestas nisl, at maximus orci tempor eget. Maecenas vel turpis tellus. Sed posuere vulputate consectetur.</p>
+                            <a href="#" class="btn btn-primary">Lorem ipsum</a>
+                        </div>
+                        <div class="col-md-6">
+                            <img src="images/foto.png" alt="Descripción de la imagen" class="img-fluid">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <div class="carousel-item">
+            <div class="container hero-section">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <h1>Servicio 2</h1>
+                        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam rhoncus egestas nisl, at maximus orci tempor eget. Maecenas vel turpis tellus. Sed posuere vulputate consectetur.</p>
+                        <a href="#" class="btn btn-primary">Lorem ipsum</a>
+                    </div>
+                    <div class="col-md-6">
+                        <img src="images/foto.png" alt="Descripción de la imagen" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+          </div>
+
+        <div class="carousel-item">
+            <div class="container hero-section">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <h1>Servicio 3</h1>
+                        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam rhoncus egestas nisl, at maximus orci tempor eget. Maecenas vel turpis tellus. Sed posuere vulputate consectetur.</p>
+                        <a href="#" class="btn btn-primary">Lorem ipsum</a>
+                    </div>
+                    <div class="col-md-6">
+                        <img src="images/foto.png" alt="Descripción de la imagen" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+
+    </div>
+
+    <div class="container text-center my-5">
+        <h2 class="mb-4"><i class="bi bi-handshake"></i> Estas empresas confían en nosotros</h2>
+
+        <div class="d-flex justify-content-center gap-4">
+            <div class="text-center">
+                <i class="bi bi-building fs-1 text-primary"></i>
+                <p>Empresa 1</p>
+            </div>
+            <div class="text-center">
+                <i class="bi bi-briefcase fs-1 text-success"></i>
+                <p>Empresa 2</p>
+            </div>
+            <div class="text-center">
+                <i class="bi bi-graph-up fs-1 text-warning"></i>
+                <p>Empresa 3</p>
+            </div>
+            <div class="text-center">
+                <i class="bi bi-people fs-1 text-danger"></i>
+                <p>Empresa 4</p>
+            </div>
+        </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+  </body>
+
 </html>
