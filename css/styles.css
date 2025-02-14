@@ -15,6 +15,10 @@ body {
   font-size: 2rem;
 }
 
+.offcanvas-header {
+  padding-left: 30px;
+  padding-bottom: 0px;
+}
 
 .btn {
   background-color: #fdc500;
@@ -60,8 +64,8 @@ body {
 
 .footer {
   color: #c2c2c2;
-  padding-top: 80px;
-  padding-bottom: 80px;
+  padding-top: 40px;
+  padding-bottom: 10px;
 }
 
 .footer-brand {
