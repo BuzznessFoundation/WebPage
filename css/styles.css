@@ -77,3 +77,12 @@ body {
   padding-right: 60px;
   text-align: justify;
 }
+
+.text-mission {
+  text-align: justify;
+  padding-bottom: 56px
+}
+
+.list-group-item {
+  text-align: justify;
+}
