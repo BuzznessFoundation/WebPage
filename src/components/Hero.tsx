@@ -67,7 +67,7 @@ export default function Hero() {
                 </div>
               </div>
               <div className="aspect-video bg-bee-dark/5 rounded-lg flex items-center justify-center mb-4">
-              <img src="./src/assets/images/icon.webp" alt="Bee Logo" className="h-20 w-20"/>
+              <img src="/assets/images/icon.webp" alt="Bee Logo" className="h-20 w-20"/>
               </div>
               <div className="space-y-3">
                 <div className="h-6 bg-bee-dark/5 rounded-lg w-3/4"></div>
