@@ -23,12 +23,12 @@ const About = () => {
     },
     {
       name: 'Lucas Capurro',
-      role: 'UX Designer & Product Manager',
+      role: 'CFO & Product Manager',
       image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80',
     },
     {
-      name: 'John Doe',
-      role: 'Educator & Social Media Manager',
+      name: 'Antonio Valdivia',
+      role: 'Community Manager & Marketing',
       image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80',
     },
   ];
