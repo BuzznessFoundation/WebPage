@@ -134,7 +134,7 @@ const About = () => {
                     </div>
                     <div className="h-40 bg-gray-200 rounded-lg overflow-hidden animate-float" style={{ animationDelay: '0.7s' }}>
                       <img 
-                        src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" 
+                        src="https://images.unsplash.com/photo-1571260899304-425eee4c7efc?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" 
                         alt="Conference presentation" 
                         className="w-full h-full object-cover"
                       />
