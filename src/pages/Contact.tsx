@@ -49,6 +49,18 @@ const Contact = () => {
     },
   ];
 
+  // Detecta el parámetro de éxito en la URL
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('success') === 'true') {
+      setShowSuccess(true);
+      // Opcional: limpia el parámetro de la URL después de mostrar el mensaje
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }, []);
+
   return (
     <div className="min-h-screen bg-bee-background">
       <Navbar />
@@ -109,6 +121,13 @@ const Contact = () => {
                     Envianos un mensaje
                   </h3>
                   
+                  {/* Mensaje de éxito */}
+                  {showSuccess && (
+                    <div className="mb-6 p-4 bg-green-100 text-green-800 rounded">
+                      ¡Mensaje enviado correctamente! Pronto nos pondremos en contacto contigo.
+                    </div>
+                  )}
+
                   <form 
                     name="contact"
                     action="/"
