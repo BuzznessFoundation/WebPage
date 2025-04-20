@@ -17,45 +17,9 @@ const Contact = () => {
     message: '',
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      const form = e.target as HTMLFormElement;
-      const formData = new FormData(form);
-
-      const response = await fetch(form.action, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams(formData as any).toString()
-      });
-
-      if (response.ok) {
-        toast.success('¡Mensaje enviado con éxito! Nos pondremos en contacto pronto.');
-        setFormData({
-          name: '',
-          email: '',
-          subject: '',
-          message: ''
-        });
-      } else {
-        throw new Error('Error en el envío del formulario');
-      }
-    } catch (error) {
-      toast.error('Hubo un error al enviar el mensaje. Por favor, inténtalo de nuevo.');
-    } finally {
-      setIsSubmitting(false);
-    }
   };
 
   const contactOptions = [
@@ -151,7 +115,6 @@ const Contact = () => {
                     method="POST"
                     data-netlify="true"
                     data-netlify-honeypot="bot-field"
-                    onSubmit={handleSubmit}
                     className="space-y-6"
                   >
                     <input type="hidden" name="form-name" value="contact" />
@@ -230,23 +193,12 @@ const Contact = () => {
                     
                     <button
                       type="submit"
-                      disabled={isSubmitting}
                       className="bee-button w-full flex items-center justify-center"
                     >
-                      {isSubmitting ? (
-                        <span className="flex items-center">
-                          <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                          </svg>
-                          Enviando...
-                        </span>
-                      ) : (
-                        <span className="flex items-center">
-                          <Send className="mr-2 h-4 w-4" />
-                          Enviar Mensaje
-                        </span>
-                      )}
+                      <span className="flex items-center">
+                        <Send className="mr-2 h-4 w-4" />
+                        Enviar Mensaje
+                      </span>
                     </button>
                   </form>
                 </div>
