@@ -34,10 +34,8 @@ const Contact = () => {
 
       const response = await fetch('/', {
         method: 'POST',
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: new URLSearchParams(formData as any).toString(),
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData as any).toString()
       });
 
       if (response.ok) {
@@ -146,12 +144,13 @@ const Contact = () => {
                   </h3>
                   
                   <form 
-                    onSubmit={handleSubmit}  
-                    className="space-y-6"
                     name="contact"
-                    method="POST"
+                    method="post"
                     data-netlify="true"
-                    netlify-honeypot="bot-field">
+                    data-netlify-honeypot="bot-field"
+                    onSubmit={handleSubmit}
+                    className="space-y-6"
+                  >
                     <input type="hidden" name="form-name" value="contact" />
                     <div hidden>
                       <input name="bot-field" />
