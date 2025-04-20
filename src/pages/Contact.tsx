@@ -24,21 +24,36 @@ const Contact = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      toast.success('¡Mensaje enviado con éxito! Nos pondremos en contacto pronto.');
-      setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        message: '',
+
+    try {
+      const form = e.target as HTMLFormElement;
+      const formData = new FormData(form);
+
+      const response = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData as any).toString(),
       });
-    }, 1500);
+
+      if (response.ok) {
+        toast.success('¡Mensaje enviado con éxito! Nos pondremos en contacto pronto.');
+        setFormData({
+          name: '',
+          email: '',
+          subject: '',
+          message: '',
+        });
+      } else {
+        throw new Error('Error en el envío del formulario');
+      }
+    } catch (error) {
+      toast.error('Hubo un error al enviar el mensaje. Por favor, inténtalo de nuevo.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactOptions = [
@@ -46,17 +61,17 @@ const Contact = () => {
       icon: Mail,
       title: 'Email',
       description: 'Nuestro equipo responderá lo antes posible.',
-      contact: 'contacto@buzzness.cl',
+      contact: 'lucas.capurro@buzzness.cl',
       action: 'Enviar email',
-      href: 'mailto:contacto@buzzness.cl',
+      href: 'mailto:lucas.capurro@buzzness.cl',
     },
     {
       icon: MessageSquare,
-      title: 'Discord',
-      description: 'Únete a nuestro servidor de Discord.',
-      contact: 'discord.gg/edubee',
+      title: 'LinkedIn',
+      description: 'Siguenos en nuestra comunidad de LinkedIn.',
+      contact: 'linkedin.com/company/buzznessfoundation',
       action: 'Unirse',
-      href: 'https://discord.gg',
+      href: 'https://www.linkedin.com/company/buzznessfoundation',
     },
     {
       icon: Github,
@@ -80,7 +95,7 @@ const Contact = () => {
                 Contacto
               </h1>
               <p className="text-xl text-bee-muted mb-8 text-pretty">
-                Estamos aquí para ayudarte. No dudes en contactarnos con cualquier pregunta o sugerencia.
+              ¿Quieres ir un paso mas alla?. No dudes en contactarnos con cualquier pregunta o sugerencia.
               </p>
             </div>
           </div>
@@ -128,7 +143,13 @@ const Contact = () => {
                     Envianos un mensaje
                   </h3>
                   
-                  <form onSubmit={handleSubmit} className="space-y-6">
+                  <form 
+                    onSubmit={handleSubmit}  
+                    className="space-y-6"
+                    name="contact"
+                    method="POST"
+                    data-netlify="true"
+                    netlify-honeypot="bot-field">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       <div>
                         <label htmlFor="name" className="block text-sm font-medium text-bee-dark mb-2">
@@ -228,7 +249,7 @@ const Contact = () => {
                   Contáctanos
                 </span>
                 <h2 className="text-3xl md:text-4xl font-bold text-bee-dark mb-6">
-                  Estamos aquí para ayudarte en tu viaje educativo
+                  Estamos aquí para ayudarte en tu colmena
                 </h2>
                 <p className="text-bee-muted mb-8 text-pretty">
                   Ya sea que tengas preguntas sobre cómo implementar nuestro software en tu institución, 
@@ -243,7 +264,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <h3 className="font-medium text-bee-dark">Comunidad Global</h3>
-                      <p className="text-bee-muted">Somos una comunidad diversa con presencia en más de 50 países.</p>
+                      <p className="text-bee-muted">Somos una comunidad diversa con presencia en las principales universidades del pais.</p>
                     </div>
                   </div>
                   
@@ -252,8 +273,8 @@ const Contact = () => {
                       <MapPin className="h-5 w-5 text-bee-yellow" />
                     </div>
                     <div>
-                      <h3 className="font-medium text-bee-dark">Oficina Central</h3>
-                      <p className="text-bee-muted">Calle Innovación 123, Ciudad Tecnológica, País</p>
+                      <h3 className="font-medium text-bee-dark">¿Donde esta el panal?</h3>
+                      <p className="text-bee-muted">Av. Víctor Jara 3769, Region Metropolitana, Chile</p>
                     </div>
                   </div>
                   
@@ -263,15 +284,14 @@ const Contact = () => {
                     </div>
                     <div>
                       <h3 className="font-medium text-bee-dark">Teléfono</h3>
-                      <p className="text-bee-muted">+1 (555) 123-4567</p>
+                      <p className="text-bee-muted">+569 3071 5676</p>
                     </div>
                   </div>
                 </div>
                 
                 <div className="bg-bee-dark text-white p-6 rounded-xl">
                   <p className="font-medium mb-2">Horario de atención</p>
-                  <p className="text-gray-300">Lunes a Viernes: 8:00 - 18:00</p>¿'
-                  <p className="text-gray-300">Domingo: Cerrado</p>
+                  <p className="text-gray-300">Las abejas nunca descansan.</p>
                 </div>
               </div>
             </div>
@@ -298,11 +318,11 @@ const Contact = () => {
                 {[
                   {
                     question: '¿Es realmente gratuito?',
-                    answer: 'Sí, EduBee es un proyecto de código abierto completamente gratuito. Puedes descargar, modificar y usar el software sin costo. Ofrecemos servicios de soporte premium opcionales para instituciones que requieran asistencia especializada.'
+                    answer: 'Sí, Buzzness es un proyecto de código abierto completamente gratuito. Puedes descargar, modificar y usar el software sin costo. Ofrecemos servicios de soporte premium opcionales para instituciones que requieran asistencia especializada y no dispongan de un tecnico que tenga la capacidad o conocimientos sobre nuestro software.'
                   },
                   {
                     question: '¿Qué requisitos técnicos necesito para implementarlo?',
-                    answer: 'Los requisitos son mínimos: un servidor web básico con PHP 7.4+ y MySQL/MariaDB. También ofrecemos opciones de despliegue en la nube que simplifican aún más la instalación.'
+                    answer: 'Los requisitos dependen del tamaño de la escuela y los servicios a utilizar, si no dispones de un tecnico TI que pueda calcular o montar el servicio, entonces te podemos ayudar poniendote en contacto via email.'
                   },
                   {
                     question: '¿Cómo puedo contribuir al proyecto?',
@@ -310,11 +330,7 @@ const Contact = () => {
                   },
                   {
                     question: '¿Ofrecen capacitación para docentes?',
-                    answer: 'Sí, contamos con diversos recursos de formación gratuitos, incluyendo webinars, tutoriales en video y documentación detallada. Para capacitaciones personalizadas, por favor contáctanos.'
-                  },
-                  {
-                    question: '¿El software cumple con estándares de privacidad de datos?',
-                    answer: 'Absolutamente. Hemos diseñado EduBee siguiendo estrictos estándares de privacidad y protección de datos, cumpliendo con regulaciones como GDPR, COPPA y otras normativas de privacidad educativa.'
+                    answer: 'Sí, contamos con diversos recursos de formación gratuitos ademas de charlas sobre diversos topicos de la tecnologia. actualmente puedes solicitar una charla sobre uso de la IA o seguridad informatica para docentes.'
                   },
                 ].map((faq, index) => (
                   <div key={index} className="bg-white rounded-xl p-6 shadow-sm transition-all duration-300 hover:shadow-md">
@@ -329,7 +345,7 @@ const Contact = () => {
                   ¿No encuentras la respuesta que buscas?
                 </p>
                 <a
-                  href="mailto:info@edubee.org"
+                  href="mailto:cristian.alvarado@buzzness.cl"
                   className="bee-button-outline"
                 >
                   Envíanos tu pregunta
