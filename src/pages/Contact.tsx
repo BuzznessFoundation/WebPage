@@ -34,7 +34,9 @@ const Contact = () => {
 
       const response = await fetch('/', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
         body: new URLSearchParams(formData as any).toString(),
       });
 
@@ -150,6 +152,10 @@ const Contact = () => {
                     method="POST"
                     data-netlify="true"
                     netlify-honeypot="bot-field">
+                    <input type="hidden" name="form-name" value="contact" />
+                    <div hidden>
+                      <input name="bot-field" />
+                    </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       <div>
                         <label htmlFor="name" className="block text-sm font-medium text-bee-dark mb-2">
