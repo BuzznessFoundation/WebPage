@@ -65,6 +65,19 @@ const Contact = () => {
     <div className="min-h-screen bg-bee-background">
       <Navbar />
       <main className="pt-20">
+        {/* Formulario oculto para Netlify */}
+        <form name="contact" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
+          <input type="text" name="name" />
+          <input type="email" name="email" />
+          <select name="subject">
+            <option>Soporte Técnico</option>
+            <option>Consulta General</option>
+            <option>Colaboración</option>
+            <option>Reporte de Error</option>
+            <option>Otro</option>
+          </select>
+          <textarea name="message"></textarea>
+        </form>
         {/* Hero Section */}
         <section className="py-16 md:py-24 bg-gradient-to-b from-bee-yellow/10 to-bee-background">
           <div className="container mx-auto px-4 md:px-6">
