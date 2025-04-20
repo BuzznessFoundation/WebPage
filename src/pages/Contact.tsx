@@ -32,9 +32,11 @@ const Contact = () => {
       const form = e.target as HTMLFormElement;
       const formData = new FormData(form);
 
-      const response = await fetch('/', {
+      const response = await fetch(form.action, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
         body: new URLSearchParams(formData as any).toString()
       });
 
@@ -44,7 +46,7 @@ const Contact = () => {
           name: '',
           email: '',
           subject: '',
-          message: '',
+          message: ''
         });
       } else {
         throw new Error('Error en el envío del formulario');
@@ -145,7 +147,8 @@ const Contact = () => {
                   
                   <form 
                     name="contact"
-                    method="post"
+                    action="/contact/?success=true"
+                    method="POST"
                     data-netlify="true"
                     data-netlify-honeypot="bot-field"
                     onSubmit={handleSubmit}
