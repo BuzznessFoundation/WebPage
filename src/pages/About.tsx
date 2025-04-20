@@ -97,12 +97,12 @@ const About = () => {
                     plataformas educativas existentes. ya sea por fines economicos o por falta de vision.
                   </p>
                   <p>
-                    Lo que comenzó como un proyecto de clase, rápidamente se convirtió en una pasión compartida 
-                    por crear soluciones educativas abiertas que pudieran adaptarse a diferentes contextos y necesidades.
+                    Lo que comenzó como una idea, rápidamente se convirtió en una pasión compartida 
+                    por crear un nuevo estandar en lo que llamamos tecnologia en las escuelas.
                   </p>
                   <p>
-                    No buscamos competir con las grandes empresas, sino colaborar con ellas para construir un futuro
-                    educativo más inclusivo, accesible y centrado en el estudiante.
+                    No buscamos competir con las grandes empresas, sino colaborar con todos aquellos que esten dispuestos a construir un futuro
+                    educativo más inclusivo, accesible y centrado en las comunidades.
                   </p>
                 </div>
               </div>
@@ -224,7 +224,7 @@ const About = () => {
                 Y muchos más colaboradores de todo el mundo que contribuyen a nuestro proyecto de código abierto.
               </p>
               <a
-                href="https://github.com/buzznessfoundation"
+                href="https://github.com/orgs/BuzznessFoundation/people"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bee-button-outline"

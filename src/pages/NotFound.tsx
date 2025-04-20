@@ -21,7 +21,12 @@ const NotFound = () => {
       <main className="flex-grow flex items-center justify-center pt-20">
         <div className="container mx-auto px-4 md:px-6 py-20">
           <div className="text-center max-w-lg mx-auto">
-            <div className="text-9xl font-bold text-bee-yellow mb-6">404</div>
+            <img
+              src="/assets/images/404.png"
+              alt="Página no encontrada"
+              className="h-60 w-60 mx-auto mb-6"
+            />
+            <div className="text-6xl font-bold text-bee-yellow mb-6">404</div>
             <h1 className="text-3xl md:text-4xl font-bold text-bee-dark mb-4">Página no encontrada</h1>
             <p className="text-bee-muted mb-8">
               Lo sentimos, la página que buscas no existe o ha sido movida a otra ubicación.

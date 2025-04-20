@@ -42,7 +42,10 @@ export default function Hero() {
               para que la escuela solo tenga un fin, <span className="text-bee-yellow">Educar.</span>
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start space-y-4 sm:space-y-0 sm:space-x-4 animate-fade-in" style={{ animationDelay: '0.3s' }}>
-              <Link to="/features" className="bee-button group flex items-center space-x-2 w-full sm:w-auto">
+              <Link
+                to="/features"
+                className="bee-button group flex items-center space-x-2 w-full sm:w-auto justify-center"
+              >
                 <span>Descubrir Funciones</span>
                 <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>

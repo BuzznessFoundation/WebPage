@@ -7,9 +7,9 @@ export default function Footer() {
 
   const socialLinks = [
     { icon: Youtube, href: 'https://youtube.com', label: 'YouTube' },
-    { icon: Linkedin, href: 'https://linkedin.com', label: 'LinkedIn' },
+    { icon: Linkedin, href: 'https://www.linkedin.com/company/buzznessfoundation/', label: 'LinkedIn' },
     { icon: Github, href: 'https://github.com/BuzznessFoundation', label: 'GitHub' },
-    { icon: Instagram, href: 'https://instagram.com', label: 'Instagram' },
+    { icon: Instagram, href: 'https://www.instagram.com/buzzness.cl/', label: 'Instagram' },
   ];
 
   const footerLinks = [
@@ -34,10 +34,10 @@ export default function Footer() {
     {
       title: 'Legal',
       links: [
-        { name: 'Privacidad', href: '#' },
-        { name: 'Términos', href: '#' },
-        { name: 'Cookies', href: '#' },
-        { name: 'Licencias', href: '#' },
+        { name: 'Privacidad', href: '/construction' },
+        { name: 'Términos', href: '/construction' },
+        { name: 'Cookies', href: '/construction' },
+        { name: 'Licencias', href: '/construction' },
       ],
     },
   ];

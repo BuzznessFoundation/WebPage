@@ -1,5 +1,6 @@
 import React from 'react';
 import { CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function Benefits() {
   const benefits = [
@@ -51,12 +52,12 @@ export default function Benefits() {
               que realmente marcan la diferencia en el aula.
             </p>
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-              <button className="bee-button">
+              <Link to="/contact" className="bee-button">
                 Solicitar una Demo
-              </button>
-              <button className="bee-button-outline">
+              </Link>
+              <a href="/projects#casos-exito" className="bee-button-outline">
                 Ver Casos de Éxito
-              </button>
+              </a>
             </div>
           </div>
         </div>

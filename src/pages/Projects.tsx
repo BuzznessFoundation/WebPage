@@ -3,12 +3,19 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import CallToAction from '../components/CallToAction';
 import { Github, ExternalLink, ArrowRight } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 
 const Projects = () => {
-  // Scroll to top on page load
+  const location = useLocation();
+
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+    if (location.hash) {
+      const el = document.querySelector(location.hash);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [location]);
 
   const projects = [
     {
@@ -69,20 +76,12 @@ const Projects = () => {
 
   const caseStudies = [
     {
-      name: 'Escuela Técnica Superior',
-      location: 'Madrid, España',
-      students: '1,200+',
+      name: 'Escuela Provincia de Arauco',
+      location: 'Cerro navia, Santiago',
+      students: '300-',
       image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-      quote: 'EduBee ha transformado nuestra forma de enseñar programación y robótica, permitiéndonos crear experiencias mucho más interactivas.',
-      author: 'María Rodríguez, Coordinadora TIC',
-    },
-    {
-      name: 'Colegio San Martín',
-      location: 'Buenos Aires, Argentina',
-      students: '850+',
-      image: 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-      quote: 'La facilidad de adaptar la plataforma a nuestras necesidades específicas ha sido clave para mejorar nuestra propuesta educativa.',
-      author: 'Carlos Vega, Director',
+      quote: 'Buzzness nos permitio desarollar un estandar sobre las TIC en la escuela ademas de desarollar nuestro sitio web.',
+      author: 'Virginia Gonzalez, Directora de la escuela',
     },
   ];
 
@@ -159,7 +158,7 @@ const Projects = () => {
         </section>
 
         {/* Case Studies */}
-        <section className="py-20 bg-bee-dark text-white">
+        <section id="casos-exito" className="py-20 bg-bee-dark text-white">
           <div className="container mx-auto px-4 md:px-6">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <span className="bg-white/10 text-white px-4 py-1.5 rounded-full text-sm font-medium inline-block mb-4">
@@ -206,10 +205,12 @@ const Projects = () => {
             </div>
 
             <div className="text-center mt-12">
-              <a 
-                href="#" 
+              <a
+                href="#"
+                tabIndex={-1}
+                aria-disabled="true"
                 className="inline-flex items-center text-white bg-bee-yellow/20 px-6 py-3 rounded-lg font-medium
-                           hover:bg-bee-yellow/30 transition-colors"
+                           opacity-50 cursor-not-allowed pointer-events-none"
               >
                 <span>Ver más casos de éxito</span>
                 <ArrowRight className="ml-2 h-4 w-4" />

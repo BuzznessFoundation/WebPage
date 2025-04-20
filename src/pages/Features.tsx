@@ -31,26 +31,6 @@ const Features = () => {
       title: 'Evaluación Automática',
       description: 'Sistema inteligente para calificar y proporcionar retroalimentación instantánea.',
     },
-    {
-      icon: Edit,
-      title: 'Editor Colaborativo',
-      description: 'Herramienta para crear y editar documentos en tiempo real con múltiples participantes.',
-    },
-    {
-      icon: Calendar,
-      title: 'Planificación Avanzada',
-      description: 'Calendario y organizador de tareas con recordatorios y seguimiento de plazos.',
-    },
-    {
-      icon: Users,
-      title: 'Grupos de Trabajo',
-      description: 'Creación y gestión de equipos para proyectos colaborativos.',
-    },
-    {
-      icon: Headphones,
-      title: 'Soporte Multilenguaje',
-      description: 'Disponible en múltiples idiomas y adaptable a diferentes contextos culturales.',
-    },
   ];
 
   const technicalFeatures = [
@@ -287,7 +267,7 @@ const Features = () => {
               <p className="text-bee-muted mb-6">
                 Todos los fondos generados por el soporte premium se destinan al desarrollo continuo del proyecto.
               </p>
-              <a href="#" className="bee-button">
+              <a href="contact" className="bee-button">
                 Solicitar información de soporte premium
               </a>
             </div>
