@@ -10,6 +10,7 @@ import Projects from "./pages/Projects";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import Construction from "./pages/Construction";
+import BuzzOS from "./pages/BuzzOS";
 
 const queryClient = new QueryClient();
 
@@ -26,7 +27,7 @@ const App = () => (
           <Route path="/projects" element={<Projects />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/construction" element={<Construction />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/buzzos" element={<BuzzOS />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

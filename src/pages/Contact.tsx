@@ -255,18 +255,8 @@ const Contact = () => {
                       <Users className="h-5 w-5 text-bee-yellow" />
                     </div>
                     <div>
-                      <h3 className="font-medium text-bee-dark">Comunidad Global</h3>
-                      <p className="text-bee-muted">Somos una comunidad diversa con presencia en las principales universidades del pais.</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start space-x-4">
-                    <div className="p-2 bg-bee-yellow/10 rounded-full">
-                      <MapPin className="h-5 w-5 text-bee-yellow" />
-                    </div>
-                    <div>
-                      <h3 className="font-medium text-bee-dark">¿Donde esta el panal?</h3>
-                      <p className="text-bee-muted">Av. Víctor Jara 3769, Region Metropolitana, Chile</p>
+                      <h3 className="font-medium text-bee-dark">Comunidad Universitaria</h3>
+                      <p className="text-bee-muted">Somos una colmena con presencia en las principales universidades del pais, nuestro contacto es principalmente por redes sociales</p>
                     </div>
                   </div>
                   
@@ -279,11 +269,6 @@ const Contact = () => {
                       <p className="text-bee-muted">+569 3071 5676</p>
                     </div>
                   </div>
-                </div>
-                
-                <div className="bg-bee-dark text-white p-6 rounded-xl">
-                  <p className="font-medium mb-2">Horario de atención</p>
-                  <p className="text-gray-300">Las abejas nunca descansan.</p>
                 </div>
               </div>
             </div>

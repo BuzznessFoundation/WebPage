@@ -2,8 +2,66 @@ import React, { useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import CallToAction from '../components/CallToAction';
-import { Github, ExternalLink, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
+
+// Modelo general de contenido
+const pageContent = {
+  hero: {
+    title: "Proyectos Relacionados",
+    description: "Explora el ecosistema de herramientas y recursos que hemos desarrollado para mejorar la experiencia educativa.",
+  },
+  projects: [
+    {
+      title: 'BuzzOS',
+      description: 'Un sistema operativo especialmente pensado para salas de computacion, el cual no guarda archivos, funciona en equipos modestos, con herramientas para el monitoreo y con el toque de la colmena.',
+      image: '/assets/images/BuzzOS_PI.png',
+      language: 'Linux',
+      stars: 3,
+      forks: 12,
+      link: '/buzzos',
+    },
+    {
+      title: 'BuzzPages',
+      description: 'La posibilidad de tener una pagina de web institucional con un enfoque en la publicacion de noticias, eventos y fotografias esta aca, solo escribemos y podemos generar un lindo sitio para tu escuela.',
+      image: '/assets/images/BuzzPage_PI.png',
+      language: 'React + NodeJS',
+      stars: 5,
+      forks: 2,
+      link: '/',
+    },
+  ],
+  caseStudies: [
+    {
+      name: 'Escuela Provincia de Arauco',
+      location: 'Cerro navia, Santiago',
+      students: '300-',
+      image: 'public/assets/images/BuzzOS_PI.png',
+      quote: 'Buzzness nos permitio desarollar un estandar sobre las TIC en la escuela ademas de desarollar nuestro sitio web.',
+      author: 'Virginia Gonzalez, Directora de la escuela',
+    },
+  ],
+  roadmap: [
+    {
+      date: "Septiembre 2025 (tentativo)",
+      title: "Módulo de Gestión Bibliotecaria",
+      description: "Lanzaremos el primer módulo oficial para la colmena: un sistema de gestión bibliotecaria pensado para escuelas y liceos. Permitirá administrar préstamos, inventario y catálogos de libros de forma simple y segura.",
+      note: "¡Pronto compartiremos avances y cómo puedes participar!",
+    },
+    {
+      date: "Diciembre 2025 (tentativo)",
+      title: "Modulo de Libro Digital",
+      description: "Estamos trabajando en un módulo de libro digital que permitirá a los estudiantes acceder a libros y recursos digitales desde cualquier dispositivo. Este módulo será una herramienta clave para el aprendizaje en línea.",
+      note: "Mantente atento a nuestras actualizaciones.",
+    },
+    {
+      date: "Julio 2026 (tentativo)",
+      title: "Conexion con Whatsapp para certificados de alumno regular",
+      description: "Estamos desarrollando una integración con WhatsApp que permitirá a los estudiantes recibir sus certificados de alumno regular directamente en su teléfono. Esto facilitará el acceso a documentos de forma rápida y segura.",
+      note: "Reservalo para el futuro.",
+    },
+  ],
+};
 
 const Projects = () => {
   const location = useLocation();
@@ -17,74 +75,6 @@ const Projects = () => {
     }
   }, [location]);
 
-  const projects = [
-    {
-      title: 'EduBee Core',
-      description: 'El núcleo principal de la plataforma educativa que contiene las funcionalidades esenciales.',
-      image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-      language: 'JavaScript',
-      stars: 1280,
-      forks: 340,
-      link: 'https://github.com',
-    },
-    {
-      title: 'EduBee Analytics',
-      description: 'Módulo de análisis de datos para seguimiento del progreso y desempeño de estudiantes.',
-      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-      language: 'Python',
-      stars: 856,
-      forks: 212,
-      link: 'https://github.com',
-    },
-    {
-      title: 'EduBee Mobile',
-      description: 'Aplicación móvil que permite acceder a las funcionalidades principales desde dispositivos iOS y Android.',
-      image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-      language: 'React Native',
-      stars: 725,
-      forks: 185,
-      link: 'https://github.com',
-    },
-    {
-      title: 'EduBee Content',
-      description: 'Sistema de gestión de contenido educativo con capacidades de creación y distribución.',
-      image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-      language: 'TypeScript',
-      stars: 634,
-      forks: 142,
-      link: 'https://github.com',
-    },
-    {
-      title: 'EduBee Integrations',
-      description: 'Conectores y APIs para integrar EduBee con otros sistemas y plataformas educativas.',
-      image: 'https://images.unsplash.com/photo-1484788984921-03950022c9ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-      language: 'Go',
-      stars: 421,
-      forks: 98,
-      link: 'https://github.com',
-    },
-    {
-      title: 'EduBee Docs',
-      description: 'Documentación completa del proyecto, guías de usuario y tutoriales de implementación.',
-      image: 'https://images.unsplash.com/photo-1493421419110-74f4e85ba126?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-      language: 'Markdown',
-      stars: 318,
-      forks: 126,
-      link: 'https://github.com',
-    },
-  ];
-
-  const caseStudies = [
-    {
-      name: 'Escuela Provincia de Arauco',
-      location: 'Cerro navia, Santiago',
-      students: '300-',
-      image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-      quote: 'Buzzness nos permitio desarollar un estandar sobre las TIC en la escuela ademas de desarollar nuestro sitio web.',
-      author: 'Virginia Gonzalez, Directora de la escuela',
-    },
-  ];
-
   return (
     <div className="min-h-screen bg-bee-background">
       <Navbar />
@@ -94,11 +84,10 @@ const Projects = () => {
           <div className="container mx-auto px-4 md:px-6">
             <div className="max-w-3xl mx-auto text-center">
               <h1 className="text-4xl md:text-5xl font-bold text-bee-dark mb-6">
-                Proyectos Relacionados
+                {pageContent.hero.title}
               </h1>
               <p className="text-xl text-bee-muted mb-8 text-pretty">
-                Explora el ecosistema de herramientas y recursos que hemos desarrollado
-                para mejorar la experiencia educativa.
+                {pageContent.hero.description}
               </p>
             </div>
           </div>
@@ -108,7 +97,7 @@ const Projects = () => {
         <section className="py-20">
           <div className="container mx-auto px-4 md:px-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {projects.map((project, index) => (
+              {pageContent.projects.map((project, index) => (
                 <div 
                   key={index}
                   className="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 
@@ -144,10 +133,8 @@ const Projects = () => {
                         href={project.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center text-bee-dark font-medium hover:text-bee-yellow transition-colors"
-                      >
-                        <Github className="h-4 w-4 mr-1" />
-                        <span>Ver Código</span>
+                        className="flex items-center text-bee-dark font-medium hover:text-bee-yellow transition-colors">
+                        <span>¿Quieres saber mas?</span>
                       </a>
                     </div>
                   </div>
@@ -174,7 +161,7 @@ const Projects = () => {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {caseStudies.map((study, index) => (
+              {pageContent.caseStudies.map((study, index) => (
                 <div
                   key={index}
                   className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 
@@ -219,64 +206,34 @@ const Projects = () => {
           </div>
         </section>
 
-        {/* Community Projects */}
-        <section className="py-20">
+        {/* Roadmap */}
+        <section className="pt-20">
           <div className="container mx-auto px-4 md:px-6">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <span className="bg-bee-yellow/10 text-bee-dark px-4 py-1.5 rounded-full text-sm font-medium inline-block mb-4">
-                Comunidad
+                Roadmap
               </span>
               <h2 className="text-3xl md:text-4xl font-bold text-bee-dark mb-6">
-                Proyectos comunitarios destacados
+                Lo que viene para la colmena
               </h2>
               <p className="text-bee-muted">
-                Nuestra comunidad de desarrolladores ha creado increíbles extensiones y complementos
-                para expandir las capacidades de EduBee.
+                Estamos comprometidos con el crecimiento de nuestra plataforma. ¡Conoce lo que estamos preparando para la comunidad educativa!
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {[1, 2, 3].map((index) => (
-                <div
-                  key={index}
-                  className="bee-card hover-lift"
-                >
-                  <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-lg font-semibold text-bee-dark">EduBee Extension {index}</h3>
-                    <span className="flex items-center text-sm text-bee-muted">
-                      <span className="mr-1">⭐</span>
-                      {Math.floor(Math.random() * 500) + 100}
-                    </span>
-                  </div>
-                  <p className="text-bee-muted mb-6">
-                    Una extensión comunitaria que agrega nuevas funcionalidades a la plataforma base.
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              {pageContent.roadmap.map((item, idx) => (
+                <div key={idx} className="bee-card p-8 flex flex-col items-center text-center">
+                  <span className="inline-block bg-bee-yellow/20 text-bee-yellow px-4 py-1 rounded-full text-sm font-semibold mb-4">
+                    {item.date}
+                  </span>
+                  <h3 className="text-2xl font-bold text-bee-dark mb-2">{item.title}</h3>
+                  <p className="text-bee-muted mb-4">
+                    {item.description}
                   </p>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-bee-muted">Por: Usuario{index}</span>
-                    <a 
-                      href="#"
-                      className="text-bee-dark underline hover:text-bee-yellow transition-colors flex items-center"
-                    >
-                      <span>Ver proyecto</span>
-                      <ExternalLink className="ml-1 h-3 w-3" />
-                    </a>
-                  </div>
+                  <span className="text-bee-dark font-medium">{item.note}</span>
                 </div>
               ))}
-            </div>
-
-            <div className="text-center mt-12">
-              <p className="text-bee-muted mb-6">
-                ¿Tienes una idea para mejorar EduBee? ¡Únete a nuestra comunidad y comienza a contribuir!
-              </p>
-              <a
-                href="https://github.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bee-button-outline"
-              >
-                Contribuir en GitHub
-              </a>
             </div>
           </div>
         </section>
