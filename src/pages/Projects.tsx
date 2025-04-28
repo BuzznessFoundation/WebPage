@@ -28,7 +28,7 @@ const pageContent = {
       language: 'React + NodeJS',
       stars: 5,
       forks: 2,
-      link: '/',
+      link: '/buzzpages',
     },
   ],
   caseStudies: [
@@ -131,8 +131,6 @@ const Projects = () => {
                       </div>
                       <a 
                         href={project.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
                         className="flex items-center text-bee-dark font-medium hover:text-bee-yellow transition-colors">
                         <span>¿Quieres saber mas?</span>
                       </a>

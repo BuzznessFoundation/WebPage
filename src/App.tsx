@@ -11,6 +11,7 @@ import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import Construction from "./pages/Construction";
 import BuzzOS from "./pages/BuzzOS";
+import BuzzPages from "./pages/BuzzPages";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/contact" element={<Contact />} />
           <Route path="/construction" element={<Construction />} />
           <Route path="/buzzos" element={<BuzzOS />} />
+          <Route path="/buzzpages" element={<BuzzPages />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

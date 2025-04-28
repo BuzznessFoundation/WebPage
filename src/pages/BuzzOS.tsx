@@ -85,14 +85,13 @@ export default function BuzzOS() {
                 Un sistema operativo educativo, seguro y ligero, pensado para salas de computación y escuelas. Sin archivos locales, fácil de restaurar y con herramientas esenciales para el aprendizaje.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <a
-                  href="/descargas/buzzos.iso"
-                  className="bee-button flex items-center space-x-2"
-                  download
+                <button
+                  disabled
+                  className="bee-button flex items-center space-x-2 opacity-50 cursor-not-allowed"
                 >
                   <Download className="h-5 w-5" />
                   <span>Descargar ISO</span>
-                </a>
+                </button>
                 <Link to="/contact" className="bee-button-outline flex items-center space-x-2">
                   <Info className="h-5 w-5" />
                   <span>Solicitar Soporte</span>
