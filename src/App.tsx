@@ -12,6 +12,7 @@ import NotFound from "./pages/NotFound";
 import Construction from "./pages/Construction";
 import BuzzOS from "./pages/BuzzOS";
 import BuzzPages from "./pages/BuzzPages";
+import BuzzBooks from "./pages/BuzzBooks";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +31,7 @@ const App = () => (
           <Route path="/construction" element={<Construction />} />
           <Route path="/buzzos" element={<BuzzOS />} />
           <Route path="/buzzpages" element={<BuzzPages />} />
+          <Route path="/buzzbooks" element={<BuzzBooks />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

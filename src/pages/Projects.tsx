@@ -30,6 +30,15 @@ const pageContent = {
       forks: 2,
       link: '/buzzpages',
     },
+    {
+      title: 'BuzzBooks',
+      description: 'Un sistema de gestion bibliotecaria, pensado para ser usado por los encargador de CRA y enfocado en la simplicidad y comodidas de las bibliotecas en escuelas, ningun feature que no tenga utilidad sera agregado.',
+      image: '/assets/images/BuzzBooks_PI.png',
+      language: 'React + FastAPI',
+      stars: 4,
+      forks: 1,
+      link: '/buzzbooks',
+    }
   ],
   caseStudies: [
     {
