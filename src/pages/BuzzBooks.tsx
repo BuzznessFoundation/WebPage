@@ -99,7 +99,7 @@ const BuzzBooks = () => (
           {/* Imagen */}
           <div className="flex justify-center">
             <img
-              src="/assets/images/BuzzBooks_PI.png"
+              src="/assets/images/BuzzBooks_PI.jpg"
               alt="BuzzBooks Preview"
               className="rounded-xl shadow-lg max-w-md border border-bee-yellow/30"
             />
