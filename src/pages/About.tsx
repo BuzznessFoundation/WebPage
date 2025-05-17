@@ -14,22 +14,22 @@ const About = () => {
     {
       name: 'Cristian Alvarado',
       role: 'Director de proyecto, Fundador & Desarollador Frontend',
-      image: 'public/assets/images/Buzzteam_CA.webp',
+      image: '/assets/images/Buzzteam_CA.webp',
     },
     {
       name: 'Ricardo Zaraté',
       role: 'CTO, Fundador & Desarollador Backend',
-      image: 'public/assets/images/Buzzteam_RZ.webp',
+      image: '/assets/images/Buzzteam_RZ.webp',
     },
     {
       name: 'Lucas Capurro',
       role: 'CFO & Product Manager',
-      image: 'public/assets/images/Buzzteam_LC.webp',
+      image: '/assets/images/Buzzteam_LC.webp',
     },
     {
       name: 'Antonio Valdivia',
       role: 'Community Manager & Marketing',
-      image: 'public/assets/images/Buzzteam_AV.webp',
+      image: '/assets/images/Buzzteam_AV.webp',
     },
   ];
 
