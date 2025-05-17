@@ -15,7 +15,7 @@ const pageContent = {
     {
       title: 'BuzzOS',
       description: 'Un sistema operativo especialmente pensado para salas de computacion, el cual no guarda archivos, funciona en equipos modestos, con herramientas para el monitoreo y con el toque de la colmena.',
-      image: '/assets/images/BuzzOS_PI.png',
+      image: '/assets/images/BuzzOS_PI.jpg',
       language: 'Linux',
       stars: 3,
       forks: 12,
@@ -24,7 +24,7 @@ const pageContent = {
     {
       title: 'BuzzPages',
       description: 'La posibilidad de tener una pagina de web institucional con un enfoque en la publicacion de noticias, eventos y fotografias esta aca, solo escribemos y podemos generar un lindo sitio para tu escuela.',
-      image: '/assets/images/BuzzPage_PI.png',
+      image: '/assets/images/BuzzPage_PI.jpg',
       language: 'React + NodeJS',
       stars: 5,
       forks: 2,

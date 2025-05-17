@@ -32,7 +32,7 @@ export default function Hero() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="max-w-2xl mx-auto lg:mx-0 text-center lg:text-left">
             <span className="bg-bee-yellow/10 text-bee-dark px-4 py-1.5 rounded-full text-sm font-medium inline-block mb-6 animate-fade-in">
-              Redefiniendo el software educacional
+              Haciendo zumbar la educación chilena
             </span>
             <h1 className="headline mb-6 text-balance animate-fade-in" style={{ animationDelay: '0.1s' }}>
               Transformando la educación con tecnología a medida

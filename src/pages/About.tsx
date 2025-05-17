@@ -13,23 +13,23 @@ const About = () => {
   const teamMembers = [
     {
       name: 'Cristian Alvarado',
-      role: 'CEO, Founder & Frontend Developer',
-      image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80',
+      role: 'Director de proyecto, Fundador & Desarollador Frontend',
+      image: 'public/assets/images/Buzzteam_CA.webp',
     },
     {
       name: 'Ricardo Zaraté',
-      role: 'CTO, Founder & Backend Developer',
-      image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80',
+      role: 'CTO, Fundador & Desarollador Backend',
+      image: 'public/assets/images/Buzzteam_RZ.webp',
     },
     {
       name: 'Lucas Capurro',
       role: 'CFO & Product Manager',
-      image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80',
+      image: 'public/assets/images/Buzzteam_LC.webp',
     },
     {
       name: 'Antonio Valdivia',
       role: 'Community Manager & Marketing',
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80',
+      image: 'public/assets/images/Buzzteam_AV.webp',
     },
   ];
 
