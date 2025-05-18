@@ -87,7 +87,7 @@ const Interview: React.FC = () => {
         <section className="py-16 md:py-24">
           <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-8">
             <h1 className="text-3xl font-bold mb-6 text-bee-dark text-center">Entrevista para BuzzBooks (Gestion CRA)</h1>
-            <form onSubmit={handleSubmit} className="space-y-8">
+            <form name="interview-buzzbooks" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" className="space-y-8">
               <h2 className="text-xl font-semibold mb-4">Bloque 1: Contexto e Infraestructura de la Biblioteca</h2> 
               <div>
                 <label className="font-medium">¿Cuál es el nombre de tu establecimiento educacional y comuna?</label>
