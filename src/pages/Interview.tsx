@@ -73,13 +73,6 @@ const Interview: React.FC = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Aquí puedes enviar los datos a tu backend o servicio
-    alert('¡Formulario enviado! (Aquí deberías manejar el envío real)');
-    setForm(initialState);
-  };
-
   return (
     <div className="min-h-screen bg-bee-background flex flex-col">
       <Navbar />
@@ -88,6 +81,7 @@ const Interview: React.FC = () => {
           <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-8">
             <h1 className="text-3xl font-bold mb-6 text-bee-dark text-center">Entrevista para BuzzBooks (Gestion CRA)</h1>
             <form name="interview-buzzbooks" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" className="space-y-8">
+              <input type="hidden" name="form-name" value="interview-buzzbooks" />
               <h2 className="text-xl font-semibold mb-4">Bloque 1: Contexto e Infraestructura de la Biblioteca</h2> 
               <div>
                 <label className="font-medium">¿Cuál es el nombre de tu establecimiento educacional y comuna?</label>
