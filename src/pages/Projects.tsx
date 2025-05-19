@@ -41,14 +41,14 @@ const pageContent = {
     }
   ],
   caseStudies: [
-    {
-      name: 'Escuela Provincia de Arauco',
-      location: 'Cerro navia, Santiago',
-      students: '300-',
-      image: 'public/assets/images/BuzzOS_PI.png',
-      quote: 'Buzzness nos permitio desarollar un estandar sobre las TIC en la escuela ademas de desarollar nuestro sitio web.',
-      author: 'Virginia Gonzalez, Directora de la escuela',
-    },
+    //{
+      //name: '',
+      //location: '',
+      //students: '',
+      //image: '',
+      //quote: '',
+      //author: '',
+    //},
   ],
   roadmap: [
     {
