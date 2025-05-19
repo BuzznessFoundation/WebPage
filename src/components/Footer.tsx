@@ -17,7 +17,7 @@ export default function Footer() {
       title: 'Proyecto',
       links: [
         { name: 'Sobre Nosotros', href: '/about' },
-        { name: 'Funciones', href: '/features' },
+        { name: 'La colmena', href: '/features' },
         { name: 'Proyectos', href: '/projects' },
         { name: 'Contacto', href: '/contact' },
       ],

@@ -12,51 +12,43 @@ const Features = () => {
 
   const mainFeatures = [
     {
+      icon: Cloud,
+      title: 'Nube Local Segura',
+      description: 'Nuestro sistema de gestion en nube permite tener una suite de oficina integrada en el dispositivo, siendo office, calendario, meet y drive a la vez.',
+    },
+    {
       icon: Layout,
-      title: 'Interfaz Intuitiva',
-      description: 'Diseño centrado en el usuario que facilita la navegación y el acceso a todas las funcionalidades.',
+      title: 'Alojamiento Web',
+      description: 'La colmena es la herramienta que te permite mantener tu página institucional activa y accesible desde la red, 24/7 y sin interrupciones.',
     },
     {
-      icon: BarChart,
-      title: 'Análisis de Progreso',
-      description: 'Herramientas avanzadas de seguimiento y visualización del rendimiento académico.',
+      icon: Shield,
+      title: 'Control Parental y Filtrado',
+      description: 'Protege la navegación escolar con la colmena, bloqueamos sitios pornograficos, no deseados y evitamos la conexion a redes sociales por la red escolar.',
     },
     {
-      icon: Book,
-      title: 'Contenido Personalizado',
-      description: 'Creación y adaptación de materiales educativos según necesidades específicas.',
-    },
-    {
-      icon: Gauge,
-      title: 'Evaluación Automática',
-      description: 'Sistema inteligente para calificar y proporcionar retroalimentación instantánea.',
+      icon: Zap,
+      title: 'Antivirus Básico',
+      description: 'Todos los documentos y archivos que se suben a la colmena son escaneados en busca de virus, evitando que se propaguen por la red escolar, tienes un virus, te avisaremos.',
     },
   ];
 
   const technicalFeatures = [
     {
-      title: 'Arquitectura modular',
-      description: 'Diseño que permite la activación selectiva de funcionalidades según las necesidades de cada institución.',
+      title: 'Módulos en Desarrollo',
+      description: 'En buzzness ofrecemos modulos especializados para la gestión de clases, recursos, asistencia y más, con herramientas para docentes, estudiantes, administrativos y TI, si no lo quieres, no lo instales.',
     },
     {
-      title: 'APIs abiertas y documentadas',
-      description: 'Interfaces de programación completas para integración con sistemas existentes.',
+      title: 'Personalización y Expansión',
+      description: 'Sistema basado en software libre, adaptable a las necesidades de cada institución y ampliable mediante módulos adicionales, podemos hacerlo a tu medida o los encargados TI pueden modificarlos como les plazca.',
     },
     {
-      title: 'Escalabilidad horizontal',
-      description: 'Capacidad para crecer y adaptar recursos según la demanda de usuarios.',
+      title: 'Fácil Integración',
+      description: 'Compatible con hardware estándar y accesible por el navegador web, es accesible desde cualquier dispositivo conectado a la red de la escuela y incluso sin conexion a internet.',
     },
     {
-      title: 'Alta disponibilidad',
-      description: 'Infraestructura diseñada para minimizar tiempos de inactividad y garantizar el acceso continuo.',
-    },
-    {
-      title: 'Despliegue flexible',
-      description: 'Opciones para instalar en servidores propios o utilizar servicios en la nube.',
-    },
-    {
-      title: 'Estándares abiertos',
-      description: 'Cumplimiento con protocolos y formatos de intercambio de datos educativos.',
+      title: 'Soporte y Comunidad',
+      description: 'Acceso a documentación, comunidad en línea y soporte profesional según el plan elegido, siempre estaremos disponibles para resolver dudas, corregir bugs y generar una comunidad.',
     },
   ];
 
@@ -66,15 +58,23 @@ const Features = () => {
       <main className="pt-20">
         {/* Hero Section */}
         <section className="py-16 md:py-24 bg-gradient-to-b from-bee-yellow/10 to-bee-background">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="max-w-3xl mx-auto text-center">
+          <div className="container mx-auto px-4 md:px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            {/* Columna de texto */}
+            <div>
               <h1 className="text-4xl md:text-5xl font-bold text-bee-dark mb-6">
-                Funcionalidades del Software
+              La Colmena: Tu Centro Digital Local
               </h1>
               <p className="text-xl text-bee-muted mb-8 text-pretty">
-                Descubre todas los modulos que disponemos a las comunidades 
-                educativas y si se adaptan a tus necesidades.
+              La Colmena es un servidor NAS que actúa como el núcleo del ecosistema Buzzness. Diseñado para operar dentro de tu institución educativa, permite almacenamiento en la nube local, alojamiento web, control parental y protección antivirus básica. Todo pensado para la seguridad y autonomía digital de tu comunidad escolar.
               </p>
+            </div>
+            {/* Columna de imagen */}
+            <div className="flex justify-center">
+              <img
+                src="/assets/images/Colmena_render.png"
+                alt="Ilustración de La Colmena"
+                className="max-w-md"
+              />
             </div>
           </div>
         </section>
@@ -84,14 +84,13 @@ const Features = () => {
           <div className="container mx-auto px-4 md:px-6">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <span className="bg-bee-yellow/10 text-bee-dark px-4 py-1.5 rounded-full text-sm font-medium inline-block mb-4">
-                Características Principales
+                Funcionalidades Principales
               </span>
               <h2 className="text-3xl md:text-4xl font-bold text-bee-dark mb-6">
-                Herramientas diseñadas para educadores
+                Todo lo que tu escuela necesita, en un solo lugar
               </h2>
               <p className="text-bee-muted">
-                Cada función ha sido desarrollada en colaboración con docentes para asegurar
-                su relevancia y utilidad en entornos educativos reales.
+                La Colmena integra servicios esenciales para la gestión, seguridad y colaboración digital en tu institución educativa.
               </p>
             </div>
 
@@ -124,15 +123,13 @@ const Features = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
                 <span className="bg-white/10 text-white px-4 py-1.5 rounded-full text-sm font-medium inline-block mb-4">
-                  Aspectos Técnicos
+                  Más que almacenamiento: un ecosistema en expansión
                 </span>
                 <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                  Construido a la medida de la educación.
+                  Módulos y herramientas para toda la comunidad escolar
                 </h2>
                 <p className="text-gray-300 mb-8">
-                  Nuestra plataforma está desarrollada utilizando las mejores prácticas de 
-                  desarollo de software y tiene la finalidad de incorporar varibales a la educacion
-                  como la ciencia de datos, ciberseguridad y la inteligencia artificial.
+                  Además de las funcionalidades actuales, estamos desarrollando módulos para docentes, estudiantes, administrativos y encargados de TI. La Colmena evoluciona contigo y tu comunidad.
                 </p>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -159,8 +156,8 @@ const Features = () => {
                         <Shield className="h-6 w-6 text-bee-yellow" />
                       </div>
                       <div>
-                        <h3 className="font-semibold text-white">Seguridad Prioritaria</h3>
-                        <p className="text-sm text-gray-300">El producto incorpora un antivirus de codigo de abierto.</p>
+                        <h3 className="font-semibold text-white">Seguridad Escolar</h3>
+                        <p className="text-sm text-gray-300">Control parental, filtrado de contenido y protección antivirus básica.</p>
                       </div>
                     </div>
                     
@@ -169,8 +166,8 @@ const Features = () => {
                         <Zap className="h-6 w-6 text-bee-yellow" />
                       </div>
                       <div>
-                        <h3 className="font-semibold text-white">Rendimiento Optimizado</h3>
-                        <p className="text-sm text-gray-300">Respuesta rápida que considera los momentos de alta demanda.</p>
+                        <h3 className="font-semibold text-white">Rendimiento y Autonomía</h3>
+                        <p className="text-sm text-gray-300">Funciona 24/7 en tu red local, sin depender de internet.</p>
                       </div>
                     </div>
                     
@@ -179,8 +176,8 @@ const Features = () => {
                         <Cloud className="h-6 w-6 text-bee-yellow" />
                       </div>
                       <div>
-                        <h3 className="font-semibold text-white">Una nube en local</h3>
-                        <p className="text-sm text-gray-300">Nuestro concepto de tecnologia funciona sin internet, las 24 horas.</p>
+                        <h3 className="font-semibold text-white">Expansión Modular</h3>
+                        <p className="text-sm text-gray-300">Próximamente: módulos para gestión escolar, recursos y más.</p>
                       </div>
                     </div>
                   </div>
@@ -198,11 +195,10 @@ const Features = () => {
                 Planes y Opciones
               </span>
               <h2 className="text-3xl md:text-4xl font-bold text-bee-dark mb-6">
-                Adaptado a tus necesidades
+                Elige el plan que mejor se adapta a tu institución
               </h2>
               <p className="text-bee-muted">
-                Como proyecto de código abierto, nuestra plataforma es gratuita para todos. 
-                Sin embargo, ofrecemos diferentes opciones de implementación según tus requisitos.
+                Ofrecemos diferentes opciones para que cualquier escuela pueda acceder a La Colmena, desde la autogestión gratuita hasta el servicio integral con hardware y soporte profesional.
               </p>
             </div>
 
@@ -210,42 +206,30 @@ const Features = () => {
               <table className="min-w-full bg-white rounded-xl shadow-lg overflow-hidden">
                 <thead className="bg-bee-dark text-white">
                   <tr>
-                    <th className="py-4 px-6 text-left">Característica</th>
-                    <th className="py-4 px-6 text-center">Autogestión</th>
-                    <th className="py-4 px-6 text-center">Soporte Comunitario</th>
-                    <th className="py-4 px-6 text-center">Soporte Premium</th>
+                    <th className="py-4 px-6 text-left">Plan</th>
+                    <th className="py-4 px-6 text-center">Gratuito</th>
+                    <th className="py-4 px-6 text-center">Acompañamiento</th>
+                    <th className="py-4 px-6 text-center">Integral</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
                   <tr>
-                    <td className="py-4 px-6 font-medium">Código Completo</td>
-                    <td className="py-4 px-6 text-center"><CheckCircle className="h-5 w-5 text-green-500 mx-auto" /></td>
-                    <td className="py-4 px-6 text-center"><CheckCircle className="h-5 w-5 text-green-500 mx-auto" /></td>
-                    <td className="py-4 px-6 text-center"><CheckCircle className="h-5 w-5 text-green-500 mx-auto" /></td>
+                    <td className="py-4 px-6 font-medium">Descripción</td>
+                    <td className="py-4 px-6 text-center">Descarga y usa el software sin costo. Instalación y configuración por el equipo técnico de la institución.</td>
+                    <td className="py-4 px-6 text-center">Asistencia inicial para la implementación, guía y capacitación básica.</td>
+                    <td className="py-4 px-6 text-center">Servicio completo: hardware, instalación, capacitación y soporte continuo.</td>
                   </tr>
                   <tr>
-                    <td className="py-4 px-6 font-medium">Actualizaciones</td>
-                    <td className="py-4 px-6 text-center"><CheckCircle className="h-5 w-5 text-green-500 mx-auto" /></td>
-                    <td className="py-4 px-6 text-center"><CheckCircle className="h-5 w-5 text-green-500 mx-auto" /></td>
-                    <td className="py-4 px-6 text-center"><CheckCircle className="h-5 w-5 text-green-500 mx-auto" /></td>
+                    <td className="py-4 px-6 font-medium">Soporte</td>
+                    <td className="py-4 px-6 text-center">Documentación y comunidad</td>
+                    <td className="py-4 px-6 text-center">Guía y soporte inicial</td>
+                    <td className="py-4 px-6 text-center">Soporte técnico permanente</td>
                   </tr>
                   <tr>
-                    <td className="py-4 px-6 font-medium">Soporte por Foro</td>
-                    <td className="py-4 px-6 text-center"><CheckCircle className="h-5 w-5 text-green-500 mx-auto" /></td>
-                    <td className="py-4 px-6 text-center"><CheckCircle className="h-5 w-5 text-green-500 mx-auto" /></td>
-                    <td className="py-4 px-6 text-center"><CheckCircle className="h-5 w-5 text-green-500 mx-auto" /></td>
-                  </tr>
-                  <tr>
-                    <td className="py-4 px-6 font-medium">Soporte Prioritario</td>
-                    <td className="py-4 px-6 text-center">-</td>
-                    <td className="py-4 px-6 text-center">-</td>
-                    <td className="py-4 px-6 text-center"><CheckCircle className="h-5 w-5 text-green-500 mx-auto" /></td>
-                  </tr>
-                  <tr>
-                    <td className="py-4 px-6 font-medium">Implementación Asistida</td>
-                    <td className="py-4 px-6 text-center">-</td>
-                    <td className="py-4 px-6 text-center">-</td>
-                    <td className="py-4 px-6 text-center"><CheckCircle className="h-5 w-5 text-green-500 mx-auto" /></td>
+                    <td className="py-4 px-6 font-medium">Requisitos</td>
+                    <td className="py-4 px-6 text-center">Equipo propio y encargado TI</td>
+                    <td className="py-4 px-6 text-center">Equipo compatible y colaboración TI</td>
+                    <td className="py-4 px-6 text-center">Contratación del paquete completo</td>
                   </tr>
                   <tr>
                     <td className="py-4 px-6 font-medium">Personalización</td>
