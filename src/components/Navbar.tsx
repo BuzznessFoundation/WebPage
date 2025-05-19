@@ -69,7 +69,7 @@ export default function Navbar() {
               </Link>
             ))}
             <a
-              href="https://github.com"
+              href="https://github.com/BuzznessFoundation"
               target="_blank"
               rel="noopener noreferrer"
               className="bee-button-outline flex items-center space-x-2"
