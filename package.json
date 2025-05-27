@@ -5,7 +5,7 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "vite build",
+        "build": "echo \"Debug: VITE_CONTENTFUL_SPACE_ID exists: $VITE_CONTENTFUL_SPACE_ID\" && vite build",
         "build:dev": "vite build --mode development",
         "lint": "eslint .",
         "preview": "vite preview"
