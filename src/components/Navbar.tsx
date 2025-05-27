@@ -8,6 +8,7 @@ const navLinks = [
   { name: 'La colmena', path: '/features' },
   { name: 'Proyectos', path: '/projects' },
   { name: 'Contacto', path: '/contact' },
+  { name: 'Blog', path: '/blog' },
 ];
 
 export default function Navbar() {
