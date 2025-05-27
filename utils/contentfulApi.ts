@@ -14,6 +14,14 @@ export async function fetchBlogPosts(): Promise<BlogPost[]> {
   const SPACE_ID = import.meta.env.VITE_CONTENTFUL_SPACE_ID?.trim();
   const ACCESS_TOKEN = import.meta.env.VITE_CONTENTFUL_ACCESS_TOKEN?.trim();
 
+  // Debug logs
+  console.log('Contentful Config Debug:', {
+    spaceIdValue: SPACE_ID?.substring(0, 4) + '...',
+    spaceIdLength: SPACE_ID?.length,
+    tokenExists: !!ACCESS_TOKEN,
+    envMode: import.meta.env.MODE
+  });
+
   if (!SPACE_ID || SPACE_ID.length < 10) {
     throw new Error("Invalid Contentful Space ID");
   }
