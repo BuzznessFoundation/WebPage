@@ -11,10 +11,8 @@ import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import Construction from "./pages/Construction";
 import BuzzOS from "./pages/BuzzOS";
-import BuzzPages from "./pages/BuzzPages";
-import BuzzBooks from "./pages/BuzzBooks";
-import Interview from "./pages/Interview";
 import Blog from "./pages/Blog";
+import BuzzBot from "./pages/BuzzBot";
 
 const queryClient = new QueryClient();
 
@@ -32,10 +30,8 @@ const App = () => (
           <Route path="/contact" element={<Contact />} />
           <Route path="/construction" element={<Construction />} />
           <Route path="/buzzos" element={<BuzzOS />} />
-          <Route path="/buzzpages" element={<BuzzPages />} />
-          <Route path="/buzzbooks" element={<BuzzBooks />} />
-          <Route path="/interview" element={<Interview />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/buzzbot" element={<BuzzBot />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

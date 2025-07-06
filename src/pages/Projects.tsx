@@ -21,24 +21,6 @@ const pageContent = {
       forks: 12,
       link: '/buzzos',
     },
-    {
-      title: 'BuzzPages',
-      description: 'La posibilidad de tener una pagina de web institucional con un enfoque en la publicacion de noticias, eventos y fotografias esta aca, solo escribemos y podemos generar un lindo sitio para tu escuela.',
-      image: '/assets/images/BuzzPage_PI.jpg',
-      language: 'React + NodeJS',
-      stars: 5,
-      forks: 2,
-      link: '/buzzpages',
-    },
-    {
-      title: 'BuzzBooks',
-      description: 'Un sistema de gestion bibliotecaria, pensado para ser usado por los encargador de CRA y enfocado en la simplicidad y comodidas de las bibliotecas en escuelas, ningun feature que no tenga utilidad sera agregado.',
-      image: '/assets/images/BuzzBooks_PI.jpg',
-      language: 'React + FastAPI',
-      stars: 4,
-      forks: 1,
-      link: '/buzzbooks',
-    }
   ],
   caseStudies: [
     //{
