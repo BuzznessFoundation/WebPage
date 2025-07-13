@@ -38,28 +38,38 @@ const BuzzBot = () => {
     };
 
     setMessages(prev => [...prev, userMessage]);
-    const questionText = inputText.trim();
     setInputText('');
     setIsLoading(true);
 
     try {
-      // Simulated API call - replace with your actual API
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const response = await fetch("https://buzzbot-7v59.onrender.com/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ prompt: userMessage.text })
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error HTTP: ${response.status}`);
+      }
+
+      const data = await response.json();
       
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: 'Esta es una respuesta simulada. Reemplaza esta lógica con tu API real.',
+        text: data.respuesta,
         isUser: false,
         timestamp: new Date(),
       };
 
       setMessages(prev => [...prev, botMessage]);
     } catch (error) {
-      console.error('Error sending message:', error);
+      console.error('Error:', error);
       
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: 'Lo siento, ocurrió un error al procesar tu mensaje. Por favor, inténtalo de nuevo.',
+        text: 'Lo siento, hubo un error al procesar tu mensaje. Por favor, inténtalo de nuevo más tarde.',
         isUser: false,
         timestamp: new Date(),
       };
@@ -67,7 +77,6 @@ const BuzzBot = () => {
       setMessages(prev => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
-      inputRef.current?.focus();
     }
   };
 
@@ -173,33 +182,35 @@ const BuzzBot = () => {
           {messages.map((message) => (
             <div
               key={message.id}
-              className={`py-6 ${message.isUser ? 'bg-white' : 'bg-gray-50'}`}
+              className={`py-2 flex ${message.isUser ? 'justify-end' : 'justify-start'} animate-fade-in`}
             >
-              <div className="flex space-x-4">
-                <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
-                  message.isUser ? 'bg-yellow-400' : 'bg-gray-700'
-                }`}>
-                  {message.isUser ? (
-                    <User size={16} className="text-gray-800" />
-                  ) : (
-                    <Bot size={16} className="text-white" />
-                  )}
+              {!message.isUser && (
+                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center mr-2">
+                  <Bot size={16} className="text-white" />
                 </div>
-                <div className="flex-1 min-w-0">
-                  <div className="text-sm font-medium text-gray-800 mb-1">
-                    {message.isUser ? 'Tú' : 'BuzzBot'}
-                  </div>
-                  <div className="text-gray-800 leading-relaxed whitespace-pre-wrap">
-                    {message.text}
-                  </div>
-                  <div className="text-xs text-gray-500 mt-2">
-                    {message.timestamp.toLocaleTimeString([], { 
-                      hour: '2-digit', 
-                      minute: '2-digit' 
-                    })}
-                  </div>
+              )}
+              <div
+                className={`max-w-xs px-4 py-3 rounded-2xl shadow-sm ${
+                  message.isUser
+                    ? 'bg-yellow-400 text-gray-800 rounded-br-none'
+                    : 'bg-gray-100 text-gray-800 rounded-bl-none'
+                }`}
+              >
+                <div className="text-sm font-medium mb-1">
+                  {message.isUser ? 'Tú' : 'BuzzBot'}
+                </div>
+                <div className="leading-relaxed whitespace-pre-wrap">
+                  {message.text}
+                </div>
+                <div className="text-xs text-gray-500 mt-2 text-right">
+                  {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </div>
               </div>
+              {message.isUser && (
+                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-yellow-400 flex items-center justify-center ml-2">
+                  <User size={16} className="text-gray-800" />
+                </div>
+              )}
             </div>
           ))}
 
@@ -224,6 +235,12 @@ const BuzzBot = () => {
       {/* Input Container */}
       <div className="border-t border-gray-200 bg-white sticky bottom-0">
         <div className="max-w-4xl mx-auto px-4 py-4">
+          {/* Typing Indicator arriba del input */}
+          {isLoading && (
+            <div className="flex justify-start mb-2">
+              <TypingIndicator />
+            </div>
+          )}
           <div className="relative">
             <input
               ref={inputRef}
@@ -242,7 +259,6 @@ const BuzzBot = () => {
               <Send size={16} />
             </button>
           </div>
-          
           {/* Disclaimer */}
           <div className="text-center mt-3">
             <p className="text-xs text-gray-500">
