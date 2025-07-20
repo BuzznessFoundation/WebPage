@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Send, Globe, User, Bot, Share2 } from 'lucide-react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { Send, Globe, User, Bot, Share2, X, CheckCircle, AlertCircle, Info } from 'lucide-react';
 
 interface Message {
   id: string;
@@ -8,10 +8,19 @@ interface Message {
   timestamp: Date;
 }
 
+interface Toast {
+  id: string;
+  message: string;
+  type: 'success' | 'error' | 'info';
+  duration?: number;
+}
+
 const BuzzBot = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [toasts, setToasts] = useState<Toast[]>([]);
+  const [isMinimized, setIsMinimized] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -26,6 +35,24 @@ const BuzzBot = () => {
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
+
+  // Toast system
+  const showToast = useCallback((message: string, type: Toast['type'] = 'info', duration = 5000) => {
+    const id = Date.now().toString();
+    const newToast: Toast = { id, message, type, duration };
+    
+    setToasts(prev => [...prev, newToast]);
+    
+    if (duration > 0) {
+      setTimeout(() => {
+        setToasts(prev => prev.filter(toast => toast.id !== id));
+      }, duration);
+    }
+  }, []);
+
+  const removeToast = (id: string) => {
+    setToasts(prev => prev.filter(toast => toast.id !== id));
+  };
 
   const handleSendMessage = async () => {
     if (!inputText.trim() || isLoading) return;
@@ -64,6 +91,7 @@ const BuzzBot = () => {
       };
 
       setMessages(prev => [...prev, botMessage]);
+      showToast('Respuesta recibida exitosamente', 'success', 3000);
     } catch (error) {
       console.error('Error:', error);
       
@@ -75,6 +103,7 @@ const BuzzBot = () => {
       };
 
       setMessages(prev => [...prev, errorMessage]);
+      showToast('Error al procesar el mensaje. Inténtalo nuevamente.', 'error');
     } finally {
       setIsLoading(false);
     }
@@ -96,20 +125,16 @@ const BuzzBot = () => {
         title: 'Buzzness AI - Asistente Inteligente',
         text: shareText,
         url: shareUrl,
-      }).catch(console.error);
-    } else {
-      // Fallback: copy to clipboard
-      navigator.clipboard.writeText(`${shareText} ${shareUrl}`).then(() => {
-        alert('¡Enlace copiado al portapapeles!');
+      }).then(() => {
+        showToast('¡Contenido compartido exitosamente!', 'success');
       }).catch(() => {
-        // Fallback for older browsers
-        const textArea = document.createElement('textarea');
-        textArea.value = `${shareText} ${shareUrl}`;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
-        alert('¡Enlace copiado al portapapeles!');
+        showToast('Error al compartir el contenido', 'error');
+      });
+    } else {
+      navigator.clipboard.writeText(`${shareText} ${shareUrl}`).then(() => {
+        showToast('¡Enlace copiado al portapapeles!', 'success');
+      }).catch(() => {
+        showToast('Error al copiar el enlace', 'error');
       });
     }
   };
@@ -118,152 +143,201 @@ const BuzzBot = () => {
     <img src="/assets/images/icon.webp" alt="Bee Logo" className="h-10 w-10" />
   );
 
-  const TypingIndicator = () => (
-    <div className="flex items-center space-x-2">
-      <div className="flex space-x-1">
-        <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse"></div>
-        <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-        <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
-      </div>
-      <span className="text-gray-500 text-sm">Escribiendo...</span>
+  const LoadingDots = () => (
+    <div className="flex space-x-1">
+      <div className="w-2 h-2 bg-yellow-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+      <div className="w-2 h-2 bg-yellow-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+      <div className="w-2 h-2 bg-yellow-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+    </div>
+  );
+
+  const ToastIcon = ({ type }: { type: Toast['type'] }) => {
+    switch (type) {
+      case 'success': return <CheckCircle className="w-5 h-5 text-green-500" />;
+      case 'error': return <AlertCircle className="w-5 h-5 text-red-500" />;
+      case 'info': return <Info className="w-5 h-5 text-blue-500" />;
+    }
+  };
+
+  const ToastContainer = () => (
+    <div className="fixed top-4 right-4 z-50 space-y-2 max-w-sm">
+      {toasts.map((toast) => (
+        <div
+          key={toast.id}
+          className={`
+            flex items-start space-x-3 p-4 rounded-lg shadow-lg backdrop-blur-sm border animate-in slide-in-from-right
+            ${toast.type === 'success' ? 'bg-green-50/90 border-green-200' : ''}
+            ${toast.type === 'error' ? 'bg-red-50/90 border-red-200' : ''}
+            ${toast.type === 'info' ? 'bg-blue-50/90 border-blue-200' : ''}
+          `}
+        >
+          <ToastIcon type={toast.type} />
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-medium text-gray-900">{toast.message}</p>
+          </div>
+          <button
+            onClick={() => removeToast(toast.id)}
+            className="flex-shrink-0 text-gray-400 hover:text-gray-600"
+          >
+            <X size={16} />
+          </button>
+        </div>
+      ))}
     </div>
   );
 
   return (
-    <div className="flex flex-col h-screen bg-white">
-      {/* Header */}
-      <div className="border-b border-gray-200 bg-white sticky top-0 z-10">
-        <div className="max-w-4xl mx-auto px-4 py-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <BuzznessLogo />
-              <span className="text-xl font-bold text-gray-800">Buzzness AI</span>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
+      <ToastContainer />
+      
+      {/* Main Container */}
+      <div className="flex flex-col h-screen mx-auto">
+        
+        {/* Header */}
+        <div className="border-b border-gray-200">
+          <div className="mx-auto py-3">
+            <div className="flex items-center justify-between max-w-4xl mx-auto">
+              <div className="flex items-center space-x-2">
+                <BuzznessLogo />
+                <span className="text-xl font-bold text-gray-800">BuzzBot</span>
+              </div>
+              
+              <div className="flex items-center space-x-2">
+                <button 
+                  onClick={handleShare}
+                  className="flex items-center space-x-2 px-4 py-2 border border-gray-300 hover:bg-gray-50 text-gray-700 rounded-lg transition-colors"
+                >
+                  <Share2 size={16} />
+                  <span>Compartir</span>
+                </button>
+                <button 
+                  onClick={() => window.open('https://buzzness.cl', '_blank')}
+                  className="flex items-center space-x-2 px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-gray-800 rounded-lg transition-colors font-medium"
+                >
+                  <Globe size={16} />
+                  <span>Ir a Buzzness</span>
+                </button>
+              </div>
             </div>
+          </div>
+        </div>
+
+        {/* Messages Container */}
+        <main className="flex-1 overflow-hidden">
+          <div className="h-full overflow-y-auto px-4 sm:px-6 lg:px-8 py-6">
             
-            <div className="flex items-center space-x-2">
-              <button 
-                onClick={handleShare}
-                className="flex items-center space-x-2 px-4 py-2 border border-gray-300 hover:bg-gray-50 text-gray-700 rounded-lg transition-colors"
-              >
-                <Share2 size={16} />
-                <span>Compartir</span>
-              </button>
-              <button 
-                onClick={() => window.open('https://buzzness.cl', '_blank')}
-                className="flex items-center space-x-2 px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-gray-800 rounded-lg transition-colors font-medium"
-              >
-                <Globe size={16} />
-                <span>Ir a Buzzness</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Messages Container */}
-      <div className="flex-1 overflow-y-auto">
-        <div className="max-w-4xl mx-auto px-4">
-          {messages.length === 0 && (
-            <div className="text-center py-20">
-              <div className="mb-8">
-                <div className="inline-flex items-center justify-center w-16 h-16 mb-4">
-                  <BuzznessLogo />
+            {/* Welcome Screen */}
+            {messages.length === 0 && (
+              <div className="flex flex-col items-center justify-center h-full text-center space-y-8">
+                <div className="space-y-5">
+                  <div className="relative items-center justify-center flex">
+                    <div className="relative">
+                      <BuzznessLogo/>
+                    </div>
+                  </div>
+                  <div className="space-y-1">
+                    <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 bg-clip-text text-transparent">
+                      ¡Hola! Soy BuzzBot
+                    </h1>
+                    <p className="text-lg text-gray-600 max-w-md mx-auto leading-relaxed">
+                      Tu asistente inteligente de Buzzness. Pregúntame lo que necesites para tu escuela.
+                    </p>
+                  </div>
                 </div>
-                <h1 className="text-3xl font-semibold text-gray-800 mb-2">
-                  ¿En qué puedo ayudarte hoy?
-                </h1>
-                <p className="text-gray-600 text-lg">
-                  Soy tu asistente de Buzzness. Pregúntame lo que necesites.
-                </p>
               </div>
-            </div>
-          )}
+            )}
 
-          {messages.map((message) => (
-            <div
-              key={message.id}
-              className={`py-2 flex ${message.isUser ? 'justify-end' : 'justify-start'} animate-fade-in`}
-            >
-              {!message.isUser && (
-                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center mr-2">
-                  <Bot size={16} className="text-white" />
+            {/* Messages */}
+            <div className="space-y-6 max-w-4xl mx-auto">
+              {messages.map((message, index) => (
+                <div
+                  key={message.id}
+                  className={`flex items-start space-x-3 animate-in fade-in slide-in-from-bottom duration-500 ${
+                    message.isUser ? 'justify-end' : 'justify-start'
+                  }`}
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  {!message.isUser && (
+                    <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-gray-700 to-gray-800 rounded-full flex items-center justify-center shadow-md">
+                      <Bot size={18} className="text-white" />
+                    </div>
+                  )}
+                  
+                  <div
+                    className={`group max-w-xs sm:max-w-md lg:max-w-lg xl:max-w-xl p-4 rounded-2xl shadow-sm transition-all duration-200 hover:shadow-md ${
+                      message.isUser
+                        ? 'bg-yellow-400 border text-gray-800 rounded-br-md'
+                        : 'bg-white border border-gray-200 text-gray-800 rounded-bl-md'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs font-semibold opacity-70">
+                        {message.isUser ? 'Tú' : 'BuzzBot'}
+                      </span>
+                      <span className="text-xs opacity-50">
+                        {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                      </span>
+                    </div>
+                    <div className="leading-relaxed whitespace-pre-wrap">
+                      {message.text}
+                    </div>
+                  </div>
+
+                  {message.isUser && (
+                    <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full flex items-center justify-center shadow-md">
+                      <User size={18} className="text-gray-800" />
+                    </div>
+                  )}
+                </div>
+              ))}
+
+              {/* Loading State */}
+              {isLoading && (
+                <div className="flex items-start space-x-3 animate-in fade-in slide-in-from-bottom">
+                  <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-gray-700 to-gray-800 rounded-full flex items-center justify-center shadow-md">
+                    <Bot size={18} className="text-white" />
+                  </div>
+                  <div className="bg-white border border-gray-200 rounded-2xl rounded-bl-md p-4 shadow-sm">
+                    <div className="flex items-center space-x-3">
+                      <LoadingDots />
+                      <span className="text-sm text-gray-600">Pensando...</span>
+                    </div>
+                  </div>
                 </div>
               )}
-              <div
-                className={`max-w-xs px-4 py-3 rounded-2xl shadow-sm ${
-                  message.isUser
-                    ? 'bg-yellow-400 text-gray-800 rounded-br-none'
-                    : 'bg-gray-100 text-gray-800 rounded-bl-none'
-                }`}
-              >
-                <div className="text-sm font-medium mb-1">
-                  {message.isUser ? 'Tú' : 'BuzzBot'}
-                </div>
-                <div className="leading-relaxed whitespace-pre-wrap">
-                  {message.text}
-                </div>
-                <div className="text-xs text-gray-500 mt-2 text-right">
-                  {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                </div>
-              </div>
-              {message.isUser && (
-                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-yellow-400 flex items-center justify-center ml-2">
-                  <User size={16} className="text-gray-800" />
-                </div>
-              )}
             </div>
-          ))}
 
-          {isLoading && (
-            <div className="py-6 bg-gray-50">
-              <div className="flex space-x-4">
-                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center">
-                  <Bot size={16} className="text-white" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="text-sm font-medium text-gray-800 mb-1">BuzzBot</div>
-                  <TypingIndicator />
-                </div>
-              </div>
-            </div>
-          )}
-
-          <div ref={messagesEndRef} />
-        </div>
-      </div>
-
-      {/* Input Container */}
-      <div className="border-t border-gray-200 bg-white sticky bottom-0">
-        <div className="max-w-4xl mx-auto px-4 py-4">
-          {/* Typing Indicator arriba del input */}
-          {isLoading && (
-            <div className="flex justify-start mb-2">
-              <TypingIndicator />
-            </div>
-          )}
-          <div className="relative">
-            <input
-              ref={inputRef}
-              value={inputText}
-              onChange={(e) => setInputText(e.target.value)}
-              onKeyPress={handleKeyPress}
-              placeholder="Envía un mensaje a BuzzBot..."
-              className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 resize-none"
-              disabled={isLoading}
-            />
-            <button
-              onClick={handleSendMessage}
-              disabled={!inputText.trim() || isLoading}
-              className="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-yellow-400 hover:bg-yellow-500 disabled:bg-gray-300 disabled:cursor-not-allowed text-gray-800 rounded-lg transition-colors"
-            >
-              <Send size={16} />
-            </button>
+            <div ref={messagesEndRef} />
           </div>
-          {/* Disclaimer */}
-          <div className="text-center mt-3">
-            <p className="text-xs text-gray-500">
-              BuzzBot puede cometer errores. Considera verificar información importante.
-            </p>
+        </main>
+
+        {/* Input Container */}
+        <div className="border-t border-gray-200 bg-white sticky bottom-0 w-full">
+          <div className="max-w-4xl mx-auto px-4 py-4">
+            <div className="relative">
+              <input
+                ref={inputRef}
+                value={inputText}
+                onChange={(e) => setInputText(e.target.value)}
+                onKeyPress={handleKeyPress}
+                placeholder="Envía un mensaje a BuzzBot..."
+                className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 resize-none"
+                disabled={isLoading}
+              />
+              <button
+                onClick={handleSendMessage}
+                disabled={!inputText.trim() || isLoading}
+                className="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-yellow-400 hover:bg-yellow-500 disabled:bg-gray-300 disabled:cursor-not-allowed text-gray-800 rounded-lg transition-colors"
+              >
+                <Send size={16} />
+              </button>
+            </div>
+            {/* Disclaimer */}
+            <div className="text-center mt-3">
+              <p className="text-xs text-gray-500">
+                BuzzBot puede cometer errores. Considera verificar información importante.
+              </p>
+            </div>
           </div>
         </div>
       </div>
