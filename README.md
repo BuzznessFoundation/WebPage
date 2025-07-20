@@ -1,25 +1,14 @@
-# README de la pagina web buzzness.cl
-
-## Informacion de projecto 
+# 🐝 Buzzness – Bienvenido a nuestro proyecto
 
 **URL**: https://buzzness.cl
 
-## ¿Como modificar la pagina?
+Si estas en este sitio es porque estas interesado en nuestro proyecto, somos buzzness, un proyecto universitario el cual nace por democratizar y generar un software de administracion para escuelas que permita desarollar inteligencia de negocio a gobiernos y entidades estatales, pensamos que con base en informacion es la unica forma de generar cambios y por sobre todo que la educacion es el motor de las sociedades.
 
-Te gustaria usar la plantilla o modificarla, puedes hacerlo desde el repositorio GitHub.
-Puedes clonarlo, es un proyecto basado en React, de forma que, los modulos de la pagina
-seran los mismos que de los modulos de software
+# 🧠 ¿Usamos ia?
 
-**¿Usamos ia?**
+Si, la plantilla esencial de esta pagina y cada proyecto de buzzness usara inteligencia artificial por que creemos en la mezcla entre humano - maquina, no obstante, trataremos de siempre estar conciente del codigo que estamos generando y siempre centrarnos en el humano al momento de generar soluciones... 
 
-Si, la plantilla esencial de esta pagina esta sacada de repositorios y aplicaciones
-que utilizan tanto librerias publicas como herramientas generativas o bancos de diseño
-para Tailwind, React y demas elementos de la pagina
-
-Cualquier cambio realizado sera automaticamente reflejado en este repositorio, ya que, usamos
-la tecnologia de GitHub Sites como alojamiento.
-
-## Que tecnologias usamos en este proyecto?
+# Que tecnologias usamos en este proyecto?
 
 Este proyecto esta actualmente utilizando las siguientes tecnologias:
 
