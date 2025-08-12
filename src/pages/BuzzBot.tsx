@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Send, Globe, User, Bot, Share2, X, CheckCircle, AlertCircle, Info } from 'lucide-react';
+import { Send, Globe, User, Bot, Share2, X, CheckCircle, AlertCircle, Info, ChevronDown, BookOpen, Users, FileText, PlusCircle } from 'lucide-react';
 
 interface Message {
   id: string;
@@ -15,14 +15,51 @@ interface Toast {
   duration?: number;
 }
 
+interface Mode {
+  id: string;
+  name: string;
+  icon: React.ReactNode;
+  description: string;
+}
+
 const BuzzBot = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [toasts, setToasts] = useState<Toast[]>([]);
   const [isMinimized, setIsMinimized] = useState(false);
+  const [selectedMode, setSelectedMode] = useState<string>('normativas');
+  const [isModeDropdownOpen, setIsModeDropdownOpen] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const modeDropdownRef = useRef<HTMLDivElement>(null);
+
+  const modes: Mode[] = [
+    {
+      id: 'normativas',
+      name: 'Normativas',
+      icon: <BookOpen size={16} />,
+      description: 'Consultas sobre normativas y reglamentos'
+    },
+    {
+      id: 'curriculum',
+      name: 'Currículum',
+      icon: <FileText size={16} />,
+      description: 'Preguntas sobre contenido curricular'
+    },
+    {
+      id: 'convivencia',
+      name: 'Convivencia',
+      icon: <Users size={16} />,
+      description: 'Temas de convivencia escolar'
+    },
+    {
+      id: 'crear-documento',
+      name: 'Crear Documento',
+      icon: <PlusCircle size={16} />,
+      description: 'Generar documentos personalizados'
+    }
+  ];
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -36,7 +73,19 @@ const BuzzBot = () => {
     inputRef.current?.focus();
   }, []);
 
-  // Toast system
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (modeDropdownRef.current && !modeDropdownRef.current.contains(event.target as Node)) {
+        setIsModeDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   const showToast = useCallback((message: string, type: Toast['type'] = 'info', duration = 5000) => {
     const id = Date.now().toString();
     const newToast: Toast = { id, message, type, duration };
@@ -54,6 +103,17 @@ const BuzzBot = () => {
     setToasts(prev => prev.filter(toast => toast.id !== id));
   };
 
+  const handleModeSelect = (modeId: string) => {
+    setSelectedMode(modeId);
+    setIsModeDropdownOpen(false);
+    const selectedModeObj = modes.find(mode => mode.id === modeId);
+    showToast(`Modo cambiado a: ${selectedModeObj?.name}`, 'info', 2000);
+  };
+
+  const getCurrentMode = () => {
+    return modes.find(mode => mode.id === selectedMode) || modes[0];
+  };
+
   const handleSendMessage = async () => {
     if (!inputText.trim() || isLoading) return;
 
@@ -69,12 +129,17 @@ const BuzzBot = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch("https://buzzbot-7v59.onrender.com/chat", {
+      const response = await fetch(import.meta.env.VITE_API_URL || "", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "x-api-key": import.meta.env.VITE_API_KEY || "",
         },
-        body: JSON.stringify({ prompt: userMessage.text })
+        body: JSON.stringify({
+          question: userMessage.text,
+          top_k: 5,
+          modo: getCurrentMode().description
+        }),
       });
 
       if (!response.ok) {
@@ -85,7 +150,7 @@ const BuzzBot = () => {
       
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: data.respuesta,
+        text: data.answer,  // ✅ esto es lo que entrega tu API
         isUser: false,
         timestamp: new Date(),
       };
@@ -186,6 +251,54 @@ const BuzzBot = () => {
     </div>
   );
 
+  const ModeSelector = () => {
+    const currentMode = getCurrentMode();
+    
+    return (
+      <div className="relative" ref={modeDropdownRef}>
+        <button
+          onClick={() => setIsModeDropdownOpen(!isModeDropdownOpen)}
+          className="flex items-center space-x-2 px-4 py-2 bg-white/80 backdrop-blur-sm hover:bg-white/90 text-gray-700 rounded-lg transition-all duration-200 shadow-sm hover:shadow-md"
+        >
+          <div className="text-yellow-500">
+            {currentMode.icon}
+          </div>
+          <span className="font-medium">{currentMode.name}</span>
+          <ChevronDown 
+            size={16} 
+            className={`transition-transform duration-200 ${isModeDropdownOpen ? 'rotate-180' : ''}`}
+          />
+        </button>
+        
+        {isModeDropdownOpen && (
+          <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden z-10 animate-in fade-in slide-in-from-top-2 duration-200">
+            {modes.map((mode) => (
+              <button
+                key={mode.id}
+                onClick={() => handleModeSelect(mode.id)}
+                className={`w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors duration-150 flex items-start space-x-3 ${
+                  selectedMode === mode.id ? 'bg-yellow-50 border-r-2 border-yellow-400' : ''
+                }`}
+              >
+                <div className={`mt-0.5 ${selectedMode === mode.id ? 'text-yellow-500' : 'text-gray-400'}`}>
+                  {mode.icon}
+                </div>
+                <div className="flex-1">
+                  <div className={`font-medium ${selectedMode === mode.id ? 'text-yellow-700' : 'text-gray-900'}`}>
+                    {mode.name}
+                  </div>
+                  <div className="text-sm text-gray-500 mt-1">
+                    {mode.description}
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
       <ToastContainer />
@@ -219,6 +332,13 @@ const BuzzBot = () => {
                 </button>
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* Mode Selector Bar */}
+        <div className="bg-white/50 backdrop-blur-sm">
+          <div className="max-w-4xl mx-auto py-3">
+            <ModeSelector />
           </div>
         </div>
 
@@ -320,7 +440,7 @@ const BuzzBot = () => {
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder="Envía un mensaje a BuzzBot..."
+                placeholder={`Envía un mensaje en modo ${getCurrentMode().name}...`}
                 className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 resize-none"
                 disabled={isLoading}
               />
