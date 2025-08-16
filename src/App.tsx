@@ -5,12 +5,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import About from "./pages/About";
-import Features from "./pages/Features";
-import Projects from "./pages/Projects";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import Construction from "./pages/Construction";
-import BuzzOS from "./pages/BuzzOS";
 import Blog from "./pages/Blog";
 import BuzzBot from "./pages/BuzzBot";
 
@@ -25,11 +22,8 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<About />} />
-          <Route path="/features" element={<Features />} />
-          <Route path="/projects" element={<Projects />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/construction" element={<Construction />} />
-          <Route path="/buzzos" element={<BuzzOS />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/buzzbot" element={<BuzzBot />} />
           <Route path="*" element={<NotFound />} />

@@ -17,9 +17,8 @@ export default function Footer() {
       title: 'Proyecto',
       links: [
         { name: 'Sobre Nosotros', href: '/about' },
-        { name: 'La colmena', href: '/features' },
-        { name: 'Proyectos', href: '/projects' },
         { name: 'Contacto', href: '/contact' },
+        { name: 'Blog', href: '/blog' },
       ],
     },
     {
@@ -27,7 +26,6 @@ export default function Footer() {
       links: [
         { name: 'Documentación', href: '/construction' },
         { name: 'Tutoriales', href: '/construction' },
-        { name: 'Guía de instalación', href: '/construction' },
         { name: 'API', href: '/construction' },
       ],
     },
@@ -37,7 +35,6 @@ export default function Footer() {
         { name: 'Privacidad', href: '/construction' },
         { name: 'Términos', href: '/construction' },
         { name: 'Cookies', href: '/construction' },
-        { name: 'Licencias', href: '/construction' },
       ],
     },
   ];
