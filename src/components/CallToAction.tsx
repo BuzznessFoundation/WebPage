@@ -1,37 +1,33 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ArrowRight, Brain, BarChart3, Users, Target, CheckCircle, Terminal, Copy, Check, TrendingUp, Zap, Globe, Shield } from 'lucide-react'; 
- 
-// Call to Action Section
+
   export default function CallToActionSection() {
     return (
       <section className="py-24">
         <div className="container mx-auto px-6">
-          <div className="relative overflow-hidden bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 rounded-3xl p-12 lg:p-20">
-            {/* Background patterns */}
+          <div className="relative overflow-hidden bg-gradient-to-r from-yellow-300 via-green-300 to-yellow-300 rounded-3xl p-12 lg:p-20">
             <div className="absolute inset-0 opacity-20">
               <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-white"></div>
               <div className="absolute top-1/3 -left-24 w-64 h-64 rounded-full bg-cyan-300"></div>
               <div className="absolute -bottom-32 right-1/3 w-80 h-80 rounded-full bg-yellow-300"></div>
             </div>
-            
             <div className="relative z-10 max-w-4xl text-center mx-auto text-white">
               <h2 className="text-4xl md:text-6xl font-bold mb-8">
                 ¿Listo para revolucionar la 
-                <span className="bg-gradient-to-r from-cyan-200 to-blue-200 bg-clip-text text-transparent"> gestión educativa?</span>
+                <span className="bg-gradient-to-r from-white via-yellow-200 to-yellow-100 bg-clip-text text-transparent"> gestión educativa?</span>
               </h2>
               <p className="text-xl text-white/90 mb-12 leading-relaxed">
-                Únete a la revolución de la inteligencia de negocio educativa. Transforma la toma de decisiones 
-                en tu institución con IA, analytics avanzado y herramientas diseñadas para líderes educativos visionarios.
+                Descubre cómo nuestras herramientas pueden transformar la manera en que las instituciones educativas toman decisiones basadas en datos.
               </p>
               <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-                <button className="group bg-white text-indigo-600 px-10 py-5 rounded-2xl font-bold text-lg flex items-center justify-center space-x-3 shadow-2xl hover:scale-105 transition-all duration-300">
+                <button className="group bg-yellow-400 text-white px-10 py-5 rounded-2xl font-bold text-lg flex items-center justify-center space-x-3 shadow-2xl hover:scale-105 transition-all duration-300">
                   <Brain className="h-6 w-6" />
-                  <span>Comenzar Demo Gratuita</span>
+                  <span>Explora BuzzBot</span>
                   <ArrowRight className="h-6 w-6 group-hover:translate-x-1 transition-transform" />
                 </button>
-                <button className="bg-white/10 backdrop-blur-sm border-2 border-white/30 text-white px-10 py-5 rounded-2xl font-bold text-lg hover:bg-white/20 transition-all duration-300">
+                <button className="bg-white/50 border border-white/60 text-white px-10 py-5 rounded-2xl font-bold text-lg hover:bg-white/20 transition-all duration-300">
                   <Shield className="h-6 w-6 inline mr-3" />
-                  Ver Código Fuente
+                  Ver como funciona buzzbot
                 </button>
               </div>
             </div>

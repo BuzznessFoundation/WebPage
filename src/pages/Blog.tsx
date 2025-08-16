@@ -53,7 +53,7 @@ const Blog: React.FC = () => {
   return (
     <div className="min-h-screen bg-bee-background">
       <Navbar />
-      <main className="pt-20">
+      <main className="pt-25">
         <section className="py-16 md:py-24 bg-gradient-to-b from-bee-yellow/10 to-bee-background">
           <div className="container mx-auto px-4 md:px-6 text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-bee-dark mb-6">Blog</h1>

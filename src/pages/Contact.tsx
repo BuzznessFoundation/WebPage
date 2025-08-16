@@ -64,7 +64,7 @@ const Contact = () => {
   return (
     <div className="min-h-screen bg-bee-background">
       <Navbar />
-      <main className="pt-20">
+      <main className="pt-25">
         {/* Formulario oculto para Netlify */}
         <form name="contact" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
           <input type="text" name="name" />

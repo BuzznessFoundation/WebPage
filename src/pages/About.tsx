@@ -13,22 +13,22 @@ const About = () => {
   const teamMembers = [
     {
       name: 'Cristian Alvarado',
-      role: 'Director de proyecto, Fundador & Desarollador Frontend',
+      role: 'Director de proyecto',
       image: '/assets/images/Buzzteam_CA.webp',
     },
     {
       name: 'Ricardo Zaraté',
-      role: 'CTO, Fundador & Desarollador Backend',
+      role: 'Fundador & DevOps',
       image: '/assets/images/Buzzteam_RZ.webp',
     },
     {
       name: 'Lucas Capurro',
-      role: 'CFO & Product Manager',
+      role: 'Product Manager',
       image: '/assets/images/Buzzteam_LC.webp',
     },
     {
       name: 'Antonio Valdivia',
-      role: 'Community Manager & Marketing',
+      role: 'Community Manager',
       image: '/assets/images/Buzzteam_AV.webp',
     },
   ];
@@ -59,7 +59,7 @@ const About = () => {
   return (
     <div className="min-h-screen bg-bee-background">
       <Navbar />
-      <main className="pt-20">
+      <main className="pt-25">
         {/* Hero Section */}
         <section className="py-16 md:py-24 bg-gradient-to-b from-bee-yellow/10 to-bee-background">
           <div className="container mx-auto px-4 md:px-6">
