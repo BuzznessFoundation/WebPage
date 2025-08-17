@@ -5,7 +5,6 @@ import { Mail, MapPin, Phone, Send, MessageSquare, Github, Users } from 'lucide-
 import { toast } from 'sonner';
 
 const Contact = () => {
-  // Scroll to top on page load
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -49,14 +48,12 @@ const Contact = () => {
     },
   ];
 
-  // Detecta el parámetro de éxito en la URL
   const [showSuccess, setShowSuccess] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     if (params.get('success') === 'true') {
       setShowSuccess(true);
-      // Opcional: limpia el parámetro de la URL después de mostrar el mensaje
       window.history.replaceState({}, document.title, window.location.pathname);
     }
   }, []);
@@ -65,7 +62,6 @@ const Contact = () => {
     <div className="min-h-screen bg-bee-background">
       <Navbar />
       <main className="pt-25">
-        {/* Formulario oculto para Netlify */}
         <form name="contact" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
           <input type="text" name="name" />
           <input type="email" name="email" />
@@ -78,7 +74,6 @@ const Contact = () => {
           </select>
           <textarea name="message"></textarea>
         </form>
-        {/* Hero Section */}
         <section className="py-16 md:py-24 bg-gradient-to-b from-bee-yellow/10 to-bee-background">
           <div className="container mx-auto px-4 md:px-6">
             <div className="max-w-3xl mx-auto text-center">
@@ -91,8 +86,6 @@ const Contact = () => {
             </div>
           </div>
         </section>
-
-        {/* Contact Options */}
         <section className="py-12">
           <div className="container mx-auto px-4 md:px-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -122,8 +115,6 @@ const Contact = () => {
             </div>
           </div>
         </section>
-
-        {/* Contact Form Section */}
         <section className="py-20">
           <div className="container mx-auto px-4 md:px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -133,14 +124,11 @@ const Contact = () => {
                   <h3 className="text-2xl font-bold text-bee-dark mb-6">
                     Envianos un mensaje
                   </h3>
-                  
-                  {/* Mensaje de éxito */}
                   {showSuccess && (
                     <div className="mb-6 p-4 bg-green-100 text-green-800 rounded">
                       ¡Mensaje enviado correctamente! Pronto nos pondremos en contacto contigo.
                     </div>
                   )}
-
                   <form 
                     name="contact"
                     action="/"
@@ -185,7 +173,6 @@ const Contact = () => {
                         />
                       </div>
                     </div>
-                    
                     <div>
                       <label htmlFor="subject" className="block text-sm font-medium text-bee-dark mb-2">
                         Asunto
@@ -270,63 +257,6 @@ const Contact = () => {
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQ Section */}
-        <section className="py-20 bg-bee-yellow/5">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="text-center max-w-3xl mx-auto mb-16">
-              <span className="bg-bee-yellow/10 text-bee-dark px-4 py-1.5 rounded-full text-sm font-medium inline-block mb-4">
-                Preguntas Frecuentes
-              </span>
-              <h2 className="text-3xl md:text-4xl font-bold text-bee-dark mb-6">
-                ¿Tienes dudas?
-              </h2>
-              <p className="text-bee-muted">
-                Aquí encontrarás respuestas a las preguntas más comunes sobre nuestro proyecto.
-              </p>
-            </div>
-
-            <div className="max-w-4xl mx-auto">
-              <div className="space-y-6">
-                {[
-                  {
-                    question: '¿Es realmente gratuito?',
-                    answer: 'Sí, Buzzness es un proyecto de código abierto completamente gratuito. Puedes descargar, modificar y usar el software sin costo. Ofrecemos servicios de soporte premium opcionales para instituciones que requieran asistencia especializada y no dispongan de un tecnico que tenga la capacidad o conocimientos sobre nuestro software.'
-                  },
-                  {
-                    question: '¿Qué requisitos técnicos necesito para implementarlo?',
-                    answer: 'Los requisitos dependen del tamaño de la escuela y los servicios a utilizar, si no dispones de un tecnico TI que pueda calcular o montar el servicio, entonces te podemos ayudar poniendote en contacto via email.'
-                  },
-                  {
-                    question: '¿Cómo puedo contribuir al proyecto?',
-                    answer: 'Puedes contribuir de varias formas: escribiendo código, mejorando la documentación, reportando errores, o simplemente difundiendo el proyecto. Visita nuestro repositorio en GitHub para más información.'
-                  },
-                  {
-                    question: '¿Ofrecen capacitación para docentes?',
-                    answer: 'Sí, contamos con diversos recursos de formación gratuitos ademas de charlas sobre diversos topicos de la tecnologia. actualmente puedes solicitar una charla sobre uso de la IA o seguridad informatica para docentes.'
-                  },
-                ].map((faq, index) => (
-                  <div key={index} className="bg-white rounded-xl p-6 shadow-sm transition-all duration-300 hover:shadow-md">
-                    <h3 className="text-lg font-semibold text-bee-dark mb-3">{faq.question}</h3>
-                    <p className="text-bee-muted">{faq.answer}</p>
-                  </div>
-                ))}
-              </div>
-              
-              <div className="text-center mt-12">
-                <p className="text-bee-muted mb-4">
-                  ¿No encuentras la respuesta que buscas?
-                </p>
-                <a
-                  href="mailto:cristian.alvarado@buzzness.cl"
-                  className="bee-button-outline"
-                >
-                  Envíanos tu pregunta
-                </a>
               </div>
             </div>
           </div>

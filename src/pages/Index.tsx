@@ -1,5 +1,6 @@
 import {ArrowRight, Brain, BarChart3, Users, Target, Terminal, Copy, Check, TrendingUp, Zap} from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import CallToAction from '@/components/CallToAction';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -92,61 +93,41 @@ export default function BuzznessHomepage() {
   ];
 
   const HeroSection = () => (
-    <section className="relative min-h-screen flex items-center pt-20 overflow-hidden bg-gradient-to-br from-yellow-300 via-green-300 to-yellow-300">
-      <div ref={circleRef} className="absolute top-1/4 right-1/4 h-96 w-96 bg-gradient-to-r from-cyan-400/30 to-blue-500/30 rounded-full blur-3xl animate-pulse"></div>
-      <div className="absolute bottom-1/3 left-1/4 h-64 w-64 bg-gradient-to-r from-purple-400/20 to-pink-500/20 rounded-full blur-3xl animate-bounce" style={{ animationDuration: '3s' }}></div>
-      <div className="absolute top-1/2 left-1/2 h-32 w-32 bg-gradient-to-r from-yellow-400/25 to-orange-500/25 rounded-full blur-2xl animate-ping" style={{ animationDuration: '4s' }}></div>
-      <div className="container mx-auto px-6 z-10">
+    <section className="pt-20 min-h-screen flex items-center bg-gradient-to-br from-yellow-300 via-green-300 to-yellow-300">
+      <div ref={circleRef} className="absolute bg-gradient-to-r from-cyan-400/30 to-blue-500/30"></div>
+      <div className="absolute bg-gradient-to-r from-purple-400/20 to-pink-500/20 rounded-full blur-3xl animate-bounce" style={{ animationDuration: '3s' }}></div>
+      <div className="absolute bg-gradient-to-r from-yellow-400/25 to-orange-500/25 rounded-full blur-2xl animate-ping" style={{ animationDuration: '4s' }}></div>
+      <div className="container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="text-white">
             <h1 className="text-5xl md:text-7xl font-bold mb-8 bg-gradient-to-r from-white via-yellow-200 to-yellow-100 bg-clip-text text-transparent leading-tight">
               Inteligencia de Negocio para 
-              <span className="block text-transparent bg-gradient-to-r from-yellow-200 to-yellow-300 bg-clip-text">
+              <span className="block bg-gradient-to-r from-yellow-200 to-yellow-300 bg-clip-text">
                 Educación
               </span>
             </h1>
-            <p className="text-xl text-gray-400 mb-10 leading-relaxed">
+            <p className="text-2xl text-white mb-10 leading-relaxed">
               Empodera a los equipos directivos educativos con herramientas de IA y análisis avanzado 
               para la toma de decisiones estratégicas que transforman la educación.
             </p>
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
-              <button className="group bg-yellow-400 text-white px-8 py-4 rounded-xl font-semibold flex items-center justify-center space-x-3 shadow-2xl transform transition-all duration-300 hover:scale-105 hover:shadow-cyan-500/50">
+              <Link 
+                to="/buzzbot" 
+                className="group bg-yellow-400 text-white px-8 py-4 rounded-xl font-semibold flex items-center justify-center space-x-3 shadow-2xl transform transition-all duration-300 hover:scale-105 hover:shadow-cyan-500/50"
+              >
                 <Brain className="h-5 w-5" />
                 <span>Explora BuzzBot</span>
                 <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-              </button>
-              <button className="bg-white/50 border border-white/60 text-white px-8 py-4 rounded-xl font-semibold hover:bg-white/30 transition-all duration-300">
-                Ver Demo en Vivo
-              </button>
+              </Link>
+              <Link 
+                to="/about" 
+                className="bg-white/50 border border-white/60 text-white px-8 py-4 rounded-xl font-semibold hover:bg-white/30 transition-all duration-300"
+              >
+                Conoce Sobre Nosotros
+              </Link>
             </div>
           </div>
           <div className="relative px-10">
-            <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-8 shadow-2xl transform hover:rotate-1 transition-all duration-500">
-              <div className="bg-gradient-to-r from-gray-800 to-gray-900 h-12 w-full rounded-xl mb-6 flex items-center px-4">
-                <div className="flex space-x-3">
-                  <div className="h-4 w-4 rounded-full bg-red-400"></div>
-                  <div className="h-4 w-4 rounded-full bg-yellow-400"></div>
-                  <div className="h-4 w-4 rounded-full bg-green-400"></div>
-                </div>
-                <div className="ml-4 text-white/70 text-sm">Dashboard Directivo</div>
-              </div>
-              <div className="space-y-4">
-                <div className="bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-xl p-4">
-                  <div className="flex items-center space-x-3 mb-3">
-                    <BarChart3 className="h-6 w-6 text-cyan-400" />
-                    <span className="text-white font-semibold">Análisis Predictivo</span>
-                  </div>
-                  <div className="h-6 bg-white/20 rounded-lg w-full animate-pulse"></div>
-                </div>
-                <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-xl p-4">
-                  <div className="flex items-center space-x-3 mb-3">
-                    <Users className="h-6 w-6 text-purple-400" />
-                    <span className="text-white font-semibold">Insights de Rendimiento</span>
-                  </div>
-                  <div className="h-4 bg-white/20 rounded-lg w-3/4 animate-pulse"></div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>

@@ -49,9 +49,8 @@ export default function Footer() {
               <span className="font-bold text-xl">Buzzness</span>
             </Link>
             <p className="text-gray-300 mb-6 max-w-md">
-              Una plataforma educativa de código abierto diseñada para facilitar
-              la experiencia en la gestion de escuelas a traves de herramientas
-              agiles, intuitivas y colaborativas.
+              Una proyecto que busca desarollar herramientas de inteligencia artificial para la educación,
+              facilitando el acceso a información y recursos para los equipos directivos educativos.
             </p>
             <div className="flex space-x-4">
               {socialLinks.map((social) => (

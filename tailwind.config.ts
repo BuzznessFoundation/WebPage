@@ -142,7 +142,7 @@ export default {
       },
       fontFamily: {
         sans: ["SF Pro Display", "system-ui", "sans-serif"],
-        text: ["SF Pro Text", "system-ui", "sans-serif"],
+        text: ["Montserrat", "system-ui", "sans-serif"],
       },
       backdropBlur: {
         xs: "2px",

@@ -36,12 +36,12 @@ export default function Navbar() {
       className={`fixed top-0 left-0 z-50 w-full transition-all duration-300 ${isOpen? 'bg-white py-5': scrolled? 'bg-white/80 backdrop-blur-md shadow-sm py-5': 'bg-transparent py-5'}`}>
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between">
-          <Link to="/" className="flex items-center space-x-2 text-bee-dark font-bold text-xl transition-transform duration-300 hover:scale-105">
+          <Link to="/" className="flex items-center space-x-2 text-gray-800 font-bold text-2xl transition-transform duration-300 hover:scale-105">
             <img src="/assets/images/icon.webp" alt="Bee Logo" className="h-10 w-10" />
             <span>Buzzness</span>
           </Link>
 
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden md:flex items-center space-x-8 text-white">
             {navLinks.map((link) => (
               <Link key={link.path} to={link.path} className={`nav-link ${location.pathname === link.path ? 'after:w-full' : ''}`}>
                 {link.name}
@@ -65,7 +65,7 @@ export default function Navbar() {
               {link.name}
             </Link>
           ))}
-          <a href="/buzzbot" target="_blank" rel="noopener noreferrer" className="bg-yellow-400 font-bold text-gray-100 px-8 py-4 rounded-2xl text-lg flex items-center justify-center space-x-3 shadow-2xl hover:scale-105 transition-all duration-300">
+          <a href="/buzzbot" target="_blank" rel="noopener noreferrer" className="bg-yellow-400 font-bold text-white py-3 rounded-xl text-lg flex items-center justify-center space-x-3 shadow-2xl hover:scale-105 transition-all duration-300">
             BuzzBot
           </a>
         </nav>
