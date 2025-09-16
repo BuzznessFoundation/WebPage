@@ -1,5 +1,9 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const hostname = 'https://buzzness.cl';
 const routes = [
@@ -7,7 +11,6 @@ const routes = [
   { url: '/about', changefreq: 'monthly', priority: 0.8 },
   { url: '/buzzbot', changefreq: 'monthly', priority: 0.7 },
   { url: '/contact', changefreq: 'monthly', priority: 0.7 }
-  // añade aquí más rutas o genera dinámicamente desde Contentful/tu CMS
 ];
 
 const today = new Date().toISOString().split('T')[0];
