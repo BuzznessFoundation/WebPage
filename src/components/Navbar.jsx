@@ -26,7 +26,7 @@ export default function Navbar() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center space-x-2 text-dark font-bold text-2xl transition-transform duration-300 hover:scale-105">
-            <img src="/src/assets/images/buzzness-icon.webp" alt="Logo del proyecto" className="h-11 w-11" />
+            <img src="/assets/images/icon.webp" alt="Logo del proyecto" className="h-11 w-11" />
             <span>Buzzness</span>
           </Link>
 

@@ -8,22 +8,22 @@ const About = () => {
     {
       name: "Cristian Alvarado",
       role: "Director de proyecto",
-      image: "src/assets/images/Buzzteam_CA.webp",
+      image: "/assets/images/Buzzteam_CA.webp",
     },
     {
       name: "Ricardo Zaraté",
       role: "Fundador & DevOps",
-      image: "src/assets/images/Buzzteam_RZ.webp",
+      image: "/assets/images/Buzzteam_RZ.webp",
     },
     {
       name: "Lucas Capurro",
       role: "Product Manager",
-      image: "src/assets/images/Buzzteam_LC.webp",
+      image: "/assets/images/Buzzteam_LC.webp",
     },
     {
       name: "Antonio Valdivia",
       role: "Community Manager",
-      image: "src/assets/images/Buzzteam_AV.webp",
+      image: "/assets/images/Buzzteam_AV.webp",
     },
   ];
 
@@ -93,7 +93,7 @@ const About = () => {
               </div>
               <div className="relative h-full">
                 <img
-                  src="src/assets/images/AboutBux.png"
+                  src="/assets/images/Colmena_render.png" {/* ajusta si usas otra */}
                   alt="Imagen representativa de Buzzness"
                   className="w-full h-full object-cover rounded-xl"
                 />
