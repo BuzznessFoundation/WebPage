@@ -46,7 +46,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
           <div className="lg:col-span-2">
             <Link to="/" className="flex items-center space-x-2 mb-6">
-              <img src="/assets/images/icon.webp" alt="Logo del proyecto" className="h-11 w-11" />
+              <img src="public/assets/images/Buzzness_Icon.webp" alt="Logo del proyecto" className="h-11 w-11" />
               <span className="font-bold text-2xl">Buzzness</span>
             </Link>
             <p className="text-gray-300 mb-6 max-w-md">
