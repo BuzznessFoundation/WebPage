@@ -93,7 +93,7 @@ const About = () => {
               </div>
               <div className="relative h-full">
                 <img
-                  src="/assets/images/Colmena_render.png" {/* ajusta si usas otra */}
+                  src="/assets/images/Colmena_render.png"
                   alt="Imagen representativa de Buzzness"
                   className="w-full h-full object-cover rounded-xl"
                 />
