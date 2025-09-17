@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { initSession, incrementPromptCount, DAILY_LIMIT, MODAL_THRESHOLD } from '../utils/PromptSession';
+import PromptLimitModal from '../components/PromptLimitModal';
 
 const API_URL = 'https://TU_API_URL';
 
@@ -7,10 +9,10 @@ const DEV_MODE = true;
 const MOCK_ONLINE = true;
 
 // Offsets y dimensiones
-const NAVBAR_OFFSET = 88;     // alto aprox del Navbar
-const BOTTOMBAR_OFFSET = 56;  // alto aprox de la barra inferior
-const INPUT_BAR_H = 80;       // alto aprox de la barra de entrada
-const INPUT_BOTTOM_GAP = 12;  // separación respecto a la barra inferior
+const NAVBAR_OFFSET = 88;
+const BOTTOMBAR_OFFSET = 56;
+const INPUT_BAR_H = 80;
+const INPUT_BOTTOM_GAP = 12;
 
 export default function BuzzBot() {
   const [messages, setMessages] = useState([
@@ -22,6 +24,8 @@ export default function BuzzBot() {
   const [showChat, setShowChat] = useState(false);
   const [active, setActive] = useState(true);
   const [ratings, setRatings] = useState({});
+  const [promptCount, setPromptCount] = useState(0);
+  const [showLimitModal, setShowLimitModal] = useState(false);
   const chatEndRef = useRef(null);
 
   const mockResponses = [
@@ -46,6 +50,18 @@ export default function BuzzBot() {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, showChat]);
 
+  // Inicializar sesión y contador diario
+  useEffect(() => {
+    const s = initSession();
+    setPromptCount(s.count || 0);
+    if ((s.count || 0) >= DAILY_LIMIT) {
+      setActive(false);
+    }
+    if ((s.count || 0) >= MODAL_THRESHOLD) {
+      setShowLimitModal(true);
+    }
+  }, []);
+
   const handleRate = (index, value) => {
     setRatings(r => ({ ...r, [index]: value ? 'like' : 'dislike' }));
   };
@@ -56,6 +72,24 @@ export default function BuzzBot() {
 
     setMessages(msgs => [...msgs, { role: 'user', content: input }]);
     if (!showChat) setShowChat(true);
+
+    // Usamos la función exportada para incrementar el contador
+    const result = incrementPromptCount();
+    if (!result.allowed) {
+      setPromptCount(result.session.count || 0);
+      setActive(false);
+      setShowLimitModal(true);
+      alert('Has alcanzado el límite diario de prompts.');
+      return;
+    }
+    // actualizar contador local
+    setPromptCount(result.session.count || 0);
+    if ((result.session.count || 0) >= MODAL_THRESHOLD) {
+      setShowLimitModal(true);
+    }
+    if ((result.session.count || 0) >= DAILY_LIMIT) {
+      setActive(false);
+    }
 
     try {
       if (DEV_MODE) {
@@ -81,7 +115,6 @@ export default function BuzzBot() {
     setLoading(false);
   };
 
-  // Altura del box de mensajes cuando el chat está visible
   const chatBoxHeight = `calc(100vh - ${NAVBAR_OFFSET + BOTTOMBAR_OFFSET + INPUT_BAR_H + INPUT_BOTTOM_GAP}px)`;
 
   return (
@@ -203,6 +236,7 @@ export default function BuzzBot() {
         <span className="flex items-center gap-2 text-xs text-gray-300">
           <span className={`inline-block h-2 w-2 rounded-full ${apiStatus === 'online' ? 'bg-green-400' : 'bg-red-400'}`} />
           {apiStatus === 'online' ? 'API Online' : 'API Offline'}
+          <span className="ml-4 text-yellow-300">Prompts hoy: {promptCount}/{DAILY_LIMIT}</span>
         </span>
         <div className="flex gap-5 items-center">
           <button
@@ -219,6 +253,15 @@ export default function BuzzBot() {
           </button>
         </div>
       </div>
+
+      {/* Modal importado */}
+      <PromptLimitModal
+        show={showLimitModal}
+        promptCount={promptCount}
+        dailyLimit={DAILY_LIMIT}
+        threshold={MODAL_THRESHOLD}
+        onClose={() => setShowLimitModal(false)}
+      />
     </div>
   );
 }
