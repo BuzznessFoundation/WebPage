@@ -32,7 +32,7 @@ const Contact = () => {
         setPosts(fetchedPosts);
       } catch (err) {
         setError('Error cargando las noticias');
-        console.error(err);
+        // Eliminado console.error para evitar logs en devtools
       } finally {
         setLoading(false);
       }

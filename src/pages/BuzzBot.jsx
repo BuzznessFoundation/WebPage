@@ -1,14 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { initSession, incrementPromptCount, DAILY_LIMIT, MODAL_THRESHOLD } from '../utils/PromptSession';
 import PromptLimitModal from '../components/PromptLimitModal';
+import { checkHealth, getStats, askQuestion, sendFeedback } from '../utils/Api';
+import Toast from '../components/Toast';
 
-const API_URL = 'https://TU_API_URL';
+const API_BASE = import.meta.env.VITE_API_URL
 
-// Config de test
-const DEV_MODE = true;
-const MOCK_ONLINE = true;
-
-// Offsets y dimensiones
 const NAVBAR_OFFSET = 88;
 const BOTTOMBAR_OFFSET = 56;
 const INPUT_BAR_H = 80;
@@ -26,46 +22,56 @@ export default function BuzzBot() {
   const [ratings, setRatings] = useState({});
   const [promptCount, setPromptCount] = useState(0);
   const [showLimitModal, setShowLimitModal] = useState(false);
+  const [toastMsg, setToastMsg] = useState(""); // Estado para el toast
+
   const chatEndRef = useRef(null);
 
-  const mockResponses = [
-    'Claro, aquí tienes un ejemplo rápido.',
-    'Puedo ayudarte con eso, ¿quieres más detalle?',
-    'No tengo datos suficientes en este momento, pero puedo investigar.',
-    '¡Perfecto! Esto debería ayudarte a avanzar.'
-  ];
-
+  // ⬇️ Verificar estado de la API
   useEffect(() => {
-    if (DEV_MODE) {
-      setApiStatus(MOCK_ONLINE ? 'online' : 'offline');
-      return;
-    }
-    fetch(`${API_URL}/health`)
-      .then(res => res.json())
-      .then(data => setApiStatus(data.status === 'ok' ? 'online' : 'offline'))
-      .catch(() => setApiStatus('offline'));
+    checkHealth().then(status => setApiStatus(status));
   }, []);
 
+  // ⬇️ Scroll automático al final del chat
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, showChat]);
 
-  // Inicializar sesión y contador diario
+  // ⬇️ Obtener stats iniciales del usuario
   useEffect(() => {
-    const s = initSession();
-    setPromptCount(s.count || 0);
-    if ((s.count || 0) >= DAILY_LIMIT) {
-      setActive(false);
-    }
-    if ((s.count || 0) >= MODAL_THRESHOLD) {
-      setShowLimitModal(true);
-    }
+    const fetchStats = async () => {
+      try {
+        const stats = await getStats();
+        if (stats) {
+          setPromptCount(stats.used);
+          setActive(stats.used < stats.limit);
+          setShowLimitModal(stats.show_form);
+        } else {
+          setToastMsg("La API no está disponible, intente más tarde.");
+        }
+      } catch {
+        setToastMsg("Error interno, refresque la página.");
+      }
+    };
+    fetchStats();
   }, []);
 
-  const handleRate = (index, value) => {
-    setRatings(r => ({ ...r, [index]: value ? 'like' : 'dislike' }));
+  // ⬇️ Manejar éxito del registro
+  const handleRegistrationSuccess = ({ stats }) => {
+    if (stats) {
+      setPromptCount(stats.used);
+      setActive(stats.used < stats.limit);
+    } else {
+      setActive(true);
+    }
+    setShowLimitModal(false);
   };
 
+  // ⬇️ Manejar error del registro  
+  const handleRegistrationError = () => {
+    setToastMsg("Error interno, intente más tarde.");
+  };
+
+  // ⬇️ Enviar mensaje
   const sendMessage = async () => {
     if (!input.trim() || !active) return;
     setLoading(true);
@@ -73,46 +79,58 @@ export default function BuzzBot() {
     setMessages(msgs => [...msgs, { role: 'user', content: input }]);
     if (!showChat) setShowChat(true);
 
-    // Usamos la función exportada para incrementar el contador
-    const result = incrementPromptCount();
-    if (!result.allowed) {
-      setPromptCount(result.session.count || 0);
-      setActive(false);
-      setShowLimitModal(true);
-      alert('Has alcanzado el límite diario de prompts.');
+    // Llamada al backend
+    let data;
+    try {
+      data = await askQuestion(input);
+    } catch {
+      setToastMsg("La API no está disponible, intente más tarde.");
+      setLoading(false);
       return;
     }
-    // actualizar contador local
-    setPromptCount(result.session.count || 0);
-    if ((result.session.count || 0) >= MODAL_THRESHOLD) {
-      setShowLimitModal(true);
-    }
-    if ((result.session.count || 0) >= DAILY_LIMIT) {
-      setActive(false);
+
+    // Si la respuesta es error, mostrar toast y NO agregar al chat
+    if (!data || !data.answer_text || data.answer_text === 'Error al conectar con la API.') {
+      setToastMsg("La API no está disponible, intente más tarde.");
+    } else {
+      setMessages(msgs => [
+        ...msgs,
+        { role: 'assistant', content: data.answer_text, question_id: data.id }
+      ]);
     }
 
+    // Actualizar estadísticas
     try {
-      if (DEV_MODE) {
-        await new Promise(r => setTimeout(r, 700 + Math.random() * 800));
-        const mock = mockResponses[Math.floor(Math.random() * mockResponses.length)];
-        setMessages(msgs => [...msgs, { role: 'assistant', content: mock }]);
+      const stats = await getStats();
+      if (stats) {
+        setPromptCount(stats.used);
+        setActive(stats.used < stats.limit);
+        setShowLimitModal(stats.show_form);
       } else {
-        const res = await fetch(`${API_URL}/query`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ query: input })
-        });
-        const data = await res.json();
-        setMessages(msgs => [
-          ...msgs,
-          { role: 'assistant', content: data.results?.[0]?.content || 'No encontré información.' }
-        ]);
+        setToastMsg("La API no está disponible, intente más tarde.");
       }
     } catch {
-      setMessages(msgs => [...msgs, { role: 'assistant', content: 'Error al conectar con la API.' }]);
+      setToastMsg("Error interno, refresque la página.");
     }
+
     setInput('');
     setLoading(false);
+  };
+
+  // ⬇️ Enviar feedback
+  const handleRate = async (index, value) => {
+    const msg = messages[index];
+    if (!msg.question_id) return;
+
+    setRatings(r => ({ ...r, [index]: value ? 'like' : 'dislike' }));
+    try {
+      const result = await sendFeedback(msg.question_id, value ? 'like' : 'dislike');
+      if (!result) {
+        setToastMsg("No se pudo enviar el feedback, intente más tarde.");
+      }
+    } catch {
+      setToastMsg("Error interno, refresque la página.");
+    }
   };
 
   const chatBoxHeight = `calc(100vh - ${NAVBAR_OFFSET + BOTTOMBAR_OFFSET + INPUT_BAR_H + INPUT_BOTTOM_GAP}px)`;
@@ -122,12 +140,12 @@ export default function BuzzBot() {
       className="relative min-h-screen bg-gradient-to-br from-yellow-100 to-green-50 px-4"
       style={{ paddingTop: NAVBAR_OFFSET, paddingBottom: BOTTOMBAR_OFFSET }}
     >
-      {/* Contenedor que respeta navbar y barra inferior */}
+      {/* Contenedor principal */}
       <div
         className={`${showChat ? '' : 'flex items-center'} w-full`}
         style={{ minHeight: `calc(100vh - ${NAVBAR_OFFSET + BOTTOMBAR_OFFSET}px)` }}
       >
-        {/* Vista inicial: barra centrada (60% ancho). Desaparece al iniciar chat */}
+        {/* Vista inicial */}
         {!showChat && (
           <div className="w-3/5 mx-auto animate-fadein">
             <div className="w-full flex items-center gap-2">
@@ -158,7 +176,7 @@ export default function BuzzBot() {
           </div>
         )}
 
-        {/* Chat visible: mensajes en box (60% ancho) con scroll oculto */}
+        {/* Chat visible */}
         {showChat && (
           <div className="w-3/5 mx-auto animate-slideup">
             <div
@@ -172,7 +190,7 @@ export default function BuzzBot() {
                 >
                   <div className="bg-white text-gray-900 px-4 py-3 rounded-xl shadow max-w-full break-words">
                     <div>{msg.content}</div>
-                    {msg.role === 'assistant' && (
+                    {msg.role === 'assistant' && msg.question_id && (
                       <div className="mt-2 flex gap-2 items-center">
                         <button
                           onClick={() => handleRate(i, true)}
@@ -196,7 +214,7 @@ export default function BuzzBot() {
           </div>
         )}
 
-        {/* Barra de entrada fija (60% ancho) cuando el chat está visible */}
+        {/* Barra de entrada fija */}
         {showChat && (
           <div
             className="fixed left-1/2 -translate-x-1/2 w-3/5"
@@ -231,12 +249,12 @@ export default function BuzzBot() {
         )}
       </div>
 
-      {/* Barra inferior fija: oscura y delgada */}
+      {/* Barra inferior */}
       <div className="fixed bottom-0 left-0 w-full bg-gray-900 border-t border-gray-800 py-2 px-6 flex justify-between items-center z-50">
         <span className="flex items-center gap-2 text-xs text-gray-300">
           <span className={`inline-block h-2 w-2 rounded-full ${apiStatus === 'online' ? 'bg-green-400' : 'bg-red-400'}`} />
           {apiStatus === 'online' ? 'API Online' : 'API Offline'}
-          <span className="ml-4 text-yellow-300">Prompts hoy: {promptCount}/{DAILY_LIMIT}</span>
+          <span className="ml-4 text-yellow-300">Prompts hoy: {promptCount}</span>
         </span>
         <div className="flex gap-5 items-center">
           <button
@@ -254,14 +272,16 @@ export default function BuzzBot() {
         </div>
       </div>
 
-      {/* Modal importado */}
+      {/* Modal límite de prompts con tu implementación mejorada */}
       <PromptLimitModal
         show={showLimitModal}
         promptCount={promptCount}
-        dailyLimit={DAILY_LIMIT}
-        threshold={MODAL_THRESHOLD}
-        onClose={() => setShowLimitModal(false)}
+        threshold={15}
+        onSuccess={handleRegistrationSuccess}
+        onError={handleRegistrationError}
       />
+
+      <Toast message={toastMsg} onClose={() => setToastMsg("")} />
     </div>
   );
 }

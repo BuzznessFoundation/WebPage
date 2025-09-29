@@ -5,7 +5,7 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';
-import BuzzBot from './pages/BuzzBot..jsx';
+import BuzzBot from './pages/BuzzBot.jsx';
 
 const App = () => {
   return (

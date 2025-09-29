@@ -1,0 +1,16 @@
+{
+  "name": "Buzzness",
+  "short_name": "Buzzness",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FDC500",
+  "theme_color": "#FDC500",
+  "description": "Somos un proyecto universitario que busca desarollar herramientas para las comunidades escolares basada en inteligencia artificial.",
+  "icons": [
+    {
+      "src": "/assets/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
