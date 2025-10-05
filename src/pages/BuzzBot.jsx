@@ -122,6 +122,21 @@ export default function BuzzBot() {
     // setShowLimitModal permanece true
   };
 
+  // Añadir este componente helper para renderizar HTML seguro
+  const FormattedMessage = ({ content, isFormatted }) => {
+    if (isFormatted && content.html) {
+      return (
+        <div 
+          className="formatted-content"
+          dangerouslySetInnerHTML={{ __html: content.html }}
+        />
+      );
+    }
+    
+    // Fallback a texto plano
+    return <div>{content.text || content}</div>;
+  };
+
   // ⬇️ Enviar mensaje
   const sendMessage = async () => {
     if (!input.trim() || !active || apiStatus !== 'online') return;
@@ -130,25 +145,17 @@ export default function BuzzBot() {
     setMessages(msgs => [...msgs, { role: 'user', content: input }]);
     if (!showChat) setShowChat(true);
 
-    // Llamada al backend
-    const response = await askQuestion(input);
+    // Llamada al backend con formato
+    const response = await askQuestion(input, "markdown"); // Pasar formato
     
-    // Debug: mostrar la respuesta en consola para verificar estructura
-    console.log('Response from backend:', response);
-
-    // Si hay toast, mostrarlo (puede ser warning o error)
-    if (response.toast) {
-      console.log('Setting toast:', response.toast);
-      setToast(response.toast);
-    }
-
     // Si la respuesta es exitosa y tiene answer_text
     if (response.success && response.data && response.data.answer_text) {
       setMessages(msgs => [
         ...msgs,
         { 
           role: 'assistant', 
-          content: response.data.answer_text, 
+          content: response.data.answer_text,
+          formatted_content: response.data.formatted_answer, // Nueva propiedad
           question_id: response.data.id 
         }
       ]);
@@ -286,7 +293,10 @@ export default function BuzzBot() {
                   className={`my-3 flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} animate-chatmsg`}
                 >
                   <div className="bg-white text-gray-900 px-4 py-3 rounded-xl shadow max-w-full break-words">
-                    <div>{msg.content}</div>
+                    <FormattedMessage 
+                      content={msg.formatted_content || msg.content} 
+                      isFormatted={!!msg.formatted_content}
+                    />
                     {msg.role === 'assistant' && msg.question_id && (
                       <div className="mt-2 flex gap-2 items-center">
                         <button

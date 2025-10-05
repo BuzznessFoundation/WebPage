@@ -31,17 +31,19 @@ export async function getStats() {
   }
 }
 
-export async function askQuestion(questionText) {
+export async function askQuestion(questionText, format = "markdown") {
   try {
     const res = await fetch(`${API_BASE}/query`, {
       method: 'POST',
       headers,
       credentials: 'include',
-      body: JSON.stringify({ question_text: questionText }),
+      body: JSON.stringify({ 
+        question_text: questionText,
+        format: format  // Añadir parámetro de formato
+      }),
     });
     return await res.json();
   } catch {
-    // Solo error de conexión/red
     return {
       success: false,
       toast: {
