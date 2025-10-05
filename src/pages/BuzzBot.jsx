@@ -3,12 +3,12 @@ import PromptLimitModal from '../components/PromptLimitModal';
 import { checkHealth, getStats, askQuestion, sendFeedback } from '../utils/Api';
 import Toast from '../components/Toast';
 
-const API_BASE = import.meta.env.VITE_API_URL
-
-const NAVBAR_OFFSET = 88;
-const BOTTOMBAR_OFFSET = 56;
-const INPUT_BAR_H = 80;
-const INPUT_BOTTOM_GAP = 12;
+// Configuración desde variables de entorno
+const NAVBAR_OFFSET = parseInt(import.meta.env.VITE_BUZZBOT_NAVBAR_OFFSET) || 88;
+const BOTTOMBAR_OFFSET = parseInt(import.meta.env.VITE_BUZZBOT_BOTTOMBAR_OFFSET) || 56;
+const INPUT_BAR_H = parseInt(import.meta.env.VITE_BUZZBOT_INPUT_BAR_HEIGHT) || 80;
+const INPUT_BOTTOM_GAP = parseInt(import.meta.env.VITE_BUZZBOT_INPUT_BOTTOM_GAP) || 12;
+const PROMPT_THRESHOLD = parseInt(import.meta.env.VITE_BUZZBOT_PROMPT_THRESHOLD) || 15;
 
 export default function BuzzBot() {
   const [messages, setMessages] = useState([
@@ -22,7 +22,7 @@ export default function BuzzBot() {
   const [ratings, setRatings] = useState({});
   const [promptCount, setPromptCount] = useState(0);
   const [showLimitModal, setShowLimitModal] = useState(false);
-  const [toastMsg, setToastMsg] = useState(""); // Estado para el toast
+  const [toast, setToast] = useState(null);
 
   const chatEndRef = useRef(null);
 
@@ -39,78 +39,161 @@ export default function BuzzBot() {
   // ⬇️ Obtener stats iniciales del usuario
   useEffect(() => {
     const fetchStats = async () => {
-      try {
-        const stats = await getStats();
-        if (stats) {
-          setPromptCount(stats.used);
-          setActive(stats.used < stats.limit);
-          setShowLimitModal(stats.show_form);
-        } else {
-          setToastMsg("La API no está disponible, intente más tarde.");
-        }
-      } catch {
-        setToastMsg("Error interno, refresque la página.");
+      const response = await getStats();
+      
+      // Si hay toast (error o success), mostrarlo
+      if (response.toast) {
+        setToast(response.toast);
+      }
+      
+      // Si tiene data válida (nueva estructura), usarla
+      if (response.success && response.data) {
+        setPromptCount(response.data.used || 0);
+        setActive(response.data.used < response.data.limit);
+        setShowLimitModal(response.data.show_form || false);
+      }
+      // Si es la estructura antigua (compatibilidad)
+      else if (response.used !== undefined) {
+        setPromptCount(response.used);
+        setActive(response.used < response.limit);
+        setShowLimitModal(response.show_form || false);
       }
     };
     fetchStats();
   }, []);
 
   // ⬇️ Manejar éxito del registro
-  const handleRegistrationSuccess = ({ stats }) => {
-    if (stats) {
-      setPromptCount(stats.used);
-      setActive(stats.used < stats.limit);
-    } else {
-      setActive(true);
+  const handleRegistrationSuccess = async (response) => {
+    console.log('Registration success:', response);
+    
+    // Mostrar toast de éxito si viene del backend
+    if (response.toast) {
+      setToast(response.toast);
     }
+    
+    // Actualizar estado local si hay stats en la respuesta
+    if (response.success && response.data && response.data.stats) {
+      setPromptCount(response.data.stats.used);
+      setActive(response.data.stats.used < response.data.stats.limit);
+    }
+    // Estructura antigua (compatibilidad)
+    else if (response.stats) {
+      setPromptCount(response.stats.used);
+      setActive(response.stats.used < response.stats.limit);
+    }
+    else {
+      
+      // ⚠️ Si no hay stats claros, obtenerlos del servidor
+      console.log('No stats in registration response, fetching fresh stats...');
+      const freshStats = await getStats();
+      
+      if (freshStats.success && freshStats.data) {
+        setPromptCount(freshStats.data.used || 0);
+        setActive(freshStats.data.used < freshStats.data.limit);
+      } else if (freshStats.used !== undefined) {
+        setPromptCount(freshStats.used);
+        setActive(freshStats.used < freshStats.limit);
+      } else {
+        // Solo como último recurso
+        setPromptCount(0);
+        setActive(true);
+      }
+    }
+    
     setShowLimitModal(false);
   };
 
   // ⬇️ Manejar error del registro  
-  const handleRegistrationError = () => {
-    setToastMsg("Error interno, intente más tarde.");
+  const handleRegistrationError = (error) => {
+    console.log('Registration error:', error);
+    
+    if (error.toast) {
+      setToast(error.toast);
+    } else {
+      setToast({
+        type: 'error',
+        title: 'Error en el registro',
+        message: 'No se pudo completar el registro. Intente nuevamente.'
+      });
+    }
+    
+    // ⚠️ IMPORTANTE: NO cerrar el modal en caso de error
+    // El usuario debe poder intentar de nuevo
+    // setShowLimitModal permanece true
   };
 
   // ⬇️ Enviar mensaje
   const sendMessage = async () => {
-    if (!input.trim() || !active) return;
+    if (!input.trim() || !active || apiStatus !== 'online') return;
     setLoading(true);
 
     setMessages(msgs => [...msgs, { role: 'user', content: input }]);
     if (!showChat) setShowChat(true);
 
     // Llamada al backend
-    let data;
-    try {
-      data = await askQuestion(input);
-    } catch {
-      setToastMsg("La API no está disponible, intente más tarde.");
-      setLoading(false);
-      return;
+    const response = await askQuestion(input);
+    
+    // Debug: mostrar la respuesta en consola para verificar estructura
+    console.log('Response from backend:', response);
+
+    // Si hay toast, mostrarlo (puede ser warning o error)
+    if (response.toast) {
+      console.log('Setting toast:', response.toast);
+      setToast(response.toast);
     }
 
-    // Si la respuesta es error, mostrar toast y NO agregar al chat
-    if (!data || !data.answer_text || data.answer_text === 'Error al conectar con la API.') {
-      setToastMsg("La API no está disponible, intente más tarde.");
-    } else {
+    // Si la respuesta es exitosa y tiene answer_text
+    if (response.success && response.data && response.data.answer_text) {
       setMessages(msgs => [
         ...msgs,
-        { role: 'assistant', content: data.answer_text, question_id: data.id }
+        { 
+          role: 'assistant', 
+          content: response.data.answer_text, 
+          question_id: response.data.id 
+        }
+      ]);
+    }
+    // Si es una respuesta de límite alcanzado (warning), no agregar mensaje al chat
+    // porque answer_text será null pero es un warning válido
+    else if (response.success && response.toast && response.toast.type === 'warning') {
+      // Solo mostrar toast, no agregar mensaje al chat
+      console.log('Límite alcanzado, solo mostrando toast');
+    }
+    // Estructura antigua (compatibilidad) - solo si no hay toast de error
+    else if (response.answer_text && !response.toast) {
+      setMessages(msgs => [
+        ...msgs,
+        { 
+          role: 'assistant', 
+          content: response.answer_text, 
+          question_id: response.id 
+        }
       ]);
     }
 
-    // Actualizar estadísticas
-    try {
-      const stats = await getStats();
-      if (stats) {
-        setPromptCount(stats.used);
-        setActive(stats.used < stats.limit);
-        setShowLimitModal(stats.show_form);
-      } else {
-        setToastMsg("La API no está disponible, intente más tarde.");
+    // Actualizar estadísticas solo si la respuesta incluye stats
+    if (response.data && response.data.stats) {
+      setPromptCount(response.data.stats.used);
+      setActive(response.data.stats.used < response.data.stats.limit);
+      setShowLimitModal(response.data.stats.show_form || false);
+    } else {
+      // Si no hay stats en la respuesta, obtenerlas por separado
+      const statsResponse = await getStats();
+      if (statsResponse.toast && !response.toast) { // Solo mostrar si no hay toast previo
+        console.log('Stats toast:', statsResponse.toast);
+        setToast(statsResponse.toast);
       }
-    } catch {
-      setToastMsg("Error interno, refresque la página.");
+      if (statsResponse.success && statsResponse.data) {
+        setPromptCount(statsResponse.data.used);
+        setActive(statsResponse.data.used < statsResponse.data.limit);
+        setShowLimitModal(statsResponse.data.show_form);
+      }
+      // Estructura antigua (compatibilidad)
+      else if (statsResponse.used !== undefined) {
+        setPromptCount(statsResponse.used);
+        setActive(statsResponse.used < statsResponse.limit);
+        setShowLimitModal(statsResponse.show_form);
+      }
     }
 
     setInput('');
@@ -122,16 +205,28 @@ export default function BuzzBot() {
     const msg = messages[index];
     if (!msg.question_id) return;
 
+    // Actualizar UI inmediatamente
     setRatings(r => ({ ...r, [index]: value ? 'like' : 'dislike' }));
-    try {
-      const result = await sendFeedback(msg.question_id, value ? 'like' : 'dislike');
-      if (!result) {
-        setToastMsg("No se pudo enviar el feedback, intente más tarde.");
-      }
-    } catch {
-      setToastMsg("Error interno, refresque la página.");
+    
+    // Enviar feedback al backend
+    const response = await sendFeedback(msg.question_id, value ? 'like' : 'dislike');
+    
+    // Mostrar toast de confirmación
+    if (response.toast) {
+      console.log('Feedback toast:', response.toast);
+      setToast(response.toast);
+    }
+    
+    // Si hay error, revertir el rating visual
+    if (!response.success) {
+      setRatings(r => ({ ...r, [index]: undefined }));
     }
   };
+
+  // Debug para el estado del toast
+  useEffect(() => {
+    console.log('Toast state changed:', toast);
+  }, [toast]);
 
   const chatBoxHeight = `calc(100vh - ${NAVBAR_OFFSET + BOTTOMBAR_OFFSET + INPUT_BAR_H + INPUT_BOTTOM_GAP}px)`;
 
@@ -150,6 +245,8 @@ export default function BuzzBot() {
           <div className="w-3/5 mx-auto animate-fadein">
             <div className="w-full flex items-center gap-2">
               <input
+                id="initial-input"
+                name="initial-input"
                 className="flex-1 border-2 border-primary rounded-full px-8 py-4 text-lg focus:outline-none focus:ring-2 focus:ring-primary transition-all"
                 value={input}
                 onChange={e => setInput(e.target.value)}
@@ -222,6 +319,8 @@ export default function BuzzBot() {
           >
             <div className="w-full flex items-center gap-2">
               <input
+                id="chat-input"
+                name="chat-input"
                 className="flex-1 border-2 border-primary rounded-full px-8 py-4 text-lg focus:outline-none focus:ring-2 focus:ring-primary transition-all"
                 value={input}
                 onChange={e => setInput(e.target.value)}
@@ -272,16 +371,15 @@ export default function BuzzBot() {
         </div>
       </div>
 
-      {/* Modal límite de prompts con tu implementación mejorada */}
-      <PromptLimitModal
+      {/* Modal límite de prompts */}
+        <PromptLimitModal
         show={showLimitModal}
         promptCount={promptCount}
-        threshold={15}
+        threshold={PROMPT_THRESHOLD}
         onSuccess={handleRegistrationSuccess}
         onError={handleRegistrationError}
-      />
-
-      <Toast message={toastMsg} onClose={() => setToastMsg("")} />
+      />      {/* Toast - DEBE estar al final, fuera de otros contenedores */}
+      <Toast toast={toast} onClose={() => setToast(null)} />
     </div>
   );
 }

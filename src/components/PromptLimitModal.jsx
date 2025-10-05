@@ -18,14 +18,18 @@ export default function SoftRegistrationModal({
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Configurar tipos de persona desde variables de entorno
+  const personTypes = import.meta.env.VITE_MODAL_PERSON_TYPES?.split(',') || 
+    ['profesor', 'directora', 'utp', 'convivencia', 'inspectoria', 'slep_daem'];
+  const personLabels = import.meta.env.VITE_MODAL_PERSON_LABELS?.split(',') || 
+    ['Profesor', 'Directora', 'UTP', 'Convivencia', 'Inspectoría', 'SLEP/DAEM'];
+
   const tiposPersona = [
     { value: '', label: 'Selecciona tu rol' },
-    { value: 'profesor', label: 'Profesor' },
-    { value: 'directora', label: 'Directora' },
-    { value: 'utp', label: 'UTP' },
-    { value: 'convivencia', label: 'Convivencia' },
-    { value: 'inspectoria', label: 'Inspectoría' },
-    { value: 'slep_daem', label: 'SLEP/DAEM' }
+    ...personTypes.map((type, index) => ({
+      value: type.trim(),
+      label: personLabels[index]?.trim() || type.trim()
+    }))
   ];
 
   const handleInputChange = (e) => {
@@ -79,16 +83,29 @@ export default function SoftRegistrationModal({
     
     try {
       // 1. Enviar datos al backend
-      await registerUser(formData);
+      const registerResponse = await registerUser(formData);
       
-      // 2. Obtener stats actualizados
-      const updatedStats = await getStats();
+      console.log('Register response:', registerResponse);
+      
+      // Si el registro falló
+      if (!registerResponse.success) {
+        onError(registerResponse);
+        return;
+      }
+      
+      // 2. Solo obtener stats actualizados si no vienen en la respuesta de registro
+      let finalResponse = registerResponse;
+      if (!registerResponse.stats && !(registerResponse.data && registerResponse.data.stats)) {
+        console.log('Getting fresh stats after registration...');
+        const updatedStats = await getStats();
+        finalResponse = {
+          ...registerResponse,
+          stats: updatedStats.success ? updatedStats.data : updatedStats
+        };
+      }
       
       // 3. Notificar éxito al componente padre
-      onSuccess({
-        stats: updatedStats,
-        message: 'Usuario registrado exitosamente'
-      });
+      onSuccess(finalResponse);
       
       // 4. Limpiar formulario
       setFormData({
@@ -99,10 +116,14 @@ export default function SoftRegistrationModal({
       });
       
     } catch (error) {
-      // Notificar error al componente padre
+      console.error('Error en handleSubmit:', error);
       onError({
-        error,
-        message: error.message || 'Error al registrar usuario'
+        success: false,
+        toast: {
+          type: 'error',
+          title: 'Error inesperado',
+          message: 'Ocurrió un error inesperado durante el registro'
+        }
       });
     } finally {
       setIsSubmitting(false);

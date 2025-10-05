@@ -5,9 +5,10 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Configuración del sitio
-const SITE_URL = 'https://buzzness.cl'; // Cambia por tu dominio
-const BUILD_DIR = path.resolve(__dirname, '../../dist');
+// Configuración del sitio desde variables de entorno
+const SITE_URL = process.env.VITE_SITE_URL || 'https://buzzness.cl';
+const BUILD_DIR_NAME = process.env.VITE_SITEMAP_BUILD_DIR || 'dist';
+const BUILD_DIR = path.resolve(__dirname, '../../' + BUILD_DIR_NAME);
 const SITEMAP_PATH = path.join(BUILD_DIR, 'sitemap.xml');
 
 // Rutas estáticas de tu aplicación React

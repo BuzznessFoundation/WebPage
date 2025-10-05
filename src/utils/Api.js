@@ -1,11 +1,9 @@
-const API_BASE = import.meta.env.VITE_API_URL?.replace(/\/$/, ''); // Quitar barra final si existe
+const API_BASE = import.meta.env.VITE_API_URL?.replace(/\/$/, '');
 
-// Encabezados comunes
 const headers = {
   'Content-Type': 'application/json',
 };
 
-// Check health de la API
 export async function checkHealth() {
   try {
     const res = await fetch(`${API_BASE}/health`);
@@ -16,17 +14,23 @@ export async function checkHealth() {
   }
 }
 
-// Obtener estadísticas del usuario (prompts usados, límite, formulario)
 export async function getStats() {
   try {
     const res = await fetch(`${API_BASE}/stats/`, { credentials: 'include' });
     return await res.json();
   } catch {
-    return null; // No log, no detalles
+    // Solo error de conexión/red
+    return {
+      success: false,
+      toast: {
+        type: 'error',
+        title: 'Conexión',
+        message: 'La API no está disponible, intente más tarde.'
+      }
+    };
   }
 }
 
-// Enviar una pregunta al backend y obtener respuesta
 export async function askQuestion(questionText) {
   try {
     const res = await fetch(`${API_BASE}/query`, {
@@ -35,14 +39,20 @@ export async function askQuestion(questionText) {
       credentials: 'include',
       body: JSON.stringify({ question_text: questionText }),
     });
-    const data = await res.json();
-    return data;
+    return await res.json();
   } catch {
-    return { answer_text: 'Error al conectar con la API.' };
+    // Solo error de conexión/red
+    return {
+      success: false,
+      toast: {
+        type: 'error',
+        title: 'Conexión',
+        message: 'La API no está disponible, intente más tarde.'
+      }
+    };
   }
 }
 
-// Registrar usuario del Modal de 15 prompts
 export async function registerUser(formData) {
   try {
     const res = await fetch(`${API_BASE}/register`, {
@@ -51,32 +61,51 @@ export async function registerUser(formData) {
       credentials: 'include',
       body: JSON.stringify(formData),
     });
-    if (!res.ok) {
-      throw new Error("Error interno");
-    }
-    const data = await res.json();
-    return data;
-  } catch {
-    throw new Error("Error interno");
-  }
-}
-
-// Enviar feedback (like/dislike) para una respuesta
-export async function sendFeedback(questionId, feedback) {
-  try {
-    const res = await fetch(`${API_BASE}/feedback/${questionId}`, {
-      method: 'POST',
-      headers,
-      credentials: 'include',
-      body: JSON.stringify({ feedback }),
-    });
     return await res.json();
   } catch {
-    return null;
+    // Solo error de conexión/red
+    return {
+      success: false,
+      toast: {
+        type: 'error',
+        title: 'Conexión',
+        message: 'La API no está disponible, intente más tarde.'
+      }
+    };
   }
 }
 
-// Función para reiniciar sesión local (funcion para devs, si lees esto, usalo!)
+export async function sendFeedback(questionId, feedback) {
+  try {
+    const params = new URLSearchParams();
+    params.append('feedback', feedback);
+    
+    const res = await fetch(`${API_BASE}/feedback/${questionId}`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: params,
+    });
+    
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}`);
+    }
+    
+    return await res.json();
+  } catch {
+    return {
+      success: false,
+      toast: {
+        type: 'error',
+        title: 'Conexión',
+        message: 'No se pudo enviar el feedback, intente más tarde.'
+      }
+    };
+  }
+}
+
 export function resetSession() {
   document.cookie = 'buzzgate_user=; Max-Age=0; path=/;';
 }
