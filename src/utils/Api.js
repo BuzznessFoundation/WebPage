@@ -6,7 +6,7 @@ const headers = {
 
 export async function checkHealth() {
   try {
-    const res = await fetch(`${API_BASE}/health`);
+    const res = await fetch(`${API_BASE}/health/`); // ✅ Añadir /
     const data = await res.json();
     return data.status === 'ok' ? 'online' : 'offline';
   } catch {
@@ -33,7 +33,7 @@ export async function getStats() {
 
 export async function askQuestion(questionText, format = "markdown") {
   try {
-    const res = await fetch(`${API_BASE}/query`, {
+    const res = await fetch(`${API_BASE}/query/`, { // ✅ Añadir /
       method: 'POST',
       headers,
       credentials: 'include',
@@ -57,7 +57,7 @@ export async function askQuestion(questionText, format = "markdown") {
 
 export async function registerUser(formData) {
   try {
-    const res = await fetch(`${API_BASE}/register`, {
+    const res = await fetch(`${API_BASE}/register/`, { // ✅ Añadir /
       method: 'POST',
       headers,
       credentials: 'include',
@@ -82,7 +82,7 @@ export async function sendFeedback(questionId, feedback) {
     const params = new URLSearchParams();
     params.append('feedback', feedback);
     
-    const res = await fetch(`${API_BASE}/feedback/${questionId}`, {
+    const res = await fetch(`${API_BASE}/feedback/${questionId}/`, { // ✅ Añadir /
       method: 'POST',
       credentials: 'include',
       headers: {
