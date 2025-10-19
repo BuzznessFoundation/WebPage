@@ -131,10 +131,14 @@ const Home = () => {
               </div>
             </div>
 
-            {/* Columna con placeholder */}
+            {/* Columna derecha: Imagen HomeBux */}
             <div className="flex justify-center">
-              <div className="w-full h-64 md:h-96 bg-white/10 rounded-2xl flex items-center justify-center text-white/70 border border-white/20">
-                📷 Aquí deberia poner una wea pero no se bien cual
+              <div className="w-full h-72 md:h-[28rem] flex items-center justify-center">
+                <img 
+                  src="/assets/images/HomeBux.png" 
+                  alt="BuzzBot - Asistente Virtual Educativo" 
+                  className="h-full w-full object-cover"
+                />
               </div>
             </div>
           </div>

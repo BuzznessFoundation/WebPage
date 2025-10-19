@@ -366,18 +366,18 @@ export default function BuzzBot() {
           <span className="ml-4 text-yellow-300">Prompts hoy: {promptCount}</span>
         </span>
         <div className="flex gap-5 items-center">
-          <button
-            className="text-yellow-300 underline text-xs"
-            onClick={() => alert('Explora cómo opera: busca en los documentos procesados y usa prompts claros.')}
+          <a
+            href="/documentation"
+            className="text-yellow-300 hover:text-yellow-200 underline text-xs transition-colors duration-200"
           >
             Explora cómo opera
-          </button>
-          <button
-            className="text-yellow-300 underline text-xs"
-            onClick={() => alert('Consulta las condiciones: aviso legal y política de privacidad.')}
+          </a>
+          <a
+            href="/terms"
+            className="text-yellow-300 hover:text-yellow-200 underline text-xs transition-colors duration-200"
           >
             Consulta las condiciones
-          </button>
+          </a>
         </div>
       </div>
 

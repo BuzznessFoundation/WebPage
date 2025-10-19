@@ -6,6 +6,8 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import BuzzBot from './pages/BuzzBot.jsx';
+import Documentation from './pages/Documentation.jsx';
+import Terms from './pages/Terms.jsx';
 
 const App = () => {
   return (
@@ -16,6 +18,8 @@ const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/buzzbot" element={<BuzzBot />} />
+        <Route path="/documentation" element={<Documentation />} />
+        <Route path="/terms" element={<Terms />} />
       </Routes>
     </div>
   );

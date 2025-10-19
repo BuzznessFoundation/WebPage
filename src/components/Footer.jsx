@@ -23,7 +23,7 @@ export default function Footer() {
     {
       title: "Recursos",
       links: [
-        { name: "Documentación", href: "/construction" },
+        { name: "Documentación", href: "/documentation" },
         { name: "Tutoriales", href: "/construction" },
         { name: "API", href: "/construction" },
       ],
@@ -32,7 +32,7 @@ export default function Footer() {
       title: "Legal",
       links: [
         { name: "Privacidad", href: "/construction" },
-        { name: "Términos", href: "/construction" },
+        { name: "Términos", href: "/terms" },
         { name: "Cookies", href: "/construction" },
       ],
     },

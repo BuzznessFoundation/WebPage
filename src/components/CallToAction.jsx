@@ -21,12 +21,12 @@ export default function CallToActionSection() {
               Descubre cómo buzzbot puede ayudarte a encontrar la información que necesitas de manera rápida y eficiente. Ahora, con solo un mensaje, puedes acceder a los protocolos de convivencia y otros documentos importantes de tu institución educativa.
             </p>
             <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-              <Link to="/buzzbot" className="group bg-yellow-400 text-white px-10 py-5 rounded-2xl font-bold text-lg flex items-center justify-center space-x-3 shadow-2xl hover:scale-105 transition-all duration-300">
-                <span>Explora BuzzBot</span>
+              <Link to="/documentation" className="group bg-yellow-400 text-white px-10 py-5 rounded-2xl font-bold text-lg flex items-center justify-center space-x-3 shadow-2xl hover:scale-105 transition-all duration-300">
+                <span>Explora como opera</span>
                 <ArrowRight className="h-6 w-6 group-hover:translate-x-1 transition-transform" />
               </Link>
-              <Link to="/documentation" className="bg-white/50 border border-white/60 text-white px-10 py-5 rounded-2xl font-bold text-lg hover:bg-white/20 transition-all duration-300">
-                ¿Como funciona buzzbot?
+              <Link to="/terms" className="bg-white/50 border border-white/60 text-white px-10 py-5 rounded-2xl font-bold text-lg hover:bg-white/20 transition-all duration-300">
+                Consulta las condiciones
               </Link>
             </div>
           </div>
