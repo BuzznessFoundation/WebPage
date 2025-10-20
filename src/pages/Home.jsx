@@ -110,29 +110,29 @@ const Home = () => {
         <div className="absolute inset-0" style={bgStyle}></div>
 
         {/* Contenido */}
-        <div className="relative z-10 flex items-center justify-center min-h-screen px-6 md:px-20">
+        <div className="relative z-10 flex items-center justify-center min-h-screen px-6 md:px-20 pt-20 md:pt-0">
           <div className="grid md:grid-cols-2 gap-12 items-center max-w-7xl mx-auto w-full">
 
             {/* Columna izquierda */}
             <div>
-              <h1 className="text-4xl md:text-6xl font-extrabold text-white drop-shadow-lg mb-6 leading-tight">
+              <h1 className="text-3xl md:text-4xl lg:text-6xl font-extrabold text-white drop-shadow-lg mb-6 leading-tight">
                 Todas las leyes, protocolos y oficios<span className="text-primary"> en un solo lugar</span>
               </h1>
-              <p className="text-lg md:text-xl text-white/90 mb-8 max-w-xl">
+              <p className="text-base md:text-lg lg:text-xl text-white/90 mb-8 max-w-xl">
                 BuzzBot es un asistente virtual que te ayuda a encontrar rápidamente la información que necesitas en tu institución educativa. Con solo un mensaje, accede a los protocolos de convivencia y otros documentos importantes.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <a href="/buzzbot" className="px-7 py-4 bg-primary text-gray-900 font-semibold rounded-xl shadow-lg hover:scale-105 transition-transform duration-300">
+                <a href="/buzzbot" className="px-6 md:px-7 py-3 md:py-4 bg-primary text-gray-900 font-semibold rounded-xl shadow-lg hover:scale-105 transition-transform duration-300 text-center">
                   Probar BuzzBot
                 </a>
-                <a href="/about" className="px-7 py-4 bg-white/20 text-white font-semibold rounded-xl shadow-lg border border-white/20 hover:bg-white/30 transition-colors duration-300">
+                <a href="/about" className="px-6 md:px-7 py-3 md:py-4 bg-white/20 text-white font-semibold rounded-xl shadow-lg border border-white/20 hover:bg-white/30 transition-colors duration-300 text-center">
                   Conoce sobre nosotros
                 </a>
               </div>
             </div>
 
             {/* Columna derecha: Imagen HomeBux */}
-            <div className="flex justify-center">
+            <div className="flex justify-center md:block hidden">
               <div className="w-full h-72 md:h-[28rem] flex items-center justify-center">
                 <img 
                   src="/assets/images/HomeBux.png" 
@@ -146,16 +146,16 @@ const Home = () => {
       </section>
 
       {/* Caracteristicas del producto */}
-      <section className="px-24 py-24 bg-gradient-to-b from-gray-50 to-white">
+      <section className="px-6 md:px-12 lg:px-24 py-16 md:py-24 bg-gradient-to-b from-gray-50 to-white">
         <div className="container mx-auto px-6">
 
           {/* Titulo de la seccion */}
-          <div className="text-center max-w-4xl mx-auto mb-20">
-            <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-8">
+          <div className="text-center max-w-4xl mx-auto mb-16 md:mb-20">
+            <h2 className="text-3xl md:text-4xl lg:text-6xl font-bold text-gray-900 mb-6 md:mb-8">
               Te presentamos nuestro primer proyecto...
               <span className="bg-gradient-to-r from-green-500 to-yellow-200 bg-clip-text text-transparent"> BuzzBot</span>
             </h2>
-            <p className="text-xl text-gray-600 leading-relaxed">
+            <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
               Combinamos inteligencia artificial y bases de datos ministeriales para ayudarte con la gestión educativa, 
               no sabes como proceder ante un protocolo?, necesitas desarollar un PME?, sabes como postular a ADECO? 
               BuzzBot te ayudará a resolver todas tus dudas.
@@ -163,14 +163,14 @@ const Home = () => {
           </div>
 
           {/* Lista de caracteristicas */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
             {features.map((feature, index) => (
-              <div key={index} className="group bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100">
-                <div className={`bg-gradient-to-r ${feature.gradient} p-4 inline-flex rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                  <feature.icon className="h-8 w-8 text-white" />
+              <div key={index} className="group bg-white rounded-3xl p-6 md:p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100">
+                <div className={`bg-gradient-to-r ${feature.gradient} p-3 md:p-4 inline-flex rounded-2xl mb-4 md:mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                  <feature.icon className="h-6 w-6 md:h-8 md:w-8 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">{feature.title}</h3>
-                <p className="text-gray-600 text-lg leading-relaxed">{feature.description}</p>
+                <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3 md:mb-4">{feature.title}</h3>
+                <p className="text-gray-600 text-base md:text-lg leading-relaxed">{feature.description}</p>
               </div>
             ))}
           </div>
@@ -178,32 +178,32 @@ const Home = () => {
       </section>
 
       {/* Seccion de modos */}
-      <section className="py-24 bg-gradient-to-br bg-gray-900">
+      <section className="py-16 md:py-24 bg-gradient-to-br bg-gray-900">
         <div className="container mx-auto px-6">
 
           {/* Titulo de la seccion */}
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-300 mb-6">
+          <div className="text-center mb-12 md:mb-16">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-300 mb-4 md:mb-6">
               No sabes en que te podemos ayudar?
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
               Te presentamos los diferentes modos de BuzzBot con ejemplos de como puede ayudarte en tu institución educativa.
             </p>
           </div>
 
           {/* Lista de modos */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
             {modes.map((mode, index) => (
-              <div key={index} className="bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-700">
+              <div key={index} className="bg-gray-800 rounded-2xl p-6 md:p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-700">
                 <div className="flex flex-col h-full">
                   <div className="space-y-4 flex-1">
-                    <h3 className="text-2xl font-bold text-gray-300">{mode.title}</h3>
-                    <p className="text-gray-400">{mode.description}</p>
+                    <h3 className="text-xl md:text-2xl font-bold text-gray-300">{mode.title}</h3>
+                    <p className="text-gray-400 text-sm md:text-base">{mode.description}</p>
                   </div>
 
                   <div className="mt-auto space-y-4">
                     {/* Botón para expandir y ver ejemplos */}
-                    <button onClick={() => setExpandedMode(expandedMode === index ? null : index)} className="mt-6 px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-colors duration-300 w-full text-left">
+                    <button onClick={() => setExpandedMode(expandedMode === index ? null : index)} className="mt-6 px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-colors duration-300 w-full text-left text-sm md:text-base">
                       {expandedMode === index ? 'Ocultar ejemplos' : 'Ver ejemplos'}
                     </button>
 
@@ -211,8 +211,8 @@ const Home = () => {
                     {expandedMode === index && (
                       <div className="mt-4 space-y-2">
                         {mode.examples.map((example, idx) => (
-                          <div key={idx} className="p-4 bg-gray-700 rounded-lg border-l-4 border-primary">
-                            <p className="text-gray-300">{example}</p>
+                          <div key={idx} className="p-3 md:p-4 bg-gray-700 rounded-lg border-l-4 border-primary">
+                            <p className="text-gray-300 text-sm md:text-base">{example}</p>
                           </div>
                         ))}
                       </div>
@@ -224,7 +224,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <div className="m-32">
+      <div className="m-8 md:m-16 lg:m-32">
         <CallToAction/>
       </div>
       <Footer />

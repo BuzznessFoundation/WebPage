@@ -11,9 +11,7 @@ const INPUT_BOTTOM_GAP = parseInt(import.meta.env.VITE_BUZZBOT_INPUT_BOTTOM_GAP)
 const PROMPT_THRESHOLD = parseInt(import.meta.env.VITE_BUZZBOT_PROMPT_THRESHOLD) || 15;
 
 export default function BuzzBot() {
-  const [messages, setMessages] = useState([
-    { role: 'system', content: '¡Hola! Soy BuzzBot. ¿En qué puedo ayudarte hoy?' }
-  ]);
+  const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [apiStatus, setApiStatus] = useState('checking');
@@ -249,40 +247,32 @@ export default function BuzzBot() {
       >
         {/* Vista inicial */}
         {!showChat && (
-          <div className="w-3/5 mx-auto animate-fadein">
-            <div className="w-full flex items-center gap-2">
+          <div className="w-full max-w-4xl mx-auto px-4 animate-fadein">
+            <div className="w-full">
               <input
                 id="initial-input"
                 name="initial-input"
-                className="flex-1 border-2 border-primary rounded-full px-8 py-4 text-lg focus:outline-none focus:ring-2 focus:ring-primary transition-all"
+                className="w-full border-2 border-primary rounded-full px-6 py-4 text-base md:text-lg focus:outline-none focus:ring-2 focus:ring-primary transition-all"
                 value={input}
                 onChange={e => setInput(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && sendMessage()}
                 disabled={loading || apiStatus !== 'online' || !active}
                 placeholder={
-                  !active ? 'Chat desactivado...' : apiStatus !== 'online' ? 'API no disponible...' : '¿Qué quieres preguntar?'
+                  !active ? 'Chat desactivado...' : apiStatus !== 'online' ? 'API no disponible...' : '¿Qué quieres preguntar? (Presiona Enter para enviar)'
                 }
                 autoFocus
               />
-              <button
-                className={`px-7 py-4 rounded-full font-bold shadow transition-all text-lg ${
-                  active && apiStatus === 'online' ? 'bg-primary text-white hover:scale-105' : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                }`}
-                onClick={sendMessage}
-                disabled={loading || apiStatus !== 'online' || !active}
-              >
-                {loading ? 'Enviando...' : 'Enviar'}
-              </button>
             </div>
-            <div className="mt-3 text-sm text-gray-700">
+            <div className="mt-3 text-sm text-gray-700 text-center">
               <span className="italic">BuzzBot puede cometer errores.</span>
+              {loading && <span className="block mt-1 text-primary font-medium">Enviando...</span>}
             </div>
           </div>
         )}
 
         {/* Chat visible */}
         {showChat && (
-          <div className="w-3/5 mx-auto animate-slideup">
+          <div className="w-full max-w-4xl mx-auto px-4 animate-slideup">
             <div
               className="overflow-y-auto no-scrollbar pr-1"
               style={{ height: chatBoxHeight }}
@@ -292,7 +282,7 @@ export default function BuzzBot() {
                   key={i}
                   className={`my-3 flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} animate-chatmsg`}
                 >
-                  <div className="bg-white text-gray-900 px-4 py-3 rounded-xl shadow max-w-full break-words">
+                  <div className="bg-white text-gray-900 px-3 md:px-4 py-3 rounded-xl shadow max-w-[90%] md:max-w-full break-words">
                     <FormattedMessage 
                       content={msg.formatted_content || msg.content} 
                       isFormatted={!!msg.formatted_content}
@@ -324,48 +314,40 @@ export default function BuzzBot() {
         {/* Barra de entrada fija */}
         {showChat && (
           <div
-            className="fixed left-1/2 -translate-x-1/2 w-3/5"
+            className="fixed left-1/2 -translate-x-1/2 w-full max-w-4xl px-4"
             style={{ bottom: BOTTOMBAR_OFFSET + INPUT_BOTTOM_GAP, height: INPUT_BAR_H }}
           >
-            <div className="w-full flex items-center gap-2">
+            <div className="w-full">
               <input
                 id="chat-input"
                 name="chat-input"
-                className="flex-1 border-2 border-primary rounded-full px-8 py-4 text-lg focus:outline-none focus:ring-2 focus:ring-primary transition-all"
+                className="w-full border-2 border-primary rounded-full px-6 py-4 text-base md:text-lg focus:outline-none focus:ring-2 focus:ring-primary transition-all"
                 value={input}
                 onChange={e => setInput(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && sendMessage()}
                 disabled={loading || apiStatus !== 'online' || !active}
                 placeholder={
-                  !active ? 'Chat desactivado...' : apiStatus !== 'online' ? 'API no disponible...' : 'Escribe tu pregunta...'
+                  !active ? 'Chat desactivado...' : apiStatus !== 'online' ? 'API no disponible...' : 'Escribe tu pregunta... (Enter para enviar)'
                 }
                 autoFocus
               />
-              <button
-                className={`px-7 py-4 rounded-full font-bold shadow transition-all text-lg ${
-                  active && apiStatus === 'online' ? 'bg-primary text-white hover:scale-105' : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                }`}
-                onClick={sendMessage}
-                disabled={loading || apiStatus !== 'online' || !active}
-              >
-                {loading ? 'Enviando...' : 'Enviar'}
-              </button>
             </div>
-            <div className="mt-2 text-sm text-gray-700">
+            <div className="mt-2 text-sm text-gray-700 text-center">
               <span className="italic">BuzzBot puede cometer errores.</span>
+              {loading && <span className="block text-primary font-medium">Enviando...</span>}
             </div>
           </div>
         )}
       </div>
 
       {/* Barra inferior */}
-      <div className="fixed bottom-0 left-0 w-full bg-gray-900 border-t border-gray-800 py-2 px-6 flex justify-between items-center z-50">
+      <div className="fixed bottom-0 left-0 w-full bg-gray-900 border-t border-gray-800 py-2 px-4 md:px-6 flex flex-col md:flex-row justify-between items-center z-50 gap-2 md:gap-0">
         <span className="flex items-center gap-2 text-xs text-gray-300">
           <span className={`inline-block h-2 w-2 rounded-full ${apiStatus === 'online' ? 'bg-green-400' : 'bg-red-400'}`} />
           {apiStatus === 'online' ? 'API Online' : 'API Offline'}
-          <span className="ml-4 text-yellow-300">Prompts hoy: {promptCount}</span>
+          <span className="ml-2 md:ml-4 text-yellow-300">Prompts hoy: {promptCount}</span>
         </span>
-        <div className="flex gap-5 items-center">
+        <div className="flex gap-3 md:gap-5 items-center">
           <a
             href="/documentation"
             className="text-yellow-300 hover:text-yellow-200 underline text-xs transition-colors duration-200"

@@ -59,14 +59,14 @@ const About = () => {
       <main>
 
         {/* Sección Historia */}
-        <section className="py-20 my-20">
+        <section className="py-16 md:py-20 mt-16 md:mt-20">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch"> {/* Cambiado a items-stretch */}
-              <div className="flex flex-col justify-center"> {/* Añadido flex y justify-center */}
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-stretch">
+              <div className="flex flex-col justify-center">
+                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 md:mb-6">
                   De un proyecto universitario para la comunidad.
                 </h2>
-                <div className="space-y-4 text-gray-600 text-justify">
+                <div className="space-y-4 text-gray-600 text-justify text-sm md:text-base">
                   <p>
                     Buzzness nació como un proyecto universitario, impulsado por la
                     necesidad de crear herramientas que faciliten la gestión
@@ -91,7 +91,7 @@ const About = () => {
                   </p>
                 </div>
               </div>
-              <div className="relative h-full">
+              <div className="relative h-64 md:h-full hidden lg:block">
                 <img
                   src="/assets/images/AboutBux.png"
                   alt="Imagen representativa de Buzzness"
@@ -103,29 +103,29 @@ const About = () => {
         </section>
 
         {/* Sección Equipo */}
-        <section className="py-40 bg-gray-900 text-white">
+        <section className="py-24 md:py-40 bg-gray-900 text-white">
           <div className="container mx-auto px-4">
-            <div className="text-center max-w-3xl mx-auto mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+            <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 md:mb-6">
                 Las mentes detrás del proyecto
               </h2>
-              <p className="text-lg text-gray-400">
+              <p className="text-base md:text-lg text-gray-400">
                 Todos nuestros integrantes activos son estudiantes de ingenieria en
                 las principales universidades de Chile.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
               {teamMembers.map((member, index) => (
-                <div key={index} className="text-center bg-white/5 rounded-2xl p-6 border border-white/10 backdrop-blur-sm hover:bg-white/10 transition-all duration-300">
-                  <div className="relative w-32 h-32 mx-auto mb-4 group">
+                <div key={index} className="text-center bg-white/5 rounded-2xl p-4 md:p-6 border border-white/10 backdrop-blur-sm hover:bg-white/10 transition-all duration-300">
+                  <div className="relative w-24 h-24 md:w-32 md:h-32 mx-auto mb-4 group">
                     <div className="absolute inset-0 rounded-full bg-primary/20 group-hover:bg-primary/30 transition-all duration-300 animate-pulse"></div>
                     <img src={member.image} alt={member.name} className="relative w-full h-full object-cover rounded-full  border-4 border-white/20 shadow-md group-hover:border-primary/50 transition-all duration-300"/>
                   </div>
-                  <h3 className="text-xl font-semibold text-white mb-1">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-1">
                     {member.name}
                   </h3>
-                  <p className="text-gray-400">{member.role}</p>
+                  <p className="text-sm md:text-base text-gray-400">{member.role}</p>
                 </div>
               ))}
             </div>
@@ -133,27 +133,27 @@ const About = () => {
         </section>
 
         {/* Sección Valores */}
-        <section className="py-20">
+        <section className="py-16 md:py-20">
           <div className="container mx-auto px-4">
-            <div className="text-center max-w-3xl mx-auto mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+            <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 md:mb-6">
                 Los principios que nos guían
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
               {values.map((value, index) => (
                 <div
                   key={index}
-                  className="bg-white rounded-2xl p-6 border border-gray-100 shadow-lg"
+                  className="bg-white rounded-2xl p-4 md:p-6 border border-gray-100 shadow-lg"
                 >
-                  <div className="p-4 bg-primary/10 rounded-xl inline-flex mb-4">
-                    <value.icon className="h-6 w-6 text-primary" />
+                  <div className="p-3 md:p-4 bg-primary/10 rounded-xl inline-flex mb-3 md:mb-4">
+                    <value.icon className="h-5 w-5 md:h-6 md:w-6 text-primary" />
                   </div>
-                  <h3 className="text-xl font-semibold mb-3 text-gray-900">
+                  <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-3 text-gray-900">
                     {value.title}
                   </h3>
-                  <p className="text-gray-600">{value.description}</p>
+                  <p className="text-sm md:text-base text-gray-600">{value.description}</p>
                 </div>
               ))}
             </div>
