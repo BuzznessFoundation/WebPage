@@ -1,67 +1,109 @@
-import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
-
-const navLinks = [
-  { name: "Inicio", path: "/" },
-  { name: "Sobre Nosotros", path: "/about" },
-  { name: "Contacto", path: "/contact" },
-];
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import BuxWaving from '../assets/images/bux/bux-waving.jpg';
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const location = useLocation();
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => setIsOpen(false), [location]);
+  const navLinks = [
+    { label: 'INICIO', path: '/' },
+    { label: 'SERVICIOS', path: '/services' },
+    { label: 'TRABAJO', path: '/work' },
+    { label: 'NOSOTROS', path: '/about' },
+    { label: 'CONTACTO', path: '/contact' },
+  ];
 
   return (
-    <header className={`fixed top-0 left-0 z-50 w-full transition-all duration-300 ${isOpen? "bg-white py-5": scrolled? "bg-white/80 backdrop-blur-md shadow-sm py-5": "bg-transparent py-5"}`}>
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="flex items-center justify-between">
-          <Link to="/" className="flex items-center space-x-2 text-dark font-bold text-2xl transition-transform duration-300 hover:scale-105">
-            <img src="/assets/images/Buzzness_Icon.webp" alt="Logo del proyecto" className="h-11 w-11" />
-            <span>Buzzness</span>
-          </Link>
+    <>
+      <nav
+        className={`fixed top-0 left-0 right-0 h-[72px] bg-bz-paper z-50 border-b border-bz-border flex items-center justify-between px-[10vw] transition-shadow duration-300 ${
+          isScrolled ? 'shadow-[0_1px_0_var(--bz-border)]' : ''
+        }`}
+      >
+        <Link to="/" className="flex items-center gap-3">
+          <svg width="28" height="28" viewBox="0 0 28 28" className="flex-shrink-0">
+            <path
+              d="M7 14L14 7L21 14M7 14L14 21L21 14M14 7V21"
+              stroke="#F0B429"
+              strokeWidth="1.5"
+              fill="none"
+              vectorEffect="non-scaling-stroke"
+            />
+          </svg>
+          <span className="font-archivo-black text-lg uppercase hidden sm:block">
+            <span className="text-bz-dark">BUZZ</span>
+            <span className="text-bz-yellow">NESS</span>
+          </span>
+        </Link>
 
-          {/* Enlaces */}
-          <nav className="hidden md:flex items-center space-x-8">
-            {navLinks.map((link) => (
-              <Link key={link.path} to={link.path} className={`relative text-base font-medium transition-colors duration-300 ${location.pathname === link.path? "text-primary after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-full after:bg-primary": "text-dark hover:text-primary"}`}>
-                {link.name}
-              </Link>
-            ))}
-            <a href="/buzzbot" target="_blank" rel="noopener noreferrer" className="bg-primary font-bold text-white px-7 py-4 rounded-xl text-lg flex items-center justify-center shadow-lg hover:scale-105 transition-all duration-300">
-              BuzzBot
-            </a>
-          </nav>
-
-          {/* Botón Sandwich */}
-          <button onClick={() => setIsOpen(!isOpen)} className="md:hidden text-dark focus:outline-none" aria-label={isOpen ? "Close Menu" : "Open Menu"}>
-            {isOpen ? (<X className="h-6 w-6 transition-transform duration-300" />) : (<Menu className="h-6 w-6 transition-transform duration-300 hover:scale-110" />)}
-          </button>
-        </div>
-      </div>
-
-      {/* Menú Mobile */}
-      <div className={`fixed inset-0 bg-white z-40 pt-20 px-4 md:hidden transform transition-transform duration-300 ease-in-out ${isOpen ? "translate-x-0" : "translate-x-full"}`}>
-        <nav className="flex flex-col space-y-6 items-center">
+        <div className="hidden md:flex items-center gap-12">
           {navLinks.map((link) => (
-            <Link key={link.path} to={link.path} className={`text-lg font-medium transition-colors duration-300 ${location.pathname === link.path ? "text-primary" : "text-dark hover:text-primary"}`}>
-              {link.name}
+            <Link
+              key={link.path}
+              to={link.path}
+              className="font-archivo text-xs font-medium uppercase tracking-widest text-bz-dark hover:text-bz-yellow transition-colors duration-200 pb-1 border-b-2 border-transparent hover:border-bz-yellow"
+            >
+              {link.label}
             </Link>
           ))}
-          <a href="/buzzbot" target="_blank" rel="noopener noreferrer" className="bg-primary font-bold text-dark py-3 px-6 rounded-xl text-lg shadow-lg hover:scale-105 transition-all duration-300">
-            BuzzBot
-          </a>
-        </nav>
-      </div>
-    </header>
+        </div>
+
+        <button
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          className="md:hidden flex flex-col gap-1.5 p-2 relative"
+        >
+          <span
+            className={`w-6 h-0.5 bg-bz-dark transition-all duration-300 ${
+              isMenuOpen ? 'rotate-45 translate-y-2' : ''
+            }`}
+          />
+          <span className={`w-6 h-0.5 bg-bz-dark transition-opacity duration-300 ${isMenuOpen ? 'opacity-0' : ''}`} />
+          <span
+            className={`w-6 h-0.5 bg-bz-dark transition-all duration-300 ${
+              isMenuOpen ? '-rotate-45 -translate-y-2' : ''
+            }`}
+          />
+        </button>
+
+        <Link
+          to="/contact"
+          className="hidden md:block px-8 py-4 bg-bz-yellow text-bz-dark font-archivo-black text-sm uppercase font-bold hover:bg-bz-dark hover:text-bz-yellow transition-all duration-200 active:translate-y-0.5 active:scale-98"
+        >
+          HABLEMOS
+        </Link>
+      </nav>
+
+      {isMenuOpen && (
+        <div className="fixed inset-0 bg-bz-paper z-40 flex flex-col items-center justify-center pt-20 md:hidden overflow-hidden">
+          <div className="flex flex-col gap-8 items-center">
+            {navLinks.map((link, idx) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                className="font-archivo-black text-3xl uppercase text-bz-dark hover:text-bz-yellow transition-colors duration-200"
+                style={{ animation: `scroll-in 600ms cubic-bezier(0.16, 1, 0.3, 1) forwards` }}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+
+          <div className="absolute bottom-16 right-10">
+            <img src={BuxWaving} alt="Bux saludando" className="h-24" />
+            <p className="font-caveat text-sm text-bz-yellow -rotate-1 mt-2 whitespace-nowrap">¡hola! →</p>
+          </div>
+        </div>
+      )}
+    </>
   );
 }

@@ -1,4 +1,4 @@
 User-agent: *
-Disallow:
-
+Allow: /
+Disallow: /api/
 Sitemap: https://buzzness.cl/sitemap.xml

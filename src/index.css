@@ -1,116 +1,61 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700&family=Archivo+Black:wght@900&family=Caveat:wght@600;700&family=IBM+Plex+Mono:wght@300;400&display=swap');
 
-/* Json */
-.formatted-content h2 {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin: 1rem 0 0.5rem 0;
-  color: #1f2937;
+:root {
+  --bz-paper: #FAFAF5;
+  --bz-yellow: #F0B429;
+  --bz-dark: #1C1917;
+  --bz-grid: rgba(180, 160, 100, 0.1);
+  --bz-border: rgba(180, 160, 100, 0.25);
+  --bz-muted: rgba(28, 25, 23, 0.55);
 }
 
-.formatted-content h3 {
-  font-size: 1.125rem;
-  font-weight: 600;
-  margin: 0.75rem 0 0.5rem 0;
-  color: #374151;
-}
-
-.formatted-content p {
-  margin: 0.5rem 0;
-  line-height: 1.6;
-}
-
-.formatted-content ul, .formatted-content ol {
-  margin: 0.5rem 0;
-  padding-left: 1.5rem;
-}
-
-.formatted-content li {
-  margin: 0.25rem 0;
-  line-height: 1.5;
-}
-
-.formatted-content strong {
-  font-weight: 600;
-  color: #1f2937;
-}
-
-.formatted-content em {
-  font-style: italic;
-}
-
-/* --- Fuentes globales --- */
 * {
-  font-family: 'Montserrat', 'Esteban', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 html {
   scroll-behavior: smooth;
 }
 
-/* --- Scrollbar minimal --- */
-::-webkit-scrollbar {
-  width: 6px;
+body {
+  font-family: 'Archivo', sans-serif;
+  background-color: var(--bz-paper);
+  color: var(--bz-dark);
+  line-height: 1.6;
+  font-weight: 400;
 }
-::-webkit-scrollbar-track {
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Archivo Black', sans-serif;
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  border: none;
   background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  font-family: inherit;
 }
 
-/* --- Transiciones básicas --- */
-button, a {
-  transition: all 0.3s ease;
+input, textarea, select {
+  font-family: 'Archivo', sans-serif;
+  color: inherit;
 }
 
-/* --- Accesibilidad --- */
-button:focus-visible,
-a:focus-visible {
-  outline: 2px solid theme('colors.primary');
-  outline-offset: 2px;
-  border-radius: 6px;
+textarea {
+  resize: vertical;
 }
 
-/* --- Preferencias del usuario --- */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation: none !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
-/* --- Animaciones personalizadas para Buzzbot --- */
-@layer utilities {
-  .animate-fadein { animation: fadein 0.7s; }
-  @keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
-
-  .animate-slideup { animation: slideup 0.6s; }
-  @keyframes slideup {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-  }
-
-  .animate-chatmsg { animation: chatmsg 0.35s; }
-  @keyframes chatmsg {
-    from { transform: translateY(6px) scale(0.99); opacity: 0; }
-    to { transform: translateY(0) scale(1); opacity: 1; }
-  }
-
-  /* Animación para toast */
-  .animate-slide-in-right { animation: slideInRight 0.3s ease-out; }
-  @keyframes slideInRight {
-    from { transform: translateX(100%); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
-  }
-
-  /* Ocultar scrollbars pero permitir scroll */
-  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-  .no-scrollbar::-webkit-scrollbar { display: none; }
+#root {
+  width: 100%;
+  min-height: 100vh;
 }

@@ -1,101 +1,157 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { Github, Instagram, Linkedin} from "lucide-react";
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
-
-  const socialLinks = [
-    { icon: Linkedin, href: "https://www.linkedin.com/company/buzznessfoundation/", label: "LinkedIn" },
-    { icon: Github, href: "https://github.com/BuzznessFoundation", label: "GitHub" },
-    { icon: Instagram, href: "https://www.instagram.com/buzzness.cl/", label: "Instagram" },
-  ];
-
-  const footerLinks = [
-    {
-      title: "Proyecto",
-      links: [
-        { name: "Inicio", href: "/" },
-        { name: "Sobre Nosotros", href: "/about" },
-        { name: "Contacto", href: "/contact" },
-      ],
-    },
-    {
-      title: "Recursos",
-      links: [
-        { name: "Documentación", href: "/documentation" },
-        { name: "Tutoriales", href: "/construction" },
-        { name: "API", href: "/construction" },
-      ],
-    },
-    {
-      title: "Legal",
-      links: [
-        { name: "Privacidad", href: "/construction" },
-        { name: "Términos", href: "/terms" },
-        { name: "Cookies", href: "/construction" },
-      ],
-    },
-  ];
-
   return (
-    <footer className="bg-dark text-white pt-16 pb-8">
-      <div className="container mx-auto px-4 md:px-6">
-
-        {/* Logo + descripción + redes */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
-          <div className="lg:col-span-2">
-            <Link to="/" className="flex items-center space-x-2 mb-6">
-              <img src="/assets/images/Buzzness_Icon.webp" alt="Logo del proyecto" className="h-11 w-11" />
-              <span className="font-bold text-2xl">Buzzness</span>
-            </Link>
-            <p className="text-gray-300 mb-6 max-w-md">
-              Un proyecto que busca desarrollar herramientas de inteligencia artificial para la educación,
-              facilitando el acceso a información y recursos para los equipos directivos educativos.
-            </p>
-            <div className="flex space-x-4">
-              {socialLinks.map((social) => (
-                <a key={social.label} href={social.href} target="_blank" rel="noopener noreferrer" className="bg-white/10 hover:bg-white/20 rounded-full p-3 transition-all duration-300 hover:text-bee-yellow transform hover:-translate-y-1" aria-label={social.label}>
-                  <social.icon className="h-5 w-5" />
-                </a>
-              ))}
-            </div>
+    <footer className="bg-bz-dark border-t border-[rgba(240,180,41,0.15)] py-16 px-[10vw]">
+      <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr_1fr] gap-12 md:gap-16 mb-8">
+        <div className="md:max-w-xs">
+          <div className="flex items-center gap-3 mb-4">
+            <svg width="24" height="24" viewBox="0 0 28 28">
+              <path
+                d="M7 14L14 7L21 14M7 14L14 21L21 14M14 7V21"
+                stroke="#F0B429"
+                strokeWidth="1.5"
+                fill="none"
+              />
+            </svg>
+            <span className="font-archivo-black text-sm uppercase text-white">
+              <span>BUZZ</span>
+              <span className="text-bz-yellow">NESS</span>
+            </span>
           </div>
-
-          {/* Columnas de links */}
-          {footerLinks.map((column) => (
-            <div key={column.title}>
-              <h3 className="font-semibold text-lg mb-4 text-bee-yellow">
-                {column.title}
-              </h3>
-              <ul className="space-y-3">
-                {column.links.map((link) => (
-                  <li key={link.name}>
-                    {link.href.startsWith("http") ? (
-                      <a href={link.href} className="text-gray-300 hover:text-white transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-bee-yellow after:transition-all after:duration-300 hover:after:w-full" target="_blank" rel="noopener noreferrer">
-                        {link.name}
-                      </a>
-                    ) : (
-                      <Link to={link.href} className="text-gray-300 hover:text-white transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-bee-yellow after:transition-all after:duration-300 hover:after:w-full">
-                        {link.name}
-                      </Link>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          <p className="font-archivo text-xs text-white/50 leading-relaxed mb-6">
+            Infraestructura que te pertenece. Soluciones reales para pymes que cuidan cada peso.
+          </p>
+          <div className="flex gap-8">
+            <a
+              href="https://github.com/BuzznessFoundation"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-mono text-xs uppercase text-white/30 hover:text-white/80 tracking-widest transition-colors duration-200"
+            >
+              GitHub
+            </a>
+            <a
+              href="https://linkedin.com/company/buzznessfoundation"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-mono text-xs uppercase text-white/30 hover:text-white/80 tracking-widest transition-colors duration-200"
+            >
+              LinkedIn
+            </a>
+            <a
+              href="https://instagram.com/buzzness.cl"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-mono text-xs uppercase text-white/30 hover:text-white/80 tracking-widest transition-colors duration-200"
+            >
+              Instagram
+            </a>
+          </div>
         </div>
 
-        {/* Copyright */}
-        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-400 text-sm mb-4 md:mb-0">
-            &copy; {currentYear} Buzzness. Todos los derechos reservados.
-          </p>
-          <p className="text-gray-400 text-sm">
-            Diseñado con 💛 por el equipo de Buzzness
-          </p>
+        <div>
+          <h4 className="font-mono text-xs uppercase text-bz-yellow tracking-widest letter-spacing-0.15em mb-4">
+            PROYECTO
+          </h4>
+          <ul className="space-y-3">
+            <li>
+              <Link
+                to="/"
+                className="font-archivo text-xs text-white/50 hover:text-white/90 transition-colors duration-200"
+              >
+                Inicio
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/services"
+                className="font-archivo text-xs text-white/50 hover:text-white/90 transition-colors duration-200"
+              >
+                Servicios
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/work"
+                className="font-archivo text-xs text-white/50 hover:text-white/90 transition-colors duration-200"
+              >
+                Trabajo
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/about"
+                className="font-archivo text-xs text-white/50 hover:text-white/90 transition-colors duration-200"
+              >
+                Nosotros
+              </Link>
+            </li>
+          </ul>
         </div>
+
+        <div>
+          <h4 className="font-mono text-xs uppercase text-bz-yellow tracking-widest letter-spacing-0.15em mb-4">
+            RECURSOS
+          </h4>
+          <ul className="space-y-3">
+            <li>
+              <a
+                href="#"
+                className="font-archivo text-xs text-white/50 hover:text-white/90 transition-colors duration-200"
+              >
+                Documentación
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://github.com/BuzznessFoundation"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-archivo text-xs text-white/50 hover:text-white/90 transition-colors duration-200"
+              >
+                GitHub
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="font-mono text-xs uppercase text-bz-yellow tracking-widest letter-spacing-0.15em mb-4">
+            LEGAL
+          </h4>
+          <ul className="space-y-3">
+            <li>
+              <a
+                href="#"
+                className="font-archivo text-xs text-white/50 hover:text-white/90 transition-colors duration-200"
+              >
+                Términos
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="font-archivo text-xs text-white/50 hover:text-white/90 transition-colors duration-200"
+              >
+                Privacidad
+              </a>
+            </li>
+            <li>
+              <Link
+                to="/contact"
+                className="font-archivo text-xs text-white/50 hover:text-white/90 transition-colors duration-200"
+              >
+                Contacto
+              </Link>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="border-t border-[rgba(240,180,41,0.1)] pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
+        <p className="font-mono text-xs text-white/25">© 2025 BUZZNESS — TODOS LOS DERECHOS RESERVADOS</p>
+        <p className="font-mono text-xs text-white/25">DISEÑADO Y CONSTRUIDO POR BUZZNESS</p>
       </div>
     </footer>
   );

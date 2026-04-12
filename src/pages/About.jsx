@@ -1,168 +1,161 @@
-import { Users, Heart, Code, Shield } from "lucide-react";
-import React from "react";
+import { useEffect, useRef, useState } from 'react';
+import BuxDoubt from '../assets/images/bux/bux-doubt.jpg';
 
-import Footer from '../components/Footer.jsx';
+function ScrollReveal({ children }, index = 0) {
+  const ref = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
 
-const About = () => {
-  const teamMembers = [
-    {
-      name: "Cristian Alvarado",
-      role: "Director de proyecto",
-      image: "/assets/images/Buzzteam_CA.webp",
-    },
-    {
-      name: "Ricardo Zaraté",
-      role: "Fundador & DevOps",
-      image: "/assets/images/Buzzteam_RZ.webp",
-    },
-    {
-      name: "Lucas Capurro",
-      role: "Product Manager",
-      image: "/assets/images/Buzzteam_LC.webp",
-    },
-    {
-      name: "Antonio Valdivia",
-      role: "Community Manager",
-      image: "/assets/images/Buzzteam_AV.webp",
-    },
-  ];
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.1 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
 
-  const values = [
+  return (
+    <div
+      ref={ref}
+      style={{
+        '--index': index,
+        animation: isVisible ? 'scroll-in 600ms cubic-bezier(0.16, 1, 0.3, 1) forwards' : 'none',
+        animationDelay: isVisible ? `calc(var(--index) * 80ms)` : '0',
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+export default function About() {
+  const valores = [
     {
-      icon: Users,
-      title: "Comunidad",
-      description:
-        "Creemos en el poder de la colaboración y en construir juntos un mejor futuro para la educación.",
+      title: 'SOBERANÍA',
+      description: 'Tu infraestructura, tus datos. Sin dependencias de terceros.',
     },
     {
-      icon: Heart,
-      title: "Pasión",
-      description:
-        "Nos impulsa el deseo genuino de transformar positivamente la experiencia educativa para todos.",
+      title: 'EFICIENCIA',
+      description: 'Cada peso invertido en tecnología genera valor real.',
     },
     {
-      icon: Code,
-      title: "Innovación",
-      description:
-        "Buscamos constantemente nuevas formas de aplicar la tecnología para resolver desafíos educativos.",
-    },
-    {
-      icon: Shield,
-      title: "Accesibilidad",
-      description:
-        "Creemos que el acceso a herramientas educativas de calidad es un derecho, no un privilegio.",
+      title: 'TRANSPARENCIA',
+      description: 'Sabes exactamente qué se está construyendo y por qué.',
     },
   ];
 
   return (
-    <div className="min-h-screen bg-white">
-      <main>
+    <main className="pt-[72px]">
+      <section className="relative bg-bz-dark min-h-[50vh] px-[10vw] pt-20 pb-20">
+        <div
+          className="absolute inset-0 bz-grid opacity-[0.06]"
+          style={{ backgroundImage: 'linear-gradient(var(--bz-grid) 1px, transparent 1px), linear-gradient(90deg, var(--bz-grid) 1px, transparent 1px)' }}
+        />
 
-        {/* Sección Historia */}
-        <section className="py-16 md:py-20 mt-16 md:mt-20">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-stretch">
-              <div className="flex flex-col justify-center">
-                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 md:mb-6">
-                  De un proyecto universitario para la comunidad.
-                </h2>
-                <div className="space-y-4 text-gray-600 text-justify text-sm md:text-base">
-                  <p>
-                    Buzzness nació como un proyecto universitario, impulsado por la
-                    necesidad de crear herramientas que faciliten la gestión
-                    educativa y el acceso a información relevante para los equipos
-                    directivos.
-                  </p>
-                  <p>
-                    Nuestros proyectos tienen como objetivo empoderar a los
-                    educadores y directivos, con herramientas basadas en
-                    inteligencia artificial y interfaces adaptadas para ellos.
-                  </p>
-                  <p>
-                    Creemos que la tecnología puede ser una aliada poderosa en la
-                    educación, y estamos comprometidos en hacerla accesible para
-                    todos, en el proceso creemos en generar inteligencia de negocios
-                    para las instituciones educativas como para entidades gubernamentales.
-                  </p>
-                  <p>
-                    Y si, la abeja que ves es Tux con un traje de abeja, representa la pasion
-                    por el software libre y la naturaleza colaborativa de nuestra comunidad.
-                    Saluda a Tux o se pondra triste.
-                  </p>
-                </div>
-              </div>
-              <div className="relative h-64 md:h-full hidden lg:block">
-                <img
-                  src="/assets/images/AboutBux.png"
-                  alt="Imagen representativa de Buzzness"
-                  className="w-full h-full object-cover rounded-xl"
-                />
-              </div>
+        <div className="relative z-10">
+          <p className="font-caveat text-xl text-bz-yellow -rotate-1 mb-4">sobre el proyecto</p>
+
+          <h1 className="font-archivo-black uppercase text-white text-[clamp(52px,6vw,88px)] leading-[0.92] tracking-[-0.025em] mb-6">
+            SOBRE
+            <br />
+            <span>BUZZ</span>
+            <span className="text-bz-yellow">NESS</span>
+          </h1>
+
+          <p className="font-mono text-xs uppercase text-white/35 tracking-widest">
+            un estudio de uno — grande en soluciones
+          </p>
+        </div>
+      </section>
+
+      <section className="bg-bz-paper bz-grid py-24 px-[10vw]">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
+          <div>
+            <div className="flex items-center gap-3 mb-10">
+              <div className="w-8 h-px bg-bz-yellow/50" />
+              <p className="font-mono text-xs uppercase text-bz-yellow tracking-widest">la historia</p>
+              <div className="w-8 h-px bg-bz-yellow/50" />
             </div>
-          </div>
-        </section>
 
-        {/* Sección Equipo */}
-        <section className="py-24 md:py-40 bg-gray-900 text-white">
-          <div className="container mx-auto px-4">
-            <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
-              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 md:mb-6">
-                Las mentes detrás del proyecto
-              </h2>
-              <p className="text-base md:text-lg text-gray-400">
-                Todos nuestros integrantes activos son estudiantes de ingenieria en
-                las principales universidades de Chile.
+            <h2 className="font-archivo-black uppercase text-bz-dark text-[clamp(36px,4vw,48px)] leading-[1.1] mb-6">
+              DE UN PROYECTO UNIVERSITARIO A UN ESTUDIO REAL.
+            </h2>
+
+            <p className="font-caveat text-base text-bz-yellow -rotate-1">y seguimos creciendo →</p>
+          </div>
+
+          <div className="space-y-6">
+            <p className="font-archivo text-base text-bz-dark/65 leading-relaxed">
+              Buzzness nació como un proyecto universitario, impulsado por la necesidad de crear herramientas que
+              faciliten la gestión tecnológica en organizaciones que no pueden darse el lujo de desperdiciar recursos.
+            </p>
+
+            <p className="font-archivo text-base text-bz-dark/65 leading-relaxed">
+              Hoy implementamos soluciones completas: infraestructura self-hosted, integraciones de hardware y software,
+              desarrollo web y sistemas de información.
+            </p>
+
+            <p className="font-archivo text-base text-bz-dark/65 leading-relaxed">
+              Todo con una filosofía clara: nada que no se aproveche, todo documentado, siempre tuyo.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-bz-dark py-20 px-[10vw]">
+        <div className="grid grid-cols-1 lg:grid-cols-[40%_60%] gap-20 lg:gap-16 items-start">
+          <div className="flex flex-col items-start">
+            <div className="w-full max-w-xs aspect-[3/4] bg-[#252220] border border-[rgba(240,180,41,0.15)] mb-6" />
+            <p className="font-caveat text-base text-bz-yellow -rotate-1">ese soy yo →</p>
+          </div>
+
+          <div>
+            <p className="font-mono text-xs uppercase text-bz-yellow tracking-widest mb-3">fundador & ingeniero</p>
+
+            <h2 className="font-archivo-black uppercase text-white text-4xl mb-6">CRISTIAN ALVARADO</h2>
+
+            <p className="font-archivo text-base text-white/60 leading-relaxed mb-8">
+              Ingeniero apasionado por la infraestructura y la tecnología que sirve. Fundé Buzzness porque creía que
+              las pymes se merecen soluciones tecnológicas serias, documentadas y pensadas para crecer sin dependencias.
+              Cuando no estoy escribiendo código, estoy pensando en cómo reducir costos operativos.
+            </p>
+
+            <div className="space-y-2">
+              <p className="font-mono text-xs uppercase text-bz-yellow/70 tracking-widest">
+                SELF-HOSTED · IOT · DESARROLLO WEB · SISTEMAS
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-              {teamMembers.map((member, index) => (
-                <div key={index} className="text-center bg-white/5 rounded-2xl p-4 md:p-6 border border-white/10 backdrop-blur-sm hover:bg-white/10 transition-all duration-300">
-                  <div className="relative w-24 h-24 md:w-32 md:h-32 mx-auto mb-4 group">
-                    <div className="absolute inset-0 rounded-full bg-primary/20 group-hover:bg-primary/30 transition-all duration-300 animate-pulse"></div>
-                    <img src={member.image} alt={member.name} className="relative w-full h-full object-cover rounded-full  border-4 border-white/20 shadow-md group-hover:border-primary/50 transition-all duration-300"/>
-                  </div>
-                  <h3 className="text-lg md:text-xl font-semibold text-white mb-1">
-                    {member.name}
-                  </h3>
-                  <p className="text-sm md:text-base text-gray-400">{member.role}</p>
-                </div>
-              ))}
-            </div>
+            <img
+              src={BuxDoubt}
+              alt="Bux en duda"
+              className="absolute right-12 bottom-12 h-32 opacity-80"
+            />
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Sección Valores */}
-        <section className="py-16 md:py-20">
-          <div className="container mx-auto px-4">
-            <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
-              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 md:mb-6">
-                Los principios que nos guían
-              </h2>
-            </div>
+      <section className="bg-bz-paper py-24 px-[10vw]">
+        <h3 className="font-archivo-black uppercase text-bz-dark text-[clamp(32px,4vw,48px)] leading-tight mb-16 text-center">
+          NUESTROS VALORES
+        </h3>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-              {values.map((value, index) => (
-                <div
-                  key={index}
-                  className="bg-white rounded-2xl p-4 md:p-6 border border-gray-100 shadow-lg"
-                >
-                  <div className="p-3 md:p-4 bg-primary/10 rounded-xl inline-flex mb-3 md:mb-4">
-                    <value.icon className="h-5 w-5 md:h-6 md:w-6 text-primary" />
-                  </div>
-                  <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-3 text-gray-900">
-                    {value.title}
-                  </h3>
-                  <p className="text-sm md:text-base text-gray-600">{value.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-        <Footer />
-      </main>
-    </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-bz-border p-px">
+          {valores.map((valor, idx) => (
+            <ScrollReveal key={idx} index={idx}>
+              <div className="bg-bz-paper border-t-2 border-bz-yellow p-8">
+                <h4 className="font-archivo-black uppercase text-bz-dark text-lg mb-4">{valor.title}</h4>
+                <p className="font-archivo text-sm text-bz-dark/65 leading-relaxed">{valor.description}</p>
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
+      </section>
+    </main>
   );
-};
-
-export default About;
+}

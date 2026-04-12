@@ -1,269 +1,275 @@
-import React, { useState, useEffect } from "react";
-import { Github, Linkedin, Mail } from "lucide-react";
-import { fetchBlogPosts } from "../utils/Contentful.js";
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
-import { BLOCKS, INLINES } from '@contentful/rich-text-types';
+import { useState } from 'react';
+import BuxWaving from '../assets/images/bux/bux-waving.jpg';
+import BuxDoubt from '../assets/images/bux/bux-doubt.jpg';
 
-const Contact = () => {
-  const [posts, setPosts] = useState([]);
-  const [showAllPosts, setShowAllPosts] = useState(false);
-  const [selectedPost, setSelectedPost] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+export default function Contact() {
+  const [formData, setFormData] = useState({
+    nombre: '',
+    email: '',
+    empresa: '',
+    tipo: '',
+    mensaje: '',
+  });
 
-  const richTextOptions = {
-    renderNode: {
-      [BLOCKS.PARAGRAPH]: (node, children) => <p className="mb-4">{children}</p>,
-      [BLOCKS.HEADING_1]: (node, children) => <h1 className="text-2xl font-bold mb-4">{children}</h1>,
-      [BLOCKS.HEADING_2]: (node, children) => <h2 className="text-xl font-bold mb-3">{children}</h2>,
-      [INLINES.HYPERLINK]: (node, children) => (
-        <a href={node.data.uri} className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">
-          {children}
-        </a>
-      ),
-    },
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (errors[name]) {
+      setErrors((prev) => ({ ...prev, [name]: '' }));
+    }
   };
 
-  useEffect(() => {
-    const loadPosts = async () => {
-      try {
-        setLoading(true);
-        const fetchedPosts = await fetchBlogPosts();
-        setPosts(fetchedPosts);
-      } catch (err) {
-        setError('Error cargando las noticias');
-        // Eliminado console.error para evitar logs en devtools
-      } finally {
-        setLoading(false);
-      }
-    };
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.nombre.trim()) newErrors.nombre = 'Campo requerido';
+    if (!formData.email.trim()) {
+      newErrors.email = 'Campo requerido';
+    } else if (!/.*@.*\..*/.test(formData.email)) {
+      newErrors.email = 'Email inválido';
+    }
+    if (!formData.empresa.trim()) newErrors.empresa = 'Campo requerido';
+    if (!formData.tipo) newErrors.tipo = 'Campo requerido';
+    if (!formData.mensaje.trim()) newErrors.mensaje = 'Campo requerido';
 
-    loadPosts();
-  }, []);
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
-  const contactLinks = [
-    {
-      icon: Github,
-      title: "GitHub",
-      description: "Revisa nuestro código y contribuye",
-      url: "https://github.com/BuzznessFoundation/",
-      bgColor: "bg-[#24292e]",
-      hoverBg: "hover:bg-[#1a1e22]",
-    },
-    {
-      icon: Linkedin,
-      title: "LinkedIn",
-      description: "Conéctate con nuestro equipo",
-      url: "https://www.linkedin.com/company/buzznessfoundation",
-      bgColor: "bg-[#0a66c2]",
-      hoverBg: "hover:bg-[#004182]",
-    },
-    {
-      icon: Mail,
-      title: "Correo",
-      description: "Escríbenos directamente",
-      url: "mailto:cristian.alvarado@buzzness.cl",
-      bgColor: "bg-[#EA4335]",
-      hoverBg: "hover:bg-[#d33828]",
-    },
-  ];
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  const renderPostContent = (post) => {
-    if (!post.content) return null;
-    return documentToReactComponents(post.content, richTextOptions);
+    if (!validateForm()) return;
+
+    setLoading(true);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      setSubmitted(true);
+      setFormData({ nombre: '', email: '', empresa: '', tipo: '', mensaje: '' });
+      setTimeout(() => setSubmitted(false), 3000);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="min-h-screen bg-white">
-      <main>
-        {/* Header Section */}
-        <section className="pt-40 bg-gradient-to-b from-primary/10 to-white">
-          <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                Contactate con Nosotros
-              </h1>
-              <p className="text-xl text-gray-600 mb-8">
-                Quieres ponerte en contacto con nosotros? Aquí tienes varias opciones.
+    <main className="pt-[72px]">
+      <section className="relative bg-bz-dark min-h-[50vh] px-[10vw] py-20 overflow-hidden">
+        <div className="absolute inset-0 bz-grid opacity-[0.06]" />
+
+        <div className="relative z-10">
+          <p className="font-caveat text-xl text-bz-yellow -rotate-1 mb-4">contacto</p>
+
+          <h1 className="font-archivo-black uppercase text-white text-[clamp(52px,6vw,88px)] leading-[0.92] tracking-[-0.025em] mb-6">
+            CONTACTO
+          </h1>
+        </div>
+
+        <img
+          src={BuxWaving}
+          alt="Bux saludando"
+          className="absolute right-[10vw] bottom-0 h-40 z-20"
+        />
+        <p className="absolute right-[10vw] bottom-40 font-caveat text-base text-bz-yellow -rotate-2 z-20">
+          ¡hablemos!
+        </p>
+      </section>
+
+      <section className="bg-bz-paper bz-grid py-24 px-[10vw]">
+        <div className="grid grid-cols-1 lg:grid-cols-[55%_45%] gap-16">
+          <form onSubmit={handleSubmit} className="space-y-8">
+            <div>
+              <p className="font-mono text-xs uppercase text-bz-yellow tracking-widest letter-spacing-0.15em mb-6">
+                envíanos un mensaje
               </p>
             </div>
-          </div>
-        </section>
 
-        {/* Content Grid */}
-        <section className="py-20">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-
-              {/* Contact Links Column */}
-              <div className="lg:col-span-1 space-y-6">
-                <h2 className="text-2xl font-bold text-gray-900 mb-8">Conecta con nosotros</h2>
-                {contactLinks.map((link, index) => (
-                  <a
-                    key={index}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`block p-6 rounded-xl shadow-lg transition-all duration-300 
-                               ${link.bgColor} ${link.hoverBg} 
-                               text-white transform hover:-translate-y-1`}
-                  >
-                    <div className="flex items-start space-x-4">
-                      <div className="p-3 bg-white/10 rounded-lg">
-                        <link.icon className="h-6 w-6 text-white" />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-lg mb-1 text-white">{link.title}</h3>
-                        <p className="text-white/80">
-                          {link.description}
-                        </p>
-                      </div>
-                    </div>
-                  </a>
-                ))}
-              </div>
-
-              {/* News Column */}
-              <div className="lg:col-span-2">
-                <div className="flex justify-between items-center mb-8">
-                  <h2 className="text-2xl font-bold text-gray-900">Últimas Noticias</h2>
-                  {posts.length > 5 && (
-                    <button
-                      onClick={() => setShowAllPosts(true)}
-                      className="text-primary hover:text-primary/80 font-semibold"
-                    >
-                      Ver todas
-                    </button>
-                  )}
-                </div>
-
-                {loading ? (
-                  <div className="text-center py-10">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-                  </div>
-                ) : error ? (
-                  <div className="text-center py-10 text-red-500">{error}</div>
-                ) : (
-                  <div className="space-y-6">
-                    {posts.slice(0, 5).map((post) => (
-                      <div
-                        key={post.id}
-                        className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden 
-                                 hover:shadow-xl transition-all duration-300"
-                      >
-                        <div className="p-6">
-                          <div className="flex items-start space-x-4">
-                            {post.image && (
-                              <img
-                                src={post.image}
-                                alt={post.title}
-                                className="w-24 h-24 object-cover rounded-lg"
-                              />
-                            )}
-                            <div className="flex-1">
-                              <h3 className="font-semibold text-lg mb-2">{post.title}</h3>
-                              <p className="text-gray-600 text-sm mb-2">{post.excerpt}</p>
-                              <div className="flex justify-between items-center">
-                                <span className="text-sm text-gray-400">
-                                  {new Date(post.date).toLocaleDateString()}
-                                </span>
-                                <button
-                                  onClick={() => setSelectedPost(post)}
-                                  className="text-primary hover:text-primary/80 text-sm font-semibold"
-                                >
-                                  Leer más
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      {/* Modal for full post */}
-      {selectedPost && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6">
-              {selectedPost.image && (
-                <img 
-                  src={selectedPost.image} 
-                  alt={selectedPost.title} 
-                  className="w-full h-64 object-cover rounded-lg mb-6" 
-                />
+            <div>
+              <label className="font-mono text-xs uppercase text-bz-dark/60 mb-1.5 block tracking-widest">
+                Nombre completo
+              </label>
+              <input
+                type="text"
+                name="nombre"
+                value={formData.nombre}
+                onChange={handleChange}
+                className="w-full border-0 border-b-[1.5px] border-bz-border bg-transparent px-0 py-3 font-archivo text-base text-bz-dark focus:border-bz-yellow focus:outline-none transition-colors duration-200"
+              />
+              {errors.nombre && (
+                <p className="font-mono text-xs text-red-500 mt-1">
+                  {errors.nombre}
+                </p>
               )}
-              <h2 className="text-3xl font-bold mb-4">{selectedPost.title}</h2>
-              <p className="text-sm text-gray-400 mb-6">
-                {new Date(selectedPost.date).toLocaleDateString()}
-              </p>
-              <div className="prose max-w-none">
-                {renderPostContent(selectedPost)}
-              </div>
-              <button
-                onClick={() => setSelectedPost(null)}
-                className="mt-6 bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-md transition-colors"
+            </div>
+
+            <div>
+              <label className="font-mono text-xs uppercase text-bz-dark/60 mb-1.5 block tracking-widest">
+                Correo electrónico
+              </label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full border-0 border-b-[1.5px] border-bz-border bg-transparent px-0 py-3 font-archivo text-base text-bz-dark focus:border-bz-yellow focus:outline-none transition-colors duration-200"
+              />
+              {errors.email && (
+                <p className="font-mono text-xs text-red-500 mt-1">
+                  {errors.email}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label className="font-mono text-xs uppercase text-bz-dark/60 mb-1.5 block tracking-widest">
+                Empresa / Organización
+              </label>
+              <input
+                type="text"
+                name="empresa"
+                value={formData.empresa}
+                onChange={handleChange}
+                className="w-full border-0 border-b-[1.5px] border-bz-border bg-transparent px-0 py-3 font-archivo text-base text-bz-dark focus:border-bz-yellow focus:outline-none transition-colors duration-200"
+              />
+              {errors.empresa && (
+                <p className="font-mono text-xs text-red-500 mt-1">
+                  {errors.empresa}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label className="font-mono text-xs uppercase text-bz-dark/60 mb-1.5 block tracking-widest">
+                Tipo de proyecto
+              </label>
+              <select
+                name="tipo"
+                value={formData.tipo}
+                onChange={handleChange}
+                className="w-full border-0 border-b-[1.5px] border-bz-border bg-transparent px-0 py-3 font-archivo text-base text-bz-dark focus:border-bz-yellow focus:outline-none transition-colors duration-200 appearance-none"
               >
-                Cerrar
-              </button>
+                <option value="">Selecciona una opción</option>
+                <option value="infraestructura">Infraestructura</option>
+                <option value="integracion">Integración</option>
+                <option value="web">Web</option>
+                <option value="sistemas">Sistemas</option>
+                <option value="otro">Otro</option>
+              </select>
+              {errors.tipo && (
+                <p className="font-mono text-xs text-red-500 mt-1">
+                  {errors.tipo}
+                </p>
+              )}
             </div>
-          </div>
-        </div>
-      )}
 
-      {/* Modal for all posts */}
-      {showAllPosts && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6">
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-3xl font-bold">Todas las Noticias</h2>
-                <button
-                  onClick={() => setShowAllPosts(false)}
-                  className="text-gray-500 hover:text-gray-700"
+            <div>
+              <label className="font-mono text-xs uppercase text-bz-dark/60 mb-1.5 block tracking-widest">
+                Mensaje
+              </label>
+              <textarea
+                name="mensaje"
+                value={formData.mensaje}
+                onChange={handleChange}
+                rows="5"
+                className="w-full border-0 border-b-[1.5px] border-bz-border bg-transparent px-0 py-3 font-archivo text-base text-bz-dark focus:border-bz-yellow focus:outline-none transition-colors duration-200"
+              />
+              {errors.mensaje && (
+                <p className="font-mono text-xs text-red-500 mt-1">
+                  {errors.mensaje}
+                </p>
+              )}
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading || submitted}
+              className={`w-full px-10 py-5 font-archivo-black text-sm uppercase font-bold transition-all duration-200 ${
+                submitted
+                  ? 'bg-bz-dark text-bz-yellow'
+                  : loading
+                    ? 'bg-bz-yellow text-bz-dark opacity-60'
+                    : 'bg-bz-yellow text-bz-dark hover:bg-bz-dark hover:text-bz-yellow'
+              }`}
+            >
+              {submitted ? 'MENSAJE ENVIADO' : loading ? 'ENVIANDO...' : 'ENVIAR MENSAJE'}
+            </button>
+          </form>
+
+          <div className="space-y-8">
+            <p className="font-mono text-xs uppercase text-bz-yellow tracking-widest letter-spacing-0.15em">
+              también puedes encontrarnos
+            </p>
+
+            <div className="space-y-6">
+              <div className="border-l-2 border-bz-yellow pl-4">
+                <p className="font-mono text-xs uppercase text-bz-dark/40 tracking-widest mb-1">
+                  Email
+                </p>
+                <a
+                  href="mailto:cristian@buzzness.cl"
+                  className="font-archivo font-medium text-base text-bz-dark hover:text-bz-yellow transition-colors duration-200"
                 >
-                  ✕
-                </button>
+                  cristian@buzzness.cl
+                </a>
               </div>
-              <div className="space-y-6">
-                {posts.map((post) => (
-                  <div
-                    key={post.id}
-                    className="bg-white rounded-xl shadow border border-gray-100 overflow-hidden"
-                  >
-                    <div className="p-6">
-                      <div className="flex items-start space-x-4">
-                        {post.image && (
-                          <img
-                            src={post.image}
-                            alt={post.title}
-                            className="w-24 h-24 object-cover rounded-lg"
-                          />
-                        )}
-                        <div className="flex-1">
-                          <h3 className="font-semibold text-lg mb-2">{post.title}</h3>
-                          <p className="text-gray-600 text-sm mb-2">{post.excerpt}</p>
-                          <span className="text-sm text-gray-400">
-                            {new Date(post.date).toLocaleDateString()}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+
+              <div className="border-l-2 border-bz-yellow pl-4">
+                <p className="font-mono text-xs uppercase text-bz-dark/40 tracking-widest mb-1">
+                  GitHub
+                </p>
+                <a
+                  href="https://github.com/BuzznessFoundation"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-archivo font-medium text-base text-bz-dark hover:text-bz-yellow transition-colors duration-200"
+                >
+                  github.com/BuzznessFoundation
+                </a>
+              </div>
+
+              <div className="border-l-2 border-bz-yellow pl-4">
+                <p className="font-mono text-xs uppercase text-bz-dark/40 tracking-widest mb-1">
+                  LinkedIn
+                </p>
+                <a
+                  href="https://linkedin.com/company/buzznessfoundation"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-archivo font-medium text-base text-bz-dark hover:text-bz-yellow transition-colors duration-200"
+                >
+                  linkedin.com/company/buzznessfoundation
+                </a>
+              </div>
+
+              <div className="border-l-2 border-bz-yellow pl-4">
+                <p className="font-mono text-xs uppercase text-bz-dark/40 tracking-widest mb-1">
+                  Instagram
+                </p>
+                <a
+                  href="https://instagram.com/buzzness.cl"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-archivo font-medium text-base text-bz-dark hover:text-bz-yellow transition-colors duration-200"
+                >
+                  @buzzness.cl
+                </a>
               </div>
             </div>
+
+            <img
+              src={BuxDoubt}
+              alt="Bux en duda"
+              className="mt-12 h-32"
+            />
+            <p className="font-caveat text-sm text-bz-yellow -rotate-1">¿en qué te puedo ayudar?</p>
           </div>
         </div>
-      )}
-    </div>
+      </section>
+    </main>
   );
-};
-
-export default Contact;
+}

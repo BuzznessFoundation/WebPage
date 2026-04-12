@@ -1,235 +1,342 @@
-import {Brain, BarChart3, Target, Zap, Users} from 'lucide-react';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
+import heroPrincipal from '../assets/video/hero-principal.mp4';
+import BuxNormal from '../assets/images/bux/bux-normal.jpg';
+import BuxWaving from '../assets/images/bux/bux-waving.jpg';
+import BuxHappy from '../assets/images/bux/bux-happy.jpg';
 
-import CallToAction from '../components/CallToAction.jsx';
-import Footer from '../components/Footer.jsx';
-
-const features = [
-  {
-    icon: Brain,
-    title: 'Modelo Gemini 2.5',
-    description: 'Usamos el modelo de IA más avanzado de Google para ofrecer respuestas precisas y contextualizadas a preguntas educativas, optimizando la gestión escolar.',
-    gradient: 'from-primary to-primary'
-  },
-  {
-    icon: BarChart3,
-    title: 'Protocolos actualizados',
-    description: 'Todo documento publicado por el Ministerio de Educación está disponible en un rango de 24 horas, asegurando que siempre tengas la información más reciente.',
-    gradient: 'from-green to-green'
-  },
-  {
-    icon: Target,
-    title: 'Creacion de documentos',
-    description: 'Tenemos plantillas para crear documentos oficiales como PMEs, ADECOs y otros protocolos, pudiendo adaptarlos a las necesidades y condiciones de tu institución.',
-    gradient: 'from-red to-red'
-  },
-  {
-    icon: Zap,
-    title: 'Documentos listos para descargar',
-    description: 'Genera documentos oficiales en formato PDF listos con tu insignia para descargar y compartir, facilitando la gestión administrativa de tu institución educativa.',
-    gradient: 'from-blue to-blue'
-  }
-];
-
-const modes = [
-  { 
-    title: 'Modo Normativas',
-    description: 'Consultas sobre normativas y protocolos educativos vigentes',
-    icon: Brain,
-    color: 'from-blue-500 to-cyan-500',
-    examples: [
-      '¿Cuál es el protocolo actual para casos de acoso escolar?',
-      '¿Qué dice la ley sobre el uso de celulares en clase?',
-      '¿Cuáles son los requisitos para ser profesor jefe?'
-    ]
-  },
-  { 
-    title: 'Modo Curriculum',
-    description: 'Preguntas sobre el curriculum nacional y su implementación',
-    icon: BarChart3,
-    color: 'from-purple-500 to-indigo-500',
-    examples: [
-      '¿Cuáles son los objetivos de aprendizaje en matemáticas para 8° básico?',
-      '¿Cómo implementar el DUA en el aula?',
-      '¿Qué habilidades del siglo XXI debo desarrollar en mi asignatura?'
-    ]
-  },
-  { 
-    title: 'Modo Convivencia',
-    description: 'Temas relacionados con la convivencia escolar y resolución de conflictos',
-    icon: Users,
-    color: 'from-green-500 to-emerald-500',
-    examples: [
-      '¿Cómo manejar conflictos entre estudiantes?',
-      '¿Qué medidas tomar ante casos de cyberbullying?',
-      '¿Cuál es el rol del encargado de convivencia escolar?'
-    ]
-  },
-  { 
-    title: 'Crear Documentos',
-    description: 'Generación de documentos oficiales como PMEs, ADECOs y protocolos personalizados',
-    icon: Target,
-    color: 'from-orange-500 to-red-500',
-    examples: [
-      '¿Cómo crear un PME efectivo para mi escuela?',
-      '¿Cuáles son los pasos para postular a ADECO?',
-      '¿Puedes ayudarme a redactar un protocolo de convivencia?'
-    ]
-  }
-];
-
-const Home = () => {
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [expandedMode, setExpandedMode] = useState(null);
+function ScrollReveal({ children }, index = 0) {
+  const ref = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrolled = window.scrollY;
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = maxScroll > 0 ? scrolled / maxScroll : 0;
-      setScrollProgress(progress);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.1 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
   }, []);
 
-  const bgStyle = {
-    background: `linear-gradient(135deg,
-      #FDC500 0%,
-      #22C55E 50%,
-      #FDC500 100%)`,
-    backgroundSize: '200% 200%',
-    backgroundPosition: `${scrollProgress * 100}% 50%`,
-    transition: 'background-position 0.1s linear',
-  };
-
   return (
-    <div className="flex flex-col min-h-screen overflow-x-hidden">
-      {/* Hero de ancho total */}
-      <section className="w-full relative overflow-hidden">
-        <div className="absolute inset-0" style={bgStyle}></div>
-
-        {/* Contenido */}
-        <div className="relative z-10 flex items-center justify-center min-h-screen px-6 md:px-20 pt-20 md:pt-0">
-          <div className="grid md:grid-cols-2 gap-12 items-center max-w-7xl mx-auto w-full">
-
-            {/* Columna izquierda */}
-            <div>
-              <h1 className="text-3xl md:text-4xl lg:text-6xl font-extrabold text-white drop-shadow-lg mb-6 leading-tight">
-                Todas las leyes, protocolos y oficios<span className="text-primary"> en un solo lugar</span>
-              </h1>
-              <p className="text-base md:text-lg lg:text-xl text-white/90 mb-8 max-w-xl">
-                BuzzBot es un asistente virtual que te ayuda a encontrar rápidamente la información que necesitas en tu institución educativa. Con solo un mensaje, accede a los protocolos de convivencia y otros documentos importantes.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <a href="/buzzbot" className="px-6 md:px-7 py-3 md:py-4 bg-primary text-gray-900 font-semibold rounded-xl shadow-lg hover:scale-105 transition-transform duration-300 text-center">
-                  Probar BuzzBot
-                </a>
-                <a href="/about" className="px-6 md:px-7 py-3 md:py-4 bg-white/20 text-white font-semibold rounded-xl shadow-lg border border-white/20 hover:bg-white/30 transition-colors duration-300 text-center">
-                  Conoce sobre nosotros
-                </a>
-              </div>
-            </div>
-
-            {/* Columna derecha: Imagen HomeBux */}
-            <div className="flex justify-center md:block hidden">
-              <div className="w-full h-72 md:h-[28rem] flex items-center justify-center">
-                <img 
-                  src="/assets/images/HomeBux.png" 
-                  alt="BuzzBot - Asistente Virtual Educativo" 
-                  className="h-full w-full object-cover"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Caracteristicas del producto */}
-      <section className="px-6 md:px-12 lg:px-24 py-16 md:py-24 bg-gradient-to-b from-gray-50 to-white">
-        <div className="container mx-auto px-6">
-
-          {/* Titulo de la seccion */}
-          <div className="text-center max-w-4xl mx-auto mb-16 md:mb-20">
-            <h2 className="text-3xl md:text-4xl lg:text-6xl font-bold text-gray-900 mb-6 md:mb-8">
-              Te presentamos nuestro primer proyecto...
-              <span className="bg-gradient-to-r from-green-500 to-yellow-200 bg-clip-text text-transparent"> BuzzBot</span>
-            </h2>
-            <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
-              Combinamos inteligencia artificial y bases de datos ministeriales para ayudarte con la gestión educativa, 
-              no sabes como proceder ante un protocolo?, necesitas desarollar un PME?, sabes como postular a ADECO? 
-              BuzzBot te ayudará a resolver todas tus dudas.
-            </p>
-          </div>
-
-          {/* Lista de caracteristicas */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-            {features.map((feature, index) => (
-              <div key={index} className="group bg-white rounded-3xl p-6 md:p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100">
-                <div className={`bg-gradient-to-r ${feature.gradient} p-3 md:p-4 inline-flex rounded-2xl mb-4 md:mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                  <feature.icon className="h-6 w-6 md:h-8 md:w-8 text-white" />
-                </div>
-                <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3 md:mb-4">{feature.title}</h3>
-                <p className="text-gray-600 text-base md:text-lg leading-relaxed">{feature.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Seccion de modos */}
-      <section className="py-16 md:py-24 bg-gradient-to-br bg-gray-900">
-        <div className="container mx-auto px-6">
-
-          {/* Titulo de la seccion */}
-          <div className="text-center mb-12 md:mb-16">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-300 mb-4 md:mb-6">
-              No sabes en que te podemos ayudar?
-            </h2>
-            <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
-              Te presentamos los diferentes modos de BuzzBot con ejemplos de como puede ayudarte en tu institución educativa.
-            </p>
-          </div>
-
-          {/* Lista de modos */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-            {modes.map((mode, index) => (
-              <div key={index} className="bg-gray-800 rounded-2xl p-6 md:p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-700">
-                <div className="flex flex-col h-full">
-                  <div className="space-y-4 flex-1">
-                    <h3 className="text-xl md:text-2xl font-bold text-gray-300">{mode.title}</h3>
-                    <p className="text-gray-400 text-sm md:text-base">{mode.description}</p>
-                  </div>
-
-                  <div className="mt-auto space-y-4">
-                    {/* Botón para expandir y ver ejemplos */}
-                    <button onClick={() => setExpandedMode(expandedMode === index ? null : index)} className="mt-6 px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-colors duration-300 w-full text-left text-sm md:text-base">
-                      {expandedMode === index ? 'Ocultar ejemplos' : 'Ver ejemplos'}
-                    </button>
-
-                    {/* Ejemplos expandibles */}
-                    {expandedMode === index && (
-                      <div className="mt-4 space-y-2">
-                        {mode.examples.map((example, idx) => (
-                          <div key={idx} className="p-3 md:p-4 bg-gray-700 rounded-lg border-l-4 border-primary">
-                            <p className="text-gray-300 text-sm md:text-base">{example}</p>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-      <div className="m-8 md:m-16 lg:m-32">
-        <CallToAction/>
-      </div>
-      <Footer />
+    <div
+      ref={ref}
+      style={{
+        '--index': index,
+        animation: isVisible ? 'scroll-in 600ms cubic-bezier(0.16, 1, 0.3, 1) forwards' : 'none',
+        animationDelay: isVisible ? `calc(var(--index) * 80ms)` : '0',
+      }}
+    >
+      {children}
     </div>
   );
-};
+}
 
-export default Home;
+export default function Home() {
+  const serviceCards = [
+    {
+      title: 'INFRAESTRUCTURA SELF-HOSTED',
+      description: 'reducción real de costos operativos',
+    },
+    {
+      title: 'INTEGRACIONES A MEDIDA',
+      description: 'hardware y software que hablan entre sí',
+    },
+    {
+      title: 'DESARROLLO WEB',
+      description: 'producto terminado, no plantilla',
+    },
+    {
+      title: 'SISTEMAS DE INFORMACIÓN',
+      description: 'datos que sirven para decidir',
+    },
+  ];
+
+  const philosophyCards = [
+    {
+      title: 'SIN RELLENO',
+      body: 'Nada de servicios que no vayas a usar. Cada línea tiene un propósito.',
+    },
+    {
+      title: 'DOCUMENTADO',
+      body: 'Todo queda escrito. Puedes continuar con cualquier equipo en el futuro.',
+    },
+    {
+      title: 'ROADMAP INCLUIDO',
+      body: 'Te entregamos el ahora y el mapa de crecimiento — con o sin nosotros.',
+    },
+  ];
+
+  const projectCards = [
+    {
+      tags: 'SELF-HOSTED · INFRAESTRUCTURA',
+      name: 'STACK PROPIO — CERO DEPENDENCIA',
+      description: 'Migración completa a infraestructura self-hosted para reducir costos en un 67% anual.',
+    },
+    {
+      tags: 'INTEGRACIÓN · HARDWARE',
+      name: 'SISTEMA IOT A MEDIDA',
+      description: 'Conexión de sensores físicos a dashboard web en tiempo real con alertas automáticas.',
+    },
+  ];
+
+  return (
+    <main className="pt-[72px]">
+      <section className="relative w-full min-h-screen overflow-hidden bg-bz-dark">
+        <video
+          src={heroPrincipal}
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover z-0"
+        />
+
+        <div className="absolute inset-0 bg-gradient-to-br from-[rgba(28,25,23,0.75)] via-[rgba(28,25,23,0.45)] to-[rgba(28,25,23,0.65)] z-1" />
+
+        <div className="absolute inset-0 bz-grid opacity-[0.06] z-1" />
+
+        <div className="relative z-10 flex items-center min-h-screen px-[10vw] py-20">
+          <div className="max-w-2xl">
+            <p className="font-caveat text-xl text-bz-yellow -rotate-1 mb-4">infraestructura que te pertenece →</p>
+
+            <h1 className="font-archivo-black uppercase text-white text-[clamp(52px,7vw,96px)] leading-[0.92] tracking-[-0.025em] mb-6">
+              SOLUCIONES
+              <br />
+              QUE SON <span className="text-bz-yellow">TUYAS</span>
+            </h1>
+
+            <p className="font-archivo text-lg text-white/80 max-w-lg leading-relaxed mb-4">
+              Te damos el ahora. Siempre con el futuro pensado.
+            </p>
+
+            <p className="font-caveat text-base text-bz-yellow -rotate-0.5 mb-8">— con o sin nosotros en él.</p>
+
+            <Link
+              to="/work"
+              className="inline-block px-8 py-4 bg-bz-yellow text-bz-dark font-archivo-black text-sm uppercase font-bold hover:bg-bz-dark hover:text-bz-yellow transition-all duration-200 active:translate-y-0.5"
+            >
+              VER NUESTRO TRABAJO
+            </Link>
+
+            <img
+              src={BuxWaving}
+              alt="Bux saludando"
+              className="absolute right-[8vw] bottom-[10%] h-40"
+            />
+            <p className="absolute right-[8vw] bottom-[35%] font-caveat text-base text-bz-yellow -rotate-[3deg]">
+              ¡hola!
+            </p>
+          </div>
+        </div>
+
+        <div className="absolute bottom-5 left-[10vw] font-mono text-[9px] uppercase text-white/35 tracking-widest">
+          REV 2.0 — BUZZNESS.CL — INFRAESTRUCTURA · INTEGRACIÓN · SISTEMAS
+        </div>
+
+        <div className="absolute top-8 left-8 bz-cross" />
+        <div className="absolute top-8 right-8 bz-cross" />
+        <div className="absolute bottom-8 left-8 bz-cross" />
+        <div className="absolute bottom-8 right-8 bz-cross" />
+      </section>
+
+      <section className="bg-bz-dark border-t border-[rgba(240,180,41,0.15)] border-b border-bz-yellow/15 py-10 px-[10vw]">
+        <p className="font-mono text-[10px] uppercase text-bz-yellow/50 text-center tracking-widest mb-8">
+          empresas que confían en buzzness
+        </p>
+
+        <div className="overflow-hidden">
+          <style>{`
+            @keyframes marquee {
+              0% { transform: translateX(0); }
+              100% { transform: translateX(-50%); }
+            }
+            .marquee { animation: marquee 28s linear infinite; }
+            .marquee:hover { animation-play-state: paused; }
+          `}</style>
+
+          <div className="marquee flex whitespace-nowrap">
+            {['CLIENTE A', 'CLIENTE B', 'CLIENTE C', 'CLIENTE D', 'CLIENTE E', 'CLIENTE F', 'CLIENTE G', 'CLIENTE H'].map(
+              (client, i) => (
+                <div key={i} className="flex items-center">
+                  <span className="font-archivo-black text-white/40 uppercase text-base px-12">
+                    {client}
+                  </span>
+                  {i < 7 && <div className="w-px h-6 bg-bz-yellow/20" />}
+                </div>
+              )
+            )}
+            {['CLIENTE A', 'CLIENTE B', 'CLIENTE C', 'CLIENTE D', 'CLIENTE E', 'CLIENTE F', 'CLIENTE G', 'CLIENTE H'].map(
+              (client, i) => (
+                <div key={`dup-${i}`} className="flex items-center">
+                  <span className="font-archivo-black text-white/40 uppercase text-base px-12">
+                    {client}
+                  </span>
+                  {i < 7 && <div className="w-px h-6 bg-bz-yellow/20" />}
+                </div>
+              )
+            )}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-bz-paper bz-grid py-20 px-[10vw]">
+        <div className="flex items-center gap-3 mb-12">
+          <div className="w-8 h-px bg-bz-yellow/50" />
+          <p className="font-mono text-xs uppercase text-bz-yellow tracking-widest">lo que construimos</p>
+          <div className="w-8 h-px bg-bz-yellow/50" />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-bz-border p-px">
+          {serviceCards.map((card, idx) => (
+            <ScrollReveal key={idx} index={idx}>
+              <div
+                className="bg-bz-paper p-8 border-t-2 border-bz-yellow hover:bg-bz-dark hover:text-white transition-all duration-250 cursor-pointer"
+                style={{
+                  transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
+                }}
+              >
+                <div className="w-8 h-0.5 bg-bz-yellow mb-5" />
+                <h3 className="font-archivo-black text-base uppercase mb-3 text-bz-dark group-hover:text-bz-yellow">
+                  {card.title}
+                </h3>
+                <p className="font-archivo text-sm text-bz-dark/60 line-clamp-2">{card.description}</p>
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
+
+        <div className="absolute top-8 left-8 bz-cross" />
+        <div className="absolute top-8 right-8 bz-cross" />
+        <div className="absolute bottom-8 left-8 bz-cross" />
+        <div className="absolute bottom-8 right-8 bz-cross" />
+      </section>
+
+      <section className="bg-bz-paper bz-grid py-32 px-[10vw] border-t border-bz-border relative">
+        <div className="grid grid-cols-1 lg:grid-cols-[55fr_45fr] gap-20 lg:gap-20">
+          <div>
+            <div className="flex items-center gap-3 mb-10">
+              <div className="w-8 h-px bg-bz-yellow/50" />
+              <p className="font-mono text-xs uppercase text-bz-yellow tracking-widest">nuestra forma</p>
+              <div className="w-8 h-px bg-bz-yellow/50" />
+            </div>
+
+            <h2 className="font-archivo-black uppercase text-bz-dark text-[clamp(44px,5vw,72px)] leading-[0.92] tracking-[-0.02em] mb-6">
+              NADA QUE
+              <br />
+              NO SE USE.
+              <br />
+              TODO TUYO.
+            </h2>
+
+            <p className="font-caveat text-lg text-bz-yellow -rotate-1 mb-8">así trabajamos desde el primer día →</p>
+
+            <img src={BuxNormal} alt="Bux normal" className="h-40 mt-8" />
+            <p className="font-caveat text-sm text-bz-yellow mt-2">soy Bux, tu guía técnico</p>
+          </div>
+
+          <div className="space-y-px bg-bz-border p-px">
+            {philosophyCards.map((card, idx) => (
+              <div key={idx} className="bg-bz-paper border-l-4 border-bz-yellow p-6">
+                <h3 className="font-archivo-black text-sm uppercase text-bz-dark mb-3">{card.title}</h3>
+                <p className="font-archivo text-sm text-bz-dark/65 leading-relaxed">{card.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="absolute top-8 left-8 bz-cross" />
+        <div className="absolute top-8 right-8 bz-cross" />
+        <div className="absolute bottom-8 left-8 bz-cross" />
+        <div className="absolute bottom-8 right-8 bz-cross" />
+      </section>
+
+      <section className="bg-bz-dark py-32 px-[10vw]">
+        <div className="mb-16">
+          <p className="font-mono text-xs text-white/30 uppercase tracking-widest mb-4">proyectos</p>
+          <h2 className="font-archivo-black uppercase text-white text-[clamp(48px,5vw,72px)] leading-[0.92] mb-4">
+            LO QUE
+            <br />
+            <span className="text-bz-yellow">HEMOS CONSTRUIDO</span>
+          </h2>
+          <p className="font-caveat text-lg text-bz-yellow -rotate-1">algunos de ellos →</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-bz-border p-px mb-12">
+          {projectCards.map((project, idx) => (
+            <ScrollReveal key={idx} index={idx}>
+              <div className="bg-[#252220] border border-[rgba(240,180,41,0.1)] overflow-hidden hover:border-[rgba(240,180,41,0.4)] transition-all duration-250 cursor-pointer">
+                <div className="bg-[#2C2A27] h-56 overflow-hidden hover:scale-105 transition-transform duration-[400ms]" />
+
+                <div className="p-6">
+                  <p className="font-mono text-xs uppercase text-bz-yellow tracking-widest letter-spacing-0.15em mb-2">
+                    {project.tags}
+                  </p>
+                  <h3 className="font-archivo-black text-white uppercase text-xl mb-3">{project.name}</h3>
+                  <p className="font-archivo text-sm text-white/55 leading-relaxed mb-4">{project.description}</p>
+                  <a
+                    href="#"
+                    className="font-archivo-black text-bz-yellow text-xs uppercase tracking-widest hover:letter-spacing-widest transition-all duration-300"
+                  >
+                    VER MÁS →
+                  </a>
+                </div>
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
+
+        <div className="text-center">
+          <a
+            href="/work"
+            className="font-archivo-black text-bz-yellow uppercase text-xs font-bold tracking-widest hover:text-white transition-colors duration-200"
+          >
+            VER TODOS LOS PROYECTOS →
+          </a>
+        </div>
+      </section>
+
+      <section className="relative bg-bz-yellow bz-grid py-24 px-[10vw] overflow-hidden">
+        <svg
+          className="absolute -right-20 -bottom-20 w-80 h-80 opacity-[0.06]"
+          viewBox="0 0 300 300"
+        >
+          <path d="M150 30L230 80V180L150 230L70 180V80Z" fill="#1C1917" />
+        </svg>
+
+        <div className="relative z-10 max-w-3xl mx-auto text-center">
+          <h2 className="font-archivo-black uppercase text-bz-dark text-[clamp(44px,5vw,72px)] leading-[0.95] mb-6">
+            ¿TIENES UN
+            <br />
+            PROBLEMA QUE
+            <br />
+            RESOLVER?
+          </h2>
+
+          <p className="font-caveat text-lg text-bz-dark/60 mb-10">hablemos, sin compromiso</p>
+
+          <Link
+            to="/contact"
+            className="inline-block px-10 py-5 bg-bz-dark text-bz-yellow font-archivo-black text-sm uppercase font-bold hover:bg-white hover:text-bz-dark transition-all duration-200"
+          >
+            CONTÁCTANOS
+          </Link>
+        </div>
+
+        <img
+          src={BuxHappy}
+          alt="Bux feliz"
+          className="absolute right-[10vw] bottom-0 h-40"
+        />
+        <p className="absolute right-[10vw] bottom-44 font-caveat text-sm text-bz-dark/70 -rotate-1">
+          ¡podemos ayudarte!
+        </p>
+      </section>
+    </main>
+  );
+}
