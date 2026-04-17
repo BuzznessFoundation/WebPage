@@ -14,7 +14,7 @@ export default function Navbar() {
   const textColor = useTransform(
     scrollY,
     [0, 80],
-    ['rgba(255, 255, 255, 1)', '#53391B']
+    ['rgba(255, 255, 255, 1)', 'rgba(83, 57, 27, 1)']
   );
   const borderOpacity = useTransform(scrollY, [0, 80], [0, 0.3]);
   const backgroundColor = useMotionTemplate`rgba(253, 252, 249, ${backgroundOpacity})`;

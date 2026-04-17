@@ -93,11 +93,11 @@ export default function CtaFinal() {
               color: 'var(--amber)',
             }}
           >
-            ¿Tienes un proyecto en mente?
+            Próximo paso
           </motion.div>
 
           <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-black">
-            Hablemos sin compromiso
+            Descubre cómo está tu operación
           </motion.h2>
 
           <motion.p
@@ -107,8 +107,7 @@ export default function CtaFinal() {
               color: 'var(--muted)',
             }}
           >
-            Una llamada de 30 minutos puede ser suficiente para darte un camino claro. Sin
-            letra chica, sin venta forzada.
+            Una auditoría gratuita te mostrará exactamente dónde está el desorden, cuánto dinero estás desperdiciando y qué sistema necesitas.
           </motion.p>
 
           {/* CTAs */}
@@ -130,7 +129,7 @@ export default function CtaFinal() {
               transition={{ duration: 0.3 }}
             >
               <WhatsappLogo size={18} weight="fill" />
-              Escríbenos por WhatsApp
+              Agenda una auditoría
             </motion.a>
 
             <motion.a

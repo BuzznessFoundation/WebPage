@@ -3,12 +3,38 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRef, useEffect } from 'react';
 import { Lightning, CaretDown, WhatsappLogo } from '@phosphor-icons/react';
 import { fadeUp, popIn, stagger } from '@/components/ui/AnimationVariants';
 import { WHATSAPP_NUMBER } from '@/lib/constants';
 
 export default function Hero() {
+  const videoRef = useRef<HTMLVideoElement>(null);
   const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}`;
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          video.play().catch(() => {
+            // Silently handle autoplay policy restrictions
+          });
+        } else {
+          video.pause();
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    observer.observe(video);
+
+    return () => {
+      observer.unobserve(video);
+    };
+  }, []);
 
   return (
     <section className="relative min-h-[100dvh] overflow-hidden bg-white md:flex">
@@ -16,14 +42,17 @@ export default function Hero() {
       <div className="absolute inset-0 md:relative md:order-2 md:w-1/2 md:h-auto">
         {/* Video Container */}
         <div className="relative w-full h-[100dvh] md:h-full">
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="w-full h-full object-cover"
-            src="/videos/hero.mp4"
-          />
+        <video
+          ref={videoRef}
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          width={1920}
+          height={1080}
+          className="w-full h-full object-cover"
+          src="/videos/hero.mp4"
+        />
 
           {/* Video Overlay Gradient */}
           <div className="absolute inset-0 bg-gradient-to-b from-[#53391B]/75 via-[#385066]/50 to-transparent pointer-events-none" />
@@ -54,7 +83,7 @@ export default function Hero() {
             >
               <div className="flex items-center gap-2 text-sm text-white">
                 <Lightning size={16} color="var(--amber)" weight="fill" />
-                <span>Self-hosted · Open Source · Hecho a medida</span>
+                <span>Auditoría · Integración · Control</span>
               </div>
             </motion.div>
 
@@ -63,8 +92,8 @@ export default function Hero() {
               variants={fadeUp}
               className="text-5xl md:text-6xl lg:text-6xl font-black leading-tight text-white"
             >
-              Tecnología que{' '}
-              <span className="text-gradient">trabaja para ti</span>, no al revés
+              Tu empresa tiene datos.{' '}
+              <span className="text-gradient">El problema es que no los controlas.</span>
             </motion.h1>
 
             {/* Paragraph */}
@@ -72,8 +101,7 @@ export default function Hero() {
               variants={fadeUp}
               className="max-w-lg text-lg md:text-xl font-normal text-white/75"
             >
-              Implementamos soluciones self-hosted, open-source e integraciones de IA
-              personalizadas para que tu empresa deje de depender de suscripciones costosas.
+              Buzzness convierte el caos tecnológico en un sistema ordenado, integrado y bajo tu control. Menos herramientas. Más sistema.
             </motion.p>
 
             {/* CTAs */}
@@ -95,7 +123,7 @@ export default function Hero() {
                 transition={{ duration: 0.3 }}
               >
                 <WhatsappLogo size={18} weight="fill" />
-                Cuéntanos tu proyecto
+                Agenda una auditoría
               </motion.a>
 
               <Link
@@ -106,7 +134,7 @@ export default function Hero() {
                   color: 'rgba(255, 255, 255, 0.8)',
                 }}
               >
-                Ver qué hacemos
+                Ver nuestros servicios
               </Link>
             </motion.div>
           </div>

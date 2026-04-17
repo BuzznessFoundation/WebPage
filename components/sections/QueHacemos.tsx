@@ -51,7 +51,7 @@ export default function QueHacemos() {
               width={400}
               height={400}
               className="w-full h-full object-contain"
-              unoptimized
+              sizes="(max-width: 768px) 300px, 400px"
             />
           </motion.div>
         </motion.div>
@@ -75,12 +75,12 @@ export default function QueHacemos() {
             }}
           >
             <Hexagon size={16} weight="fill" />
-            Por qué self-hosted
+            Nuestra misión
           </motion.div>
 
           {/* H2 */}
           <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-black">
-            Deja de pagar por lo{' '}
+            Ordenamos la{' '}
             <span
               style={{
                 textDecoration: '3px underline',
@@ -88,7 +88,7 @@ export default function QueHacemos() {
                 textUnderlineOffset: '6px',
               }}
             >
-              que puedes controlar
+              tecnología de tu empresa
             </span>
           </motion.h2>
 
@@ -100,16 +100,15 @@ export default function QueHacemos() {
               color: 'var(--muted)',
             }}
           >
-            Las suscripciones SaaS se acumulan. Nosotros te ayudamos a reemplazarlas con
-            soluciones propias que viven en tu infraestructura, a tu medida.
+            No vendemos más software. Integramos lo que tienes, eliminamos lo innecesario y construimos lo que falta. Todo sistema. Todo bajo control.
           </motion.p>
 
           {/* Benefits List */}
           <motion.div variants={stagger} className="flex flex-col gap-4">
             {[
-              'Sin dependencia de terceros',
-              'Costos predecibles y bajos',
-              'Tu data, en tu control',
+              'Sistemas integrados en tu infraestructura',
+              'Datos conectados y bajo tu control',
+              'Costos predecibles, sin sorpresas',
             ].map((benefit, i) => (
               <motion.div variants={fadeUp} key={i} className="flex items-start gap-3">
                 <CheckCircle

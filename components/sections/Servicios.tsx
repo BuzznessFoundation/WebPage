@@ -54,9 +54,9 @@ export default function Servicios() {
           </motion.div>
 
           <motion.h2 variants={fadeUp} className="text-3xl md:text-5xl font-black mb-4">
-            Soluciones reales para{' '}
+            Soluciones para ordenar{' '}
             <br />
-            problemas reales
+            tu operación
           </motion.h2>
 
           <motion.div
@@ -74,8 +74,7 @@ export default function Servicios() {
               color: 'var(--muted)',
             }}
           >
-            Cada implementación está pensada para tu contexto específico, no para el cliente
-            promedio.
+            Cada solución está diseñada para integrar, automatizar y devolverte el control de tu negocio.
           </motion.p>
         </motion.div>
 

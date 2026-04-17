@@ -1,8 +1,8 @@
-// Datos reales - ACTUALIZAR CON VALORES REALES DE LA EMPRESA
-export const WHATSAPP_NUMBER = '56912345678'; // Chile: sin +, con código de país
-export const WHATSAPP_MESSAGE = 'Hola, me interesa conocer más sobre sus servicios.';
-export const INSTAGRAM_URL = 'https://instagram.com/consultora';
-export const CONTACT_EMAIL = 'hola@consultora.cl';
+// Datos reales - Buzzness
+export const WHATSAPP_NUMBER = '56912345678'; // Chile: sin +, con código de país - ACTUALIZAR
+export const WHATSAPP_MESSAGE = 'Hola, me interesa agendar una auditoría gratuita.';
+export const INSTAGRAM_URL = 'https://instagram.com/buzzness'; // ACTUALIZAR
+export const CONTACT_EMAIL = 'hola@buzzness.cl'; // ACTUALIZAR
 export const MASCOT_NAME = 'Bux';
 
 export interface Servicio {
@@ -15,46 +15,46 @@ export interface Servicio {
 
 export const SERVICIOS: Servicio[] = [
   {
-    titulo: 'Self-Hosting',
-    descripcion: 'Deploy de tus propias herramientas sin depender de terceros',
-    icono: 'HardDrives',
+    titulo: 'Auditoría Tecnológica',
+    descripcion: 'Analizamos tu operación para detectar desorden, costos innecesarios y oportunidades reales.',
+    icono: 'MagnifyingGlass',
     color: '--teal',
-    badge: 'Infraestructura',
+    badge: 'Diagnóstico',
   },
   {
-    titulo: 'Integraciones IA',
-    descripcion: 'Asistentes y automatizaciones hechos a medida para tu negocio',
-    icono: 'Robot',
+    titulo: 'Sistemas Integrados (ERP/CRM)',
+    descripcion: 'Centralizamos tu operación en un sistema único bajo tu control, sin dependencias.',
+    icono: 'Database',
     color: '--pink',
-    badge: 'Inteligencia Artificial',
+    badge: 'Integración',
   },
   {
-    titulo: 'Open Source Stack',
-    descripcion: 'Implementamos las mejores herramientas del ecosistema open-source',
-    icono: 'GitBranch',
-    color: '--green',
-    badge: 'Open Source',
-  },
-  {
-    titulo: 'Automatización',
-    descripcion: 'Flujos de trabajo automáticos que eliminan tareas repetitivas',
+    titulo: 'Automatización de Procesos',
+    descripcion: 'Eliminamos tareas manuales y conectamos tu negocio para que funcione sin fricción.',
     icono: 'Gear',
+    color: '--green',
+    badge: 'Eficiencia',
+  },
+  {
+    titulo: 'Visualización & Control (BI)',
+    descripcion: 'Transformamos tus datos en dashboards claros para decisiones reales.',
+    icono: 'ChartLine',
     color: '--amber',
-    badge: 'Productividad',
+    badge: 'Datos',
   },
   {
-    titulo: 'Consultoría Tech',
-    descripcion: 'Diagnóstico y hoja de ruta tecnológica para tu empresa',
-    icono: 'Compass',
+    titulo: 'Desarrollo a Medida',
+    descripcion: 'Creamos soluciones específicas cuando ninguna herramienta existente se adapta.',
+    icono: 'Code',
     color: '--sky',
-    badge: 'Estrategia',
+    badge: 'Customizado',
   },
   {
-    titulo: 'Soporte continuo',
-    descripcion: 'Acompañamiento técnico con respuesta rápida y atención personalizada',
+    titulo: 'Soporte & Evolución',
+    descripcion: 'Mantenemos, optimizamos y adaptamos tu sistema mientras tu negocio crece.',
     icono: 'Headset',
     color: '--brown',
-    badge: 'Soporte',
+    badge: 'Continuidad',
   },
 ];
 
@@ -69,25 +69,25 @@ export const PROCESO_PASOS: PasoProceso[] = [
   {
     numero: '01',
     titulo: 'Diagnóstico',
-    descripcion: 'Analizamos tu operación actual y detectamos oportunidades',
+    descripcion: 'Entendemos tu negocio, procesos y herramientas actuales. Te mostramos el mapa claro de lo que está desordenado.',
     mascotPose: 'thinking',
   },
   {
     numero: '02',
-    titulo: 'Propuesta',
-    descripcion: 'Diseñamos una solución a medida con tecnología probada',
+    titulo: 'Diseño del Sistema',
+    descripcion: 'Definimos la arquitectura ideal para tu operación. Un plan priorizado listo para implementar.',
     mascotPose: 'builder',
   },
   {
     numero: '03',
     titulo: 'Implementación',
-    descripcion: 'Desplegamos y configuramos todo, tú solo ves el resultado',
+    descripcion: 'Construimos e integramos el sistema. ERP, CRM, automatizaciones, BI —todo funcionando en simultaneo.',
     mascotPose: 'thumbsup',
   },
   {
     numero: '04',
-    titulo: 'Soporte',
-    descripcion: 'Te acompañamos con documentación y soporte continuo post-lanzamiento',
+    titulo: 'Optimización Continua',
+    descripcion: 'Mejoramos y evolucionamos el sistema. Tu operación eficiente, escalable y bajo control.',
     mascotPose: 'waving',
   },
 ];
