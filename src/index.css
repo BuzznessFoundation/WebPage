@@ -3,12 +3,11 @@
    Reemplaza por completo los tokens anteriores (no relacionados al sistema).
    Fuente de verdad de tokens: buzzdesign 01–05b + tailwind.config.js
    ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Darker+Grotesque:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=Darker+Grotesque:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap');
 
 :root {
   /* Estructurales */
