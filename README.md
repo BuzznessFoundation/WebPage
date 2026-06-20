@@ -1,118 +1,75 @@
-# Landing SPA - Consultora Tech
+# React + TypeScript + Vite
 
-Landing page estática con Next.js 14, Tailwind CSS y Framer Motion para consultora tech especializada en soluciones self-hosted, open-source e integraciones de IA personalizadas.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Stack
+Currently, two official plugins are available:
 
-- **Next.js 14** - App Router con `output: 'export'` para static export
-- **Tailwind CSS v3** - Estilos utilities
-- **Framer Motion** - Animaciones
-- **@phosphor-icons/react** - Sistema de iconos
-- **Montserrat** - Tipografía desde Google Fonts
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## Estructura del Proyecto
+## React Compiler
 
-```
-app/
-├── globals.css          # Variables CSS y estilos base
-├── layout.tsx           # Root layout
-├── page.tsx             # Home page
-├── not-found.tsx        # Página 404
-components/
-├── layout/
-│   ├── Navbar.tsx       # Navegación responsive
-│   └── Footer.tsx       # Footer
-├── sections/
-│   ├── Hero.tsx         # Hero section
-│   ├── QueHacemos.tsx   # Propuesta de valor
-│   ├── Servicios.tsx    # Grid de servicios
-│   ├── Proceso.tsx      # Proceso de trabajo
-│   ├── Stack.tsx        # Tecnologías
-│   └── CtaFinal.tsx     # Call-to-action final
-└── ui/
-    └── AnimationVariants.ts  # Variantes Framer Motion
-lib/
-└── constants.ts         # Datos y constantes
-```
+The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
 
-## Instalación
+Note: This will impact Vite dev & build performances.
 
-```bash
-npm install
-```
+## Expanding the ESLint configuration
 
-## Desarrollo
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-```bash
-npm run dev
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
+
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 ```
 
-Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-## Build
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
-```bash
-npm run build
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 ```
-
-Genera archivos estáticos en `/out` para deploy en Netlify.
-
-## Configuración de Datos
-
-Actualiza los siguientes valores en `lib/constants.ts`:
-
-- `MASCOT_NAME` - Nombre de la mascota
-- `WHATSAPP_NUMBER` - Número WhatsApp (sin +, con código país)
-- `INSTAGRAM_URL` - URL del perfil Instagram
-- `CONTACT_EMAIL` - Email de contacto
-
-## Deploy a Netlify
-
-El proyecto está configurado para deployar automáticamente mediante `netlify.toml`.
-
-```bash
-npm run build && netlify deploy --prod --dir=out
-```
-
-## Paleta de Colores
-
-- `--bg`: #FDFCF9 (blanco cálido)
-- `--surface`: #F5F0E8 (gris claro)
-- `--brown`: #53391B (texto principal)
-- `--amber`: #E8A019 (CTAs)
-- `--teal`: #385066 (secundario)
-- `--green`: #50AA47 (éxito)
-- `--pink`: #E7326E (IA)
-- `--sky`: #15B5DB (integraciones)
-- `--muted`: #7A6B58 (texto secundario)
-
-## Tipografía
-
-- Montserrat 400 - Cuerpo
-- Montserrat 600 - Subtítulos
-- Montserrat 800 - Títulos
-
-## Mascota
-
-Imágenes en `/public/mascot/`:
-
-- `mascot-default.png` - Hero
-- `mascot-waving.png` - Qué hacemos
-- `mascot-thinking.png` - Stack
-- `mascot-builder.png` - Proceso (paso 2)
-- `mascot-thumbsup.png` - Proceso (paso 3)
-- `mascot-celebrating.png` - CTA Final
-- `mascot-404.png` - Página 404
-- `mascot-idea.png` - Servicios IA
-- `mascot-dark.png` - Variante oscura
-
-## Videos
-
-- `/public/videos/hero.mp4` - Video de fondo Hero (< 8MB)
-
-## Notas
-
-- No usar `h-screen`, siempre `min-h-[100dvh]`
-- Solo `transform` y `opacity` en animaciones
-- Usar Framer Motion `useScroll`, nunca `window.addEventListener`
-- Colores con variables CSS, nunca valores hardcodeados
