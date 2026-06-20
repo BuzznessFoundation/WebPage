@@ -1,20 +1,15 @@
-// tailwind.config.js
-// Token canónico del sistema Buzzness + utilidades de motion para el sitio.
-// Base: buzzdesign/tailwind.config.js — no se modifican los tokens existentes,
-// solo se agregan keyframes/animation necesarios para el scroll-reveal del hero.
-
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {
-        'bz-negro': '#0A0A0A', // Estructura, bordes, sombra offset
-        'bz-ambar': '#D4820A', // Acento, CTA, tipografía destacada
-        'bz-beige': '#F0EAD6', // Superficie canvas / fondo de página
-        'bz-crema': '#F5F1E8', // Superficie alt / cards light
-        'bz-grafito': '#2C2C2A', // Texto secundario
-        'bz-muted': '#888780', // Texto terciario, metadatos
+        'bz-negro': '#0A0A0A',
+        'bz-ambar': '#D4820A',
+        'bz-beige': '#F0EAD6',
+        'bz-crema': '#F5F1E8',
+        'bz-grafito': '#2C2C2A',
+        'bz-muted': '#888780',
       },
       fontFamily: {
         display: ['Anton', 'Arial Black', 'Impact', 'sans-serif'],
@@ -36,11 +31,11 @@ module.exports = {
         'bz-hero': ['72px', { letterSpacing: '-2px', lineHeight: '0.95' }],
       },
       borderRadius: {
-        bz: '10px', // Radio universal de contenedores
-        'bz-sm': '6px', // Radio de elementos decorativos pequeños
+        bz: '10px',
+        'bz-sm': '6px',
       },
       borderWidth: {
-        bz: '1.5px', // Borde estándar de componentes
+        bz: '1.5px',
       },
       spacing: {
         'bz-xs': '8px',
