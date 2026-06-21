@@ -10,8 +10,8 @@ import { Footer } from '@/components/layout/Footer'
 export default function App() {
     return (
         <div className="relative min-h-screen bz-grid-bg overflow-x-hidden">
-            <div className="relative z-[1] flex flex-col min-h-screen">
-                <Header />
+            <Header />
+            <div className="relative z-[1] flex flex-col min-h-screen pt-[73px]">
                 <main className="flex-1">
                     <Outlet />
                 </main>
