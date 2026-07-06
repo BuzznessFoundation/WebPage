@@ -2,9 +2,7 @@ import { Container } from '@/components/layout/Container'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { Badge } from '@/components/ui/Badge'
 import { Card } from '@/components/ui/Card'
-import { ImagePlaceholder } from '@/components/ui/Placeholder'
 import { Contact } from '@/components/sections/Contact'
-import { skills } from '@/data/skills'
 import { cn } from '@/lib/utils'
 
 // ─── Project showcase data ────────────────────────────────────────────────────
@@ -23,6 +21,7 @@ interface ProjectShowcase {
     icon: string
     bg: BgVariant
     flip?: boolean
+    image?: string
 }
 
 const SHOWCASE: ProjectShowcase[] = [
@@ -112,11 +111,17 @@ function ProjectSection({ project }: { project: ProjectShowcase }) {
 
                     {/* Image placeholder */}
                     <div className={cn(flip ? 'order-1 lg:order-2' : 'order-1')}>
-                        <img
-                            src={project.image}
-                            alt={project.title}
-                            className="w-full aspect-[3/4] object-cover block"
-                        />
+                        {project.image ? (
+                            <img
+                                src={project.image}
+                                alt={project.title}
+                                className="w-full aspect-[3/4] object-cover block"
+                            />
+                        ) : (
+                            <div className="w-full aspect-[3/4] bg-bz-negro/5 flex items-center justify-center">
+                                <i className="fa-solid fa-image text-4xl text-bz-negro/20" />
+                            </div>
+                        )}
                     </div>
 
                     {/* Content */}

@@ -1,5 +1,3 @@
-import { Container } from './Container'
-
 const NAV_LINKS = [
     { label: 'SOBRE MÍ', to: '/sobre-mi' },
     { label: 'SERVICIOS', to: '/servicios' },
