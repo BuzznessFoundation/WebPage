@@ -1,9 +1,9 @@
 import { NAV_ITEMS } from '@/data/navigation'
 
 const LEGAL_LINKS = [
-    { label: 'Privacidad', to: '#' },
-    { label: 'Términos', to: '#' },
-    { label: 'Contacto', to: 'mailto:hola@buzzness.cl' },
+    { label: 'Privacidad', to: '/privacidad' },
+    { label: 'Términos', to: '/terminos' },
+    { label: 'Contacto', to: '/contacto' },
 ]
 
 const SOCIAL_LINKS = [
