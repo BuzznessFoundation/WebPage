@@ -1,9 +1,16 @@
 import { Container } from '@/components/layout/Container'
 import { SectionLabel } from '@/components/ui/SectionLabel'
+import { SeoMeta } from '@/components/ui/SeoMeta'
 
 export default function PrivacyPage() {
     return (
-        <section className="py-bz-2xl">
+        <>
+            <SeoMeta
+                title="Política de privacidad"
+                description="Cómo recopilamos y usamos tus datos en Buzzness. Sin cookies de tracking, sin analytics de terceros, sin compartir información con nadie."
+                path="/privacidad"
+            />
+            <section className="py-bz-2xl">
             <Container size="narrow">
                 <SectionLabel>Legal</SectionLabel>
                 <h1 className="font-display uppercase text-bz-negro leading-[0.95] text-[10vw] sm:text-bz-xl md:text-[56px] tracking-[-1px] mb-bz-md">
@@ -65,5 +72,6 @@ export default function PrivacyPage() {
                 </div>
             </Container>
         </section>
+        </>
     )
 }

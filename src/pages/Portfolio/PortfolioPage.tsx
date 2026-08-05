@@ -1,11 +1,17 @@
 import { Container } from '@/components/layout/Container'
 import { SectionLabel } from '@/components/ui/SectionLabel'
+import { SeoMeta } from '@/components/ui/SeoMeta'
 import { Projects } from '@/components/sections/Projects'
 import { Contact } from '@/components/sections/Contact'
 
 export default function PortfolioPage() {
     return (
         <>
+            <SeoMeta
+                title="Proyectos"
+                description="Evidencia real de sistemas construidos: analítica educacional, CRM open source, automatización con n8n e infraestructura self-hosted. Datos de GitHub, no mockups."
+                path="/proyectos"
+            />
             <section className="pt-bz-2xl pb-bz-md">
                 <Container size="wide">
                     <SectionLabel>Proyectos</SectionLabel>

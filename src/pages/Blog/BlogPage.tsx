@@ -2,6 +2,7 @@ import { Container } from '@/components/layout/Container'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { Card } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Badge'
+import { SeoMeta } from '@/components/ui/SeoMeta'
 import { Contact } from '@/components/sections/Contact'
 
 const ARTICLE = {
@@ -42,6 +43,11 @@ const ARTICLE = {
 export default function BlogPage() {
     return (
         <>
+            <SeoMeta
+                title="Blog"
+                description="Casos reales de implementación: CRM, automatización, infraestructura y decisiones técnicas explicadas desde el problema de negocio."
+                path="/blog"
+            />
             <section className="pt-bz-2xl pb-bz-md">
                 <Container size="wide">
                     <SectionLabel>Blog</SectionLabel>

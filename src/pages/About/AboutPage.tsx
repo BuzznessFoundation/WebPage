@@ -2,6 +2,7 @@ import { Container } from '@/components/layout/Container'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { Badge } from '@/components/ui/Badge'
 import { Card } from '@/components/ui/Card'
+import { SeoMeta } from '@/components/ui/SeoMeta'
 import { Contact } from '@/components/sections/Contact'
 import { cn } from '@/lib/utils'
 
@@ -189,6 +190,11 @@ function ProjectSection({ project }: { project: ProjectShowcase }) {
 export default function AboutPage() {
     return (
         <>
+            <SeoMeta
+                title="Sobre mí"
+                description="Cristián Alvarado — ingeniero que construye sistemas. Automatización, datos e infraestructura propia. Buzzness es la evidencia de cómo trabajo."
+                path="/sobre-mi"
+            />
             {/* ── Hero: foto + bio + stack ───────────────────────────────── */}
             <section className="pt-bz-2xl pb-bz-2xl">
                 <Container size="wide">

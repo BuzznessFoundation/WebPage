@@ -1,5 +1,6 @@
 import { Container } from '@/components/layout/Container'
 import { SectionLabel } from '@/components/ui/SectionLabel'
+import { SeoMeta } from '@/components/ui/SeoMeta'
 import { WebDesignSection } from '@/components/sections/WebDesignSection'
 import { SocialMediaSection } from '@/components/sections/SocialMediaSection'
 import { AutomationSection } from '@/components/sections/AutomationSection'
@@ -9,6 +10,11 @@ import { Contact } from '@/components/sections/Contact'
 export default function ServicesPage() {
     return (
         <>
+            <SeoMeta
+                title="Servicios"
+                description="Automatización de procesos, CRM open source, infraestructura propia y desarrollo web. Cuatro formas de resolver lo técnico sin tercerizar el criterio."
+                path="/servicios"
+            />
             <section className="pt-bz-2xl pb-bz-md">
                 <Container size="wide">
                     <SectionLabel>Servicios</SectionLabel>

@@ -1,9 +1,16 @@
 import { Container } from '@/components/layout/Container'
 import { SectionLabel } from '@/components/ui/SectionLabel'
+import { SeoMeta } from '@/components/ui/SeoMeta'
 
 export default function TermsPage() {
     return (
-        <section className="py-bz-2xl">
+        <>
+            <SeoMeta
+                title="Términos y condiciones"
+                description="Términos de servicio de Buzzness. Trabajo profesional, comunicación directa, responsabilidad compartida. Sin suscripciones escondidas."
+                path="/terminos"
+            />
+            <section className="py-bz-2xl">
             <Container size="narrow">
                 <SectionLabel>Legal</SectionLabel>
                 <h1 className="font-display uppercase text-bz-negro leading-[0.95] text-[10vw] sm:text-bz-xl md:text-[56px] tracking-[-1px] mb-bz-md">
@@ -65,5 +72,6 @@ export default function TermsPage() {
                 </div>
             </Container>
         </section>
+        </>
     )
 }
