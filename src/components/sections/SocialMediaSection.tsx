@@ -5,7 +5,12 @@ import { Badge } from '@/components/ui/Badge'
 import { ImagePlaceholder } from '@/components/ui/Placeholder'
 import { ProblemSolution } from './ProblemSolution'
 
-const STACK = ['Calendario editorial', 'Sistema de diseño', 'Meta Business Suite', 'Métricas reales']
+const STACK = [
+    'Calendario editorial',
+    'Sistema de diseño',
+    'Meta Business Suite',
+    'Métricas reales',
+]
 
 /**
  * Servicio 02 — Gestión de redes sociales.
@@ -23,9 +28,9 @@ export function SocialMediaSection() {
                 </h2>
 
                 <p className="font-body text-bz-lead text-bz-grafito max-w-[620px] mb-bz-lg">
-                    El problema casi nunca es la frecuencia de publicación. Es que nadie
-                    mide qué publicación realmente trajo un cliente, y cada pieza se ve
-                    distinta a la anterior.
+                    El problema casi nunca es la frecuencia de publicación. Es que nadie mide qué
+                    publicación realmente trajo un cliente, y cada pieza se ve distinta a la
+                    anterior.
                 </p>
 
                 <ProblemSolution
@@ -44,16 +49,16 @@ export function SocialMediaSection() {
                                 Caso real
                             </span>
                             <p className="font-body text-bz-sm text-bz-negro leading-[1.6]">
-                                Para una empresa de robótica educativa se construyó un sistema
-                                de diseño propio — tipografía, paleta y tono fijos — usado tanto
-                                en su sitio como en cada pieza de redes, eliminando el efecto
-                                "collage" de contenido hecho por personas distintas.
+                                Para una empresa de robótica educativa se construyó un sistema de
+                                diseño propio — tipografía, paleta y tono fijos — usado tanto en su
+                                sitio como en cada pieza de redes, eliminando el efecto "collage" de
+                                contenido hecho por personas distintas.
                             </p>
                         </Card>
                         <p className="font-body text-bz-xs text-bz-muted leading-[1.6]">
-                            Cada publicación queda conectada al resto del sistema: si genera
-                            una conversación, esa conversación entra directo a tu agenda o tu
-                            WhatsApp — sin perderse en el camino.
+                            Cada publicación queda conectada al resto del sistema: si genera una
+                            conversación, esa conversación entra directo a tu agenda o tu WhatsApp —
+                            sin perderse en el camino.
                         </p>
                     </div>
 

@@ -13,7 +13,7 @@ export function Header() {
     const [open, setOpen] = useState(false)
     const [scrolled, setScrolled] = useState(false)
     const [darkMode, setDarkMode] = useState(
-        () => window.matchMedia('(prefers-color-scheme: dark)').matches
+        () => window.matchMedia('(prefers-color-scheme: dark)').matches,
     )
 
     useEffect(() => {
@@ -40,9 +40,7 @@ export function Header() {
         <header
             className={cn(
                 'fixed top-0 left-0 right-0 z-50 border-b transition-colors duration-200',
-                scrolled
-                    ? 'bg-bz-beige border-bz-negro/20'
-                    : 'bg-transparent border-transparent'
+                scrolled ? 'bg-bz-beige border-bz-negro/20' : 'bg-transparent border-transparent',
             )}
         >
             <Container>
@@ -53,14 +51,22 @@ export function Header() {
                         onClick={() => setOpen(false)}
                     >
                         <img
-                            src={darkMode ? '/icons/logo-amber.svg' : scrolled ? '/icons/logo-amber.svg' : '/icons/logo-black.svg'}
+                            src={
+                                darkMode
+                                    ? '/icons/logo-amber.svg'
+                                    : scrolled
+                                      ? '/icons/logo-amber.svg'
+                                      : '/icons/logo-black.svg'
+                            }
                             alt="Buzzness"
                             className="w-[40px] h-[40px]"
                         />
-                        <span className={cn(
-                            'font-display text-bz-lg tracking-[-0.5px] uppercase',
-                            scrolled ? 'text-bz-negro' : 'text-bz-negro'
-                        )}>
+                        <span
+                            className={cn(
+                                'font-display text-bz-lg tracking-[-0.5px] uppercase',
+                                scrolled ? 'text-bz-negro' : 'text-bz-negro',
+                            )}
+                        >
                             Buzzness
                         </span>
                     </NavLink>
@@ -74,7 +80,9 @@ export function Header() {
                                 className={({ isActive }) =>
                                     cn(
                                         'font-body text-bz-label font-bold tracking-[2px] transition-colors',
-                                        isActive ? 'text-bz-ambar' : 'text-bz-negro hover:text-bz-ambar'
+                                        isActive
+                                            ? 'text-bz-ambar'
+                                            : 'text-bz-negro hover:text-bz-ambar',
                                     )
                                 }
                             >
@@ -98,10 +106,14 @@ export function Header() {
 
             {/* Panel mobile */}
             {open && (
-                <div className={cn(
-                    'md:hidden border-t transition-colors duration-200',
-                    scrolled ? 'bg-bz-beige border-bz-negro/20' : 'bg-bz-beige border-bz-negro/20'
-                )}>
+                <div
+                    className={cn(
+                        'md:hidden border-t transition-colors duration-200',
+                        scrolled
+                            ? 'bg-bz-beige border-bz-negro/20'
+                            : 'bg-bz-beige border-bz-negro/20',
+                    )}
+                >
                     <Container>
                         <nav className="flex flex-col gap-bz-sm py-bz-md">
                             {NAV_ITEMS.map((item) => (
@@ -112,7 +124,7 @@ export function Header() {
                                     className={({ isActive }) =>
                                         cn(
                                             'font-body text-bz-md font-bold tracking-[1px] border-b border-bz-negro/10 pb-bz-sm',
-                                            isActive ? 'text-bz-ambar' : 'text-bz-negro'
+                                            isActive ? 'text-bz-ambar' : 'text-bz-negro',
                                         )
                                     }
                                 >

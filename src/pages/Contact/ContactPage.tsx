@@ -18,8 +18,8 @@ export default function ContactPage() {
                         Escríbeme.
                     </h1>
                     <p className="font-body text-bz-lead text-bz-grafito max-w-[480px]">
-                        Cuéntame qué proceso te está quitando tiempo, o qué sistema
-                        necesitas que exista. Respondo directo, sin formularios de relleno.
+                        Cuéntame qué proceso te está quitando tiempo, o qué sistema necesitas que
+                        exista. Respondo directo, sin formularios de relleno.
                     </p>
                 </Container>
             </section>

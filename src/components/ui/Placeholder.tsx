@@ -40,14 +40,14 @@ export function ImagePlaceholder({
                 'relative w-full rounded-bz border-2 border-dashed flex flex-col items-center justify-center text-center px-bz-md py-bz-lg gap-bz-xs',
                 ASPECT_CLASS[aspect],
                 invert ? 'border-bz-beige/25 bg-bz-beige/5' : 'border-bz-negro/25 bg-bz-crema',
-                className
+                className,
             )}
         >
             <i className={cn(icon, 'text-3xl', invert ? 'text-bz-beige/30' : 'text-bz-negro/30')} />
             <span
                 className={cn(
                     'font-mono text-bz-xs uppercase tracking-[1.5px]',
-                    invert ? 'text-bz-beige/50' : 'text-bz-negro/50'
+                    invert ? 'text-bz-beige/50' : 'text-bz-negro/50',
                 )}
             >
                 {label}
@@ -56,7 +56,7 @@ export function ImagePlaceholder({
                 <p
                     className={cn(
                         'font-body text-bz-xs max-w-[320px] leading-[1.5]',
-                        invert ? 'text-bz-beige/40' : 'text-bz-negro/40'
+                        invert ? 'text-bz-beige/40' : 'text-bz-negro/40',
                     )}
                 >
                     {description}

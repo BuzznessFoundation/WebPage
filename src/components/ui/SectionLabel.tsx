@@ -18,13 +18,13 @@ export function SectionLabel({ children, className, invert = false }: SectionLab
             <span
                 className={cn(
                     'block w-[2px] h-[14px] shrink-0',
-                    invert ? 'bg-bz-beige' : 'bg-bz-negro'
+                    invert ? 'bg-bz-beige' : 'bg-bz-negro',
                 )}
             />
             <span
                 className={cn(
                     'font-body text-bz-label font-bold uppercase tracking-[3px]',
-                    invert ? 'text-bz-beige' : 'text-bz-negro'
+                    invert ? 'text-bz-beige' : 'text-bz-negro',
                 )}
             >
                 {children}

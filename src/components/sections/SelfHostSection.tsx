@@ -28,12 +28,13 @@ export function SelfHostSection() {
                 <SectionLabel invert>04 — Sistemas self-host</SectionLabel>
 
                 <h2 className="font-display uppercase text-bz-beige text-bz-xl md:text-[44px] leading-[1.02] tracking-[-1px] max-w-[720px] mb-bz-md">
-                    Pagas por separado <span className="text-bz-ambar">lo que podría ser tuyo.</span>
+                    Pagas por separado{' '}
+                    <span className="text-bz-ambar">lo que podría ser tuyo.</span>
                 </h2>
 
                 <p className="font-body text-bz-lead text-bz-beige/70 max-w-[620px] mb-bz-lg">
-                    Cada SaaS por separado parece barato. Sumados — almacenamiento, agenda,
-                    chat, automatización — son una mensualidad que crece sola con tu equipo.
+                    Cada SaaS por separado parece barato. Sumados — almacenamiento, agenda, chat,
+                    automatización — son una mensualidad que crece sola con tu equipo.
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-bz-md mb-bz-lg">
@@ -43,8 +44,8 @@ export function SelfHostSection() {
                         </span>
                         <p className="font-body text-bz-sm text-bz-grafito leading-[1.6]">
                             Pagas mensualidad por Google Workspace, Calendly, Chatwoot Cloud y
-                            Zapier — cuatro cobros separados, cada uno escalando con tus
-                            usuarios, y tus datos viviendo en servidores que no controlas.
+                            Zapier — cuatro cobros separados, cada uno escalando con tus usuarios, y
+                            tus datos viviendo en servidores que no controlas.
                         </p>
                     </Card>
                     <Card variant="ambar">
@@ -52,9 +53,9 @@ export function SelfHostSection() {
                             La solución
                         </span>
                         <p className="font-body text-bz-sm text-bz-negro leading-[1.6]">
-                            La misma función, corriendo en infraestructura tuya: Nextcloud,
-                            Cal.com, Chatwoot y n8n en un solo stack Docker, detrás de una red
-                            privada — una instalación, sin mensualidad que escale sola.
+                            La misma función, corriendo en infraestructura tuya: Nextcloud, Cal.com,
+                            Chatwoot y n8n en un solo stack Docker, detrás de una red privada — una
+                            instalación, sin mensualidad que escale sola.
                         </p>
                     </Card>
                 </div>
@@ -85,7 +86,13 @@ export function SelfHostSection() {
                                             {row.selfhost}
                                         </td>
                                         <td className="font-mono text-bz-xs text-right py-bz-xs whitespace-nowrap">
-                                            <span className={row.delta < 0 ? 'text-bz-ambar' : 'text-bz-beige/60'}>
+                                            <span
+                                                className={
+                                                    row.delta < 0
+                                                        ? 'text-bz-ambar'
+                                                        : 'text-bz-beige/60'
+                                                }
+                                            >
                                                 {row.delta < 0 ? '−' : '+'}${Math.abs(row.delta)}
                                             </span>
                                         </td>
@@ -94,7 +101,10 @@ export function SelfHostSection() {
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colSpan={2} className="font-body text-bz-sm font-bold text-bz-beige py-bz-sm">
+                                    <td
+                                        colSpan={2}
+                                        className="font-body text-bz-sm font-bold text-bz-beige py-bz-sm"
+                                    >
                                         Ahorro neto mensual
                                     </td>
                                     <td className="font-mono text-bz-md font-bold text-bz-ambar text-right py-bz-sm whitespace-nowrap">

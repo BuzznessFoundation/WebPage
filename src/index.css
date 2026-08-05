@@ -10,106 +10,106 @@
 @tailwind utilities;
 
 :root {
-  /* Estructurales */
-  --color-black: #0a0a0a;
-  --color-amber: #d4820a;
-  --color-surface: #f0ead6;
-  --color-surface-alt: #f5f1e8;
-  --color-text-secondary: #2c2c2a;
-  --color-muted: #888780;
+    /* Estructurales */
+    --color-black: #0a0a0a;
+    --color-amber: #d4820a;
+    --color-surface: #f0ead6;
+    --color-surface-alt: #f5f1e8;
+    --color-text-secondary: #2c2c2a;
+    --color-muted: #888780;
 
-  /* Derivados funcionales */
-  --color-amber-hover: #e08f0f;
-  --color-amber-press: #b36e08;
-  --color-amber-subtle: rgba(212, 130, 10, 0.08);
-  --color-border: #0a0a0a;
-  --color-border-muted: rgba(10, 10, 10, 0.15);
-  --color-grid-major: rgba(180, 110, 0, 0.1);
-  --color-grid-minor: rgba(180, 110, 0, 0.04);
+    /* Derivados funcionales */
+    --color-amber-hover: #e08f0f;
+    --color-amber-press: #b36e08;
+    --color-amber-subtle: rgba(212, 130, 10, 0.08);
+    --color-border: #0a0a0a;
+    --color-border-muted: rgba(10, 10, 10, 0.15);
+    --color-grid-major: rgba(180, 110, 0, 0.1);
+    --color-grid-minor: rgba(180, 110, 0, 0.04);
 
-  /* Sombra offset brutalista — firma visual del sistema */
-  --shadow-offset-sm: 4px 4px 0px #0a0a0a;
-  --shadow-offset-md: 6px 6px 0px #0a0a0a;
-  --shadow-offset-lg: 8px 8px 0px #0a0a0a;
+    /* Sombra offset brutalista — firma visual del sistema */
+    --shadow-offset-sm: 4px 4px 0px #0a0a0a;
+    --shadow-offset-md: 6px 6px 0px #0a0a0a;
+    --shadow-offset-lg: 8px 8px 0px #0a0a0a;
 
-  color-scheme: light;
+    color-scheme: light;
 }
 
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 html {
-  scroll-behavior: smooth;
+    scroll-behavior: smooth;
 }
 
 body {
-  margin: 0;
-  background-color: var(--color-surface);
-  color: var(--color-black);
-  font-family: 'Darker Grotesque', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    background-color: var(--color-surface);
+    color: var(--color-black);
+    font-family: 'Darker Grotesque', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 a {
-  color: inherit;
+    color: inherit;
 }
 
 img {
-  max-width: 100%;
-  display: block;
+    max-width: 100%;
+    display: block;
 }
 
 ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 /* Foco visible — accesibilidad, nunca se elimina */
 :focus-visible {
-  outline: 2px solid var(--color-amber);
-  outline-offset: 2px;
+    outline: 2px solid var(--color-amber);
+    outline-offset: 2px;
 }
 
 /* Grid de fondo — la piel del sistema. Solo sobre superficie beige. */
 .bz-grid-bg {
-  background-color: var(--color-surface);
-  background-image:
-    linear-gradient(var(--color-grid-major) 1px, transparent 1px),
-    linear-gradient(90deg, var(--color-grid-major) 1px, transparent 1px),
-    linear-gradient(var(--color-grid-minor) 1px, transparent 1px),
-    linear-gradient(90deg, var(--color-grid-minor) 1px, transparent 1px);
-  background-size:
-    40px 40px,
-    40px 40px,
-    8px 8px,
-    8px 8px;
+    background-color: var(--color-surface);
+    background-image:
+        linear-gradient(var(--color-grid-major) 1px, transparent 1px),
+        linear-gradient(90deg, var(--color-grid-major) 1px, transparent 1px),
+        linear-gradient(var(--color-grid-minor) 1px, transparent 1px),
+        linear-gradient(90deg, var(--color-grid-minor) 1px, transparent 1px);
+    background-size:
+        40px 40px,
+        40px 40px,
+        8px 8px,
+        8px 8px;
 }
 
 /* Utilidad de sombra offset reutilizable — wrapper debe ser position: relative */
 .bz-shadow-wrap {
-  position: relative;
+    position: relative;
 }
 .bz-shadow-wrap::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  top: 6px;
-  left: 6px;
-  background: var(--color-black);
-  border-radius: inherit;
-  z-index: -1;
+    content: '';
+    position: absolute;
+    inset: 0;
+    top: 6px;
+    left: 6px;
+    background: var(--color-black);
+    border-radius: inherit;
+    z-index: -1;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
 }

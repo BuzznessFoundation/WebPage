@@ -19,13 +19,13 @@ export function WebDesignSection() {
                 <SectionLabel>01 — Diseño web</SectionLabel>
 
                 <h2 className="font-display uppercase text-bz-negro text-bz-xl md:text-[44px] leading-[1.02] tracking-[-1px] max-w-[720px] mb-bz-md">
-                    Tu sitio no vende porque <span className="text-bz-ambar">no fue construido para vender.</span>
+                    Tu sitio no vende porque{' '}
+                    <span className="text-bz-ambar">no fue construido para vender.</span>
                 </h2>
 
                 <p className="font-body text-bz-lead text-bz-grafito max-w-[620px] mb-bz-lg">
-                    La mayoría de los sitios de negocios chilenos sale de una plantilla
-                    genérica, pagada mes a mes, sin que nadie revise si Google realmente
-                    los está mostrando.
+                    La mayoría de los sitios de negocios chilenos sale de una plantilla genérica,
+                    pagada mes a mes, sin que nadie revise si Google realmente los está mostrando.
                 </p>
 
                 <ProblemSolution
@@ -53,14 +53,14 @@ export function WebDesignSection() {
                             </span>
                             <p className="font-body text-bz-sm text-bz-negro leading-[1.6]">
                                 Una clínica dental tenía buena actividad en su ficha de Google
-                                Business pero cero visitas registradas en su sitio. El
-                                diagnóstico encontró una URL mal configurada en la ficha — el
-                                tráfico existía, solo nunca llegaba a destino.
+                                Business pero cero visitas registradas en su sitio. El diagnóstico
+                                encontró una URL mal configurada en la ficha — el tráfico existía,
+                                solo nunca llegaba a destino.
                             </p>
                         </Card>
                         <p className="font-body text-bz-xs text-bz-muted leading-[1.6]">
-                            No es solo diseño: es asegurar que cada paso entre "alguien te
-                            busca" y "alguien te escribe" funcione.
+                            No es solo diseño: es asegurar que cada paso entre "alguien te busca" y
+                            "alguien te escribe" funcione.
                         </p>
                     </div>
                 </div>

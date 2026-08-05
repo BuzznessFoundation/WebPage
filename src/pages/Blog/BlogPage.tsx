@@ -20,22 +20,18 @@ const ARTICLE = {
     howItWorks: [
         {
             step: 'Unificación de canales',
-            detail:
-                'Todas las conversaciones — WhatsApp, Instagram, correo — llegan a un solo lugar. Sin copiar y pegar entre apps. Sin perder el hilo de quién dijo qué.',
+            detail: 'Todas las conversaciones — WhatsApp, Instagram, correo — llegan a un solo lugar. Sin copiar y pegar entre apps. Sin perder el hilo de quién dijo qué.',
         },
         {
             step: 'Tablero Kanban por etapas de venta',
-            detail:
-                'Cada contacto vive en una columna: Nuevo, En conversación, Propuesta enviada, Cerrado. Movés un contacto de columna con drag & drop y el CRM se actualiza solo.',
+            detail: 'Cada contacto vive en una columna: Nuevo, En conversación, Propuesta enviada, Cerrado. Movés un contacto de columna con drag & drop y el CRM se actualiza solo.',
         },
         {
             step: 'Etiquetado automático',
-            detail:
-                'El sistema aplica etiquetas según reglas que vos definís: "llamar-mañana" si no respondió en 48 horas, "prioridad-alta" si pidió cotización, "inactivo" si pasaron dos semanas sin contacto.',
+            detail: 'El sistema aplica etiquetas según reglas que vos definís: "llamar-mañana" si no respondió en 48 horas, "prioridad-alta" si pidió cotización, "inactivo" si pasaron dos semanas sin contacto.',
         },
     ],
-    result:
-        'Una clínica dental que probó esto pasó de perder el 30% de sus consultas por falta de seguimiento a tener un tablero donde cada paciente potencial tiene una etapa clara. El sistema no vende por ellos — pero se asegura de que nadie se caiga por olvido.',
+    result: 'Una clínica dental que probó esto pasó de perder el 30% de sus consultas por falta de seguimiento a tener un tablero donde cada paciente potencial tiene una etapa clara. El sistema no vende por ellos — pero se asegura de que nadie se caiga por olvido.',
     closing:
         'No necesitás un equipo de ingenieros ni pagar una suscripción de cientos de dólares al mes. Necesitás que las herramientas que ya usás hablen entre sí. El resto es construir el puente.',
 }
@@ -52,12 +48,11 @@ export default function BlogPage() {
                 <Container size="wide">
                     <SectionLabel>Blog</SectionLabel>
                     <h1 className="font-display uppercase text-bz-negro leading-[0.95] text-[12vw] sm:text-bz-hero tracking-[-2px] max-w-[820px]">
-                        Historias de{' '}
-                        <span className="text-bz-ambar">implementación.</span>
+                        Historias de <span className="text-bz-ambar">implementación.</span>
                     </h1>
                     <p className="font-body text-bz-lead text-bz-grafito max-w-[560px] mt-bz-md">
-                        Casos reales, lecciones aprendidas y decisiones técnicas detrás de
-                        cada proyecto.
+                        Casos reales, lecciones aprendidas y decisiones técnicas detrás de cada
+                        proyecto.
                     </p>
                 </Container>
             </section>

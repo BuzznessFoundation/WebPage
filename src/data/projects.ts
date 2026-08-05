@@ -3,94 +3,64 @@
 import type { Project } from '@/types/project'
 
 export const projects: Project[] = [
-  {
-    "id": "7BoNig24Ks5jsQCQuiI9kK",
-    "title": "BuzzINT",
-    "category": "Analítica educacional · Chile",
-    "description": "Plataforma de análisis de desempeño escolar que cruza datos públicos del MINEDUC, SIMCE y SIGE. Arquitectura medallion con modelo dimensional: 5 dimensiones conformadas, pipeline ETL automatizado y API propia. 315K líneas de Python · 52 commits.",
-    "stack": [
-      "Python",
-      "PostgreSQL",
-      "FastAPI",
-      "Docker",
-      "Polars"
-    ],
-    "status": "activo",
-    "href": "https://github.com/CrisAlva1414/BuzzINT"
-  },
-  {
-    "id": "7EH0uZpoi02gJklZjL2Ye8",
-    "title": "Chatwoot-Kanban",
-    "category": "CRM · Open Source · Integración",
-    "description": "Tablero Kanban embebido para Chatwoot CRM con drag & drop, sincronización bidireccional de atributos y auditoría completa. CI/CD activo con GitHub Actions, licencia MIT, y documentación técnica en inglés. 51 commits · 75 archivos.",
-    "stack": [
-      "Python",
-      "FastAPI",
-      "PostgreSQL",
-      "Chatwoot API",
-      "Docker"
-    ],
-    "status": "activo",
-    "href": "https://github.com/CrisAlva1414/Chatwoot-Kanban"
-  },
-  {
-    "id": "7eAHVz6r93qAvKvYUryS85",
-    "title": "Chatwoot-Tags",
-    "category": "CRM · Segmentación · WhatsApp",
-    "description": "Audience Builder para Chatwoot — segmentación de contactos con lógica AND/OR. Crea reglas desde cualquier atributo de Chatwoot y aplica etiquetas automáticamente para campañas de WhatsApp. 18 commits · 56 archivos.",
-    "stack": [
-      "Python",
-      "FastAPI",
-      "Chatwoot API",
-      "WhatsApp Business",
-      "Docker"
-    ],
-    "status": "activo",
-    "href": "https://github.com/CrisAlva1414/Chatwoot-Tags"
-  },
-  {
-    "id": "3ffdQbKU0d03YuacSy2bCf",
-    "title": "Ruki-System",
-    "category": "Infraestructura · Self-hosting",
-    "description": "NAS self-hosted sobre OrangePi 5 sirviendo Docker, Caddy reverse proxy y n8n bajo *.nas.buzzness.cl. Contenedores sin root, cap_drop completo, redes separadas, monitoreo propio. 100 commits · 51 archivos · sin dependencia de SaaS.",
-    "stack": [
-      "Docker",
-      "Caddy",
-      "n8n",
-      "Armbian",
-      "Shell"
-    ],
-    "status": "activo",
-    "href": "https://github.com/CrisAlva1414/NAS-System"
-  },
-  {
-    "id": "5w53Y2BrmcJzCrKIXDWPQw",
-    "title": "ENDDEIE 2023",
-    "category": "Machine Learning · Educación",
-    "description": "Análisis estructural de la digitalización escolar en Chile sobre 1.174 establecimientos. Pipeline de 11 pasos con KMeans, PCA, UMAP y Random Forest bootstrap. 176K líneas de Python. El hallazgo principal contradice la intuición y tiene implicancia directa para política pública.",
-    "stack": [
-      "Python",
-      "scikit-learn",
-      "PCA",
-      "UMAP",
-      "pandas"
-    ],
-    "status": "completado",
-    "href": "https://github.com/CrisAlva1414/ENDDEIE"
-  },
-  {
-    "id": "2WmK7smk36Osrem6CUhBm8",
-    "title": "Dobot Chess",
-    "category": "Robótica · Hardware-Software",
-    "description": "Brazo robótico Dobot Magician jugando ajedrez contra Stockfish en tiempo real. FastAPI + WebSockets + React, cola de turnos multijugador, calibración cartesiana del tablero físico. Dockerizado en Raspberry Pi con separación estricta de capas.",
-    "stack": [
-      "Python",
-      "FastAPI",
-      "React",
-      "WebSockets",
-      "Raspberry Pi"
-    ],
-    "status": "completado",
-    "href": "https://github.com/CrisAlva1414/Dobot-Chess"
-  }
+    {
+        id: '7BoNig24Ks5jsQCQuiI9kK',
+        title: 'BuzzINT',
+        category: 'Analítica educacional · Chile',
+        description:
+            'Plataforma de análisis de desempeño escolar que cruza datos públicos del MINEDUC, SIMCE y SIGE. Arquitectura medallion con modelo dimensional: 5 dimensiones conformadas, pipeline ETL automatizado y API propia. 315K líneas de Python · 52 commits.',
+        stack: ['Python', 'PostgreSQL', 'FastAPI', 'Docker', 'Polars'],
+        status: 'activo',
+        href: 'https://github.com/CrisAlva1414/BuzzINT',
+    },
+    {
+        id: '7EH0uZpoi02gJklZjL2Ye8',
+        title: 'Chatwoot-Kanban',
+        category: 'CRM · Open Source · Integración',
+        description:
+            'Tablero Kanban embebido para Chatwoot CRM con drag & drop, sincronización bidireccional de atributos y auditoría completa. CI/CD activo con GitHub Actions, licencia MIT, y documentación técnica en inglés. 51 commits · 75 archivos.',
+        stack: ['Python', 'FastAPI', 'PostgreSQL', 'Chatwoot API', 'Docker'],
+        status: 'activo',
+        href: 'https://github.com/CrisAlva1414/Chatwoot-Kanban',
+    },
+    {
+        id: '7eAHVz6r93qAvKvYUryS85',
+        title: 'Chatwoot-Tags',
+        category: 'CRM · Segmentación · WhatsApp',
+        description:
+            'Audience Builder para Chatwoot — segmentación de contactos con lógica AND/OR. Crea reglas desde cualquier atributo de Chatwoot y aplica etiquetas automáticamente para campañas de WhatsApp. 18 commits · 56 archivos.',
+        stack: ['Python', 'FastAPI', 'Chatwoot API', 'WhatsApp Business', 'Docker'],
+        status: 'activo',
+        href: 'https://github.com/CrisAlva1414/Chatwoot-Tags',
+    },
+    {
+        id: '3ffdQbKU0d03YuacSy2bCf',
+        title: 'Ruki-System',
+        category: 'Infraestructura · Self-hosting',
+        description:
+            'NAS self-hosted sobre OrangePi 5 sirviendo Docker, Caddy reverse proxy y n8n bajo *.nas.buzzness.cl. Contenedores sin root, cap_drop completo, redes separadas, monitoreo propio. 100 commits · 51 archivos · sin dependencia de SaaS.',
+        stack: ['Docker', 'Caddy', 'n8n', 'Armbian', 'Shell'],
+        status: 'activo',
+        href: 'https://github.com/CrisAlva1414/NAS-System',
+    },
+    {
+        id: '5w53Y2BrmcJzCrKIXDWPQw',
+        title: 'ENDDEIE 2023',
+        category: 'Machine Learning · Educación',
+        description:
+            'Análisis estructural de la digitalización escolar en Chile sobre 1.174 establecimientos. Pipeline de 11 pasos con KMeans, PCA, UMAP y Random Forest bootstrap. 176K líneas de Python. El hallazgo principal contradice la intuición y tiene implicancia directa para política pública.',
+        stack: ['Python', 'scikit-learn', 'PCA', 'UMAP', 'pandas'],
+        status: 'completado',
+        href: 'https://github.com/CrisAlva1414/ENDDEIE',
+    },
+    {
+        id: '2WmK7smk36Osrem6CUhBm8',
+        title: 'Dobot Chess',
+        category: 'Robótica · Hardware-Software',
+        description:
+            'Brazo robótico Dobot Magician jugando ajedrez contra Stockfish en tiempo real. FastAPI + WebSockets + React, cola de turnos multijugador, calibración cartesiana del tablero físico. Dockerizado en Raspberry Pi con separación estricta de capas.',
+        stack: ['Python', 'FastAPI', 'React', 'WebSockets', 'Raspberry Pi'],
+        status: 'completado',
+        href: 'https://github.com/CrisAlva1414/Dobot-Chess',
+    },
 ]

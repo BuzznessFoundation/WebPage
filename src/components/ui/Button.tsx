@@ -26,7 +26,8 @@ const base =
 
 const variants: Record<Variant, string> = {
     // CTA primario — Nivel 1 de jerarquía cromática (buzzdesign 02-color.md §4.2)
-    primary: 'bg-bz-ambar text-bz-negro shadow-[6px_6px_0px_#0A0A0A] hover:shadow-[8px_8px_0px_#0A0A0A] active:shadow-[3px_3px_0px_#0A0A0A]',
+    primary:
+        'bg-bz-ambar text-bz-negro shadow-[6px_6px_0px_#0A0A0A] hover:shadow-[8px_8px_0px_#0A0A0A] active:shadow-[3px_3px_0px_#0A0A0A]',
     // Secundario — borde negro con sombra
     ghost: 'bg-transparent text-bz-negro border-bz-negro shadow-[6px_6px_0px_#0A0A0A] hover:shadow-[8px_8px_0px_#0A0A0A] active:shadow-[3px_3px_0px_#0A0A0A] hover:bg-bz-negro hover:text-bz-beige',
     // Sobre fondos negros (hero invertido)
@@ -38,7 +39,12 @@ const variants: Record<Variant, string> = {
  * El offset shadow es exclusivo de la variante `primary` — Nivel 1 según
  * la jerarquía cromática del sistema (buzzdesign 02-color.md).
  */
-export function Button({ children, variant = 'primary', className, ...props }: ButtonProps | LinkProps) {
+export function Button({
+    children,
+    variant = 'primary',
+    className,
+    ...props
+}: ButtonProps | LinkProps) {
     const classes = cn(base, variants[variant], className)
 
     if ('href' in props && props.href) {

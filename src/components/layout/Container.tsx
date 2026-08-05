@@ -14,7 +14,7 @@ export function Container({ children, className, size = 'wide' }: ContainerProps
             className={cn(
                 'w-full mx-auto px-bz-lg',
                 size === 'narrow' ? 'max-w-[760px]' : 'max-w-[1180px]',
-                className
+                className,
             )}
         >
             {children}

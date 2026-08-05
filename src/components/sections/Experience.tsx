@@ -2,19 +2,32 @@ import { Container } from '@/components/layout/Container'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { experience } from '@/data/experience'
 import { stats } from '@/data/stats'
+import { useCountUp } from '@/lib/useCountUp'
 
-/**
- * Bloque de origen + stats — equivalente funcional a la sección de
- * fundadoras + "More than [N]..." de maggie-app.com. Aquí las cifras
- * son reales (arquitectura de BuzzINT, infraestructura propia), no
- * decorativas: encajan con el principio de "estructura visible como
- * estética" del manifiesto (01-philosophy.md §2.4).
- */
+interface StatItem {
+    value: string
+    label: string
+}
+
+function StatCount({ stat }: { stat: StatItem }) {
+    const { ref, display } = useCountUp(stat.value)
+
+    return (
+        <div ref={ref}>
+            <span className="font-display text-bz-ambar text-[14vw] sm:text-bz-2xl leading-none block">
+                {display}
+            </span>
+            <span className="font-body text-bz-xs text-bz-grafito leading-[1.4] block mt-[6px]">
+                {stat.label}
+            </span>
+        </div>
+    )
+}
+
 export function Experience() {
     return (
         <section className="py-bz-2xl bg-bz-crema border-y border-bz-negro/15">
             <Container size="wide">
-                {/* Quote — patrón de blockquote del manifiesto (05b-content.md) */}
                 <div className="relative mb-bz-2xl">
                     <div className="absolute top-bz-shadow left-bz-shadow w-full h-full bg-bz-negro rounded-bz" />
                     <blockquote className="relative bg-bz-beige border border-bz-negro rounded-bz px-bz-lg py-bz-xl">
@@ -29,21 +42,12 @@ export function Experience() {
                     </blockquote>
                 </div>
 
-                {/* Stats */}
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-bz-md mb-bz-2xl">
                     {stats.map((stat) => (
-                        <div key={stat.label}>
-                            <span className="font-display text-bz-ambar text-[14vw] sm:text-bz-2xl leading-none block">
-                                {stat.value}
-                            </span>
-                            <span className="font-body text-bz-xs text-bz-grafito leading-[1.4] block mt-[6px]">
-                                {stat.label}
-                            </span>
-                        </div>
+                        <StatCount key={stat.label} stat={stat} />
                     ))}
                 </div>
 
-                {/* Timeline */}
                 <SectionLabel>Trayectoria</SectionLabel>
                 <div className="flex flex-col gap-bz-md">
                     {experience.map((item) => (

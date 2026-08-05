@@ -31,7 +31,7 @@ export function Card({ children, variant = 'crema', className }: CardProps) {
                 className={cn(
                     'relative h-full rounded-bz border-bz p-bz-md',
                     variantStyles[variant],
-                    className
+                    className,
                 )}
             >
                 {children}

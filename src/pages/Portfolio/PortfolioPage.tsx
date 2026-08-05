@@ -19,8 +19,8 @@ export default function PortfolioPage() {
                         Cada proyecto es <span className="text-bz-ambar">evidencia.</span>
                     </h1>
                     <p className="font-body text-bz-lead text-bz-grafito max-w-[560px] mt-bz-md">
-                        No hay maquetas de relleno acá. Lo que ves abajo corre en
-                        producción o resolvió un problema real.
+                        No hay maquetas de relleno acá. Lo que ves abajo corre en producción o
+                        resolvió un problema real.
                     </p>
                 </Container>
             </section>

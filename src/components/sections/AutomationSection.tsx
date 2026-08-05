@@ -31,12 +31,13 @@ export function AutomationSection() {
                 <SectionLabel>03 — Automatizaciones</SectionLabel>
 
                 <h2 className="font-display uppercase text-bz-negro text-bz-xl md:text-[44px] leading-[1.02] tracking-[-1px] max-w-[720px] mb-bz-md">
-                    Si lo haces igual <span className="text-bz-ambar">todas las semanas, no debería ser manual.</span>
+                    Si lo haces igual{' '}
+                    <span className="text-bz-ambar">todas las semanas, no debería ser manual.</span>
                 </h2>
 
                 <p className="font-body text-bz-lead text-bz-grafito max-w-[620px] mb-bz-lg">
-                    Responder lo mismo, agendar a mano, copiar datos de un correo a una
-                    planilla — cada una de esas tareas es una hora que no vuelve.
+                    Responder lo mismo, agendar a mano, copiar datos de un correo a una planilla —
+                    cada una de esas tareas es una hora que no vuelve.
                 </p>
 
                 <ProblemSolution

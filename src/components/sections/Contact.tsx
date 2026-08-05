@@ -22,8 +22,8 @@ export function Contact({ compact = false }: ContactProps) {
         const subject = encodeURIComponent('Consulta desde buzzness.cl')
         const body = encodeURIComponent(
             `Nombre: ${(e.target as HTMLFormElement).nombre?.value || ''}\n` +
-            `Email: ${(e.target as HTMLFormElement).correo?.value || ''}\n\n` +
-            `${(e.target as HTMLFormElement).mensaje?.value || ''}`
+                `Email: ${(e.target as HTMLFormElement).correo?.value || ''}\n\n` +
+                `${(e.target as HTMLFormElement).mensaje?.value || ''}`,
         )
 
         window.location.href = `mailto:hola@buzzness.cl?subject=${subject}&body=${body}`
@@ -42,8 +42,8 @@ export function Contact({ compact = false }: ContactProps) {
                                 <span className="text-bz-ambar">próximo sistema.</span>
                             </h2>
                             <p className="font-body text-bz-md text-bz-beige/70 max-w-[480px] mb-bz-lg">
-                                Sin formularios largos. Cuéntame qué proceso te está
-                                quitando tiempo y te respondo en 24 horas.
+                                Sin formularios largos. Cuéntame qué proceso te está quitando tiempo
+                                y te respondo en 24 horas.
                             </p>
                         </>
                     )}
@@ -131,11 +131,7 @@ export function Contact({ compact = false }: ContactProps) {
                                 />
                             </div>
 
-                            {error && (
-                                <p className="font-body text-bz-xs text-red-400">
-                                    {error}
-                                </p>
-                            )}
+                            {error && <p className="font-body text-bz-xs text-red-400">{error}</p>}
 
                             <Button type="submit" variant="primary" className="mt-bz-xs">
                                 {sending ? 'Enviando...' : 'Enviar mensaje'}
@@ -143,7 +139,10 @@ export function Contact({ compact = false }: ContactProps) {
 
                             <p className="font-body text-bz-xs text-bz-beige/40">
                                 Al enviar aceptas nuestra{' '}
-                                <a href="/privacidad" className="underline hover:text-bz-ambar transition-colors">
+                                <a
+                                    href="/privacidad"
+                                    className="underline hover:text-bz-ambar transition-colors"
+                                >
                                     política de privacidad
                                 </a>
                                 .

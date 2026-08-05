@@ -30,7 +30,8 @@ const SHOWCASE: ProjectShowcase[] = [
         id: 'buzzint',
         label: '01 — Analítica educacional · Chile',
         title: 'BuzzINT',
-        subtitle: 'Como los datos publicos pueden ayudar a tomar decisiones a cientos de directores.',
+        subtitle:
+            'Como los datos publicos pueden ayudar a tomar decisiones a cientos de directores.',
         narrative:
             'BuzzINT nacio como una conversacion simple, los colegios no saben como determinar que variables mejorar cuando publican sus resultados SIMCE, pero el ministerio de educacion si sube sus datos y son muchos. Asi construimos un modelo que analizaba los datos SIMCE desde 1988 y los cruzaba con datos de estudiantes, docentes y establecimientos para determinar que variables eran las mas importantes para mejorar los resultados de los colegios. El resultado intenta ser un modelo dimensional que permite a los directores de colegios ver que variables mejorar y como mejorar sus resultados.',
         why: 'Quería demostrar que es posible construir hacer analisis con datos y no con solo observacion. Esto usando hardware limitado y herramientas open source. Sin pagar suscripción mensual por la parte difícil.',
@@ -46,7 +47,8 @@ const SHOWCASE: ProjectShowcase[] = [
         id: 'enddeie',
         label: '02 — Analítica educacional · Machine Learning',
         title: 'ENDDEIE 2023',
-        subtitle: 'Análisis estructural de la digitalización escolar en Chile sobre 1.174 establecimientos.',
+        subtitle:
+            'Análisis estructural de la digitalización escolar en Chile sobre 1.174 establecimientos.',
         narrative:
             'Un ejercicio de traducción: convertir datos crudos de encuestas educacionales — 1.174 establecimientos, 3.736 docentes, 10.326 estudiantes — en evidencia estructurada sobre cómo la digitalización realmente funciona en Chile. Construí un pipeline de 11 pasos: ingesta, scoring por factores, clustering KMeans, correlaciones Spearman, reducción dimensional con PCA y UMAP, y un Random Forest con 100 iteraciones de bootstrap para validar estabilidad. El pipeline genera automáticamente 23 tablas CSV y 23 figuras.',
         why: 'Quería demostrar que un pipeline analítico bien construido puede hacer preguntas que los datos por sí solos no pueden responder. Y que la ML no reemplaza el análisis estructural — lo profundiza y lo obliga a ser honesto.',
@@ -109,7 +111,6 @@ function ProjectSection({ project }: { project: ProjectShowcase }) {
                 <SectionLabel invert={isDark}>{project.label}</SectionLabel>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-bz-xl items-start">
-
                     {/* Image placeholder */}
                     <div className={cn(flip ? 'order-1 lg:order-2' : 'order-1')}>
                         {project.image ? (
@@ -130,7 +131,7 @@ function ProjectSection({ project }: { project: ProjectShowcase }) {
                         <h2
                             className={cn(
                                 'font-display uppercase leading-[1.0] text-bz-xl md:text-[44px] tracking-[-1px] mb-[8px]',
-                                isDark ? 'text-bz-ambar' : 'text-bz-negro'
+                                isDark ? 'text-bz-ambar' : 'text-bz-negro',
                             )}
                         >
                             {project.title}
@@ -139,7 +140,7 @@ function ProjectSection({ project }: { project: ProjectShowcase }) {
                         <p
                             className={cn(
                                 'font-body text-bz-lead mb-bz-md',
-                                isDark ? 'text-bz-beige/70' : 'text-bz-grafito'
+                                isDark ? 'text-bz-beige/70' : 'text-bz-grafito',
                             )}
                         >
                             {project.subtitle}
@@ -148,7 +149,7 @@ function ProjectSection({ project }: { project: ProjectShowcase }) {
                         <p
                             className={cn(
                                 'font-body text-bz-sm leading-[1.65] mb-bz-lg',
-                                isDark ? 'text-bz-beige/80' : 'text-bz-grafito'
+                                isDark ? 'text-bz-beige/80' : 'text-bz-grafito',
                             )}
                         >
                             {project.narrative}
@@ -199,7 +200,6 @@ export default function AboutPage() {
             <section className="pt-bz-2xl pb-bz-2xl">
                 <Container size="wide">
                     <div className="grid grid-cols-1 lg:grid-cols-[340px_1fr] gap-bz-xl items-start">
-
                         {/* Foto */}
                         <div className="lg:sticky lg:top-[100px]">
                             <div className="relative">
@@ -222,28 +222,25 @@ export default function AboutPage() {
                         <div>
                             <SectionLabel>Sobre mí</SectionLabel>
                             <h1 className="font-display uppercase text-bz-negro leading-[0.95] text-[10vw] sm:text-bz-xl md:text-[56px] tracking-[-1px] mb-bz-md">
-                                Desarollo, no{' '}
-                                <span className="text-bz-ambar">improvisación.</span>
+                                Desarollo, no <span className="text-bz-ambar">improvisación.</span>
                             </h1>
 
                             <p className="font-body text-bz-base text-bz-grafito leading-[1.65] mb-bz-sm">
-                                Empecé en el mundo del software libre y siempre desarolle
-                                todo lo que pude, desde un calendario hasta un agente de finanzas. 
-                                Lo que empezó como hobby terminó siendo la forma en que pienso cada 
-                                problema técnico: si puede ser algo propio, ese es el camino; si 
+                                Empecé en el mundo del software libre y siempre desarolle todo lo
+                                que pude, desde un calendario hasta un agente de finanzas. Lo que
+                                empezó como hobby terminó siendo la forma en que pienso cada
+                                problema técnico: si puede ser algo propio, ese es el camino; si
                                 puede automatizarse, no debería hacerse a mano; si puede
                                 documentarse, no hay razón para no hacerlo.
                             </p>
 
                             <p className="font-body text-bz-base text-bz-grafito leading-[1.65] mb-bz-sm">
                                 Me muevo entre infraestructura, automatización e inteligencia
-                                artificial — no como disciplinas separadas, sino como piezas
-                                del mismo sistema. Puedo tomar una idea, construir la
-                                herramienta, montarla en producción y dejarla corriendo con
-                                monitoreo propio. Sin depender de terceros para la parte
-                                difícil.
+                                artificial — no como disciplinas separadas, sino como piezas del
+                                mismo sistema. Puedo tomar una idea, construir la herramienta,
+                                montarla en producción y dejarla corriendo con monitoreo propio. Sin
+                                depender de terceros para la parte difícil.
                             </p>
-
                         </div>
                     </div>
                 </Container>

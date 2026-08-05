@@ -22,9 +22,9 @@ export default function ServicesPage() {
                         Lo que <span className="text-bz-ambar">construyo</span> cuando me contratas.
                     </h1>
                     <p className="font-body text-bz-lead text-bz-grafito max-w-[600px] mt-bz-md">
-                        Cuatro áreas, explicadas como problema y solución — sin asumir que ya
-                        sabes qué es n8n, SEO técnico o self-hosting. Si entiendes el problema,
-                        el resto se explica solo.
+                        Cuatro áreas, explicadas como problema y solución — sin asumir que ya sabes
+                        qué es n8n, SEO técnico o self-hosting. Si entiendes el problema, el resto
+                        se explica solo.
                     </p>
                 </Container>
             </section>
