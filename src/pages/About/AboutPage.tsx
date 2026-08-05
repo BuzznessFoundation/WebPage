@@ -3,7 +3,6 @@ import { SectionLabel } from '@/components/ui/SectionLabel'
 import { Badge } from '@/components/ui/Badge'
 import { Card } from '@/components/ui/Card'
 import { SeoMeta } from '@/components/ui/SeoMeta'
-import { Contact } from '@/components/sections/Contact'
 import { cn } from '@/lib/utils'
 
 // ─── Project showcase data ────────────────────────────────────────────────────
@@ -259,8 +258,6 @@ export default function AboutPage() {
             {SHOWCASE.map((project) => (
                 <ProjectSection key={project.id} project={project} />
             ))}
-
-            <Contact />
         </>
     )
 }

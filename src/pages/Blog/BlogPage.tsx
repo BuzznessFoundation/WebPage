@@ -3,7 +3,6 @@ import { SectionLabel } from '@/components/ui/SectionLabel'
 import { Card } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Badge'
 import { SeoMeta } from '@/components/ui/SeoMeta'
-import { Contact } from '@/components/sections/Contact'
 
 const ARTICLE = {
     title: 'De Excel y WhatsApp a un CRM que trabaja solo',
@@ -145,8 +144,6 @@ export default function BlogPage() {
                     </article>
                 </Container>
             </section>
-
-            <Contact />
         </>
     )
 }

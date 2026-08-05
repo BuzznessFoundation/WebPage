@@ -4,11 +4,6 @@ import { Container } from './Container'
 import { cn } from '@/lib/utils'
 import { NAV_ITEMS } from '@/data/navigation'
 
-/**
- * Navbar editorial — sin chrome flotante al inicio (sigue grid),
- * fondo aparece al scroll.
- * Spec: buzzdesign 05a-layout.md §Navbar
- */
 export function Header() {
     const [open, setOpen] = useState(false)
     const [scrolled, setScrolled] = useState(false)
@@ -71,7 +66,6 @@ export function Header() {
                         </span>
                     </NavLink>
 
-                    {/* Nav desktop */}
                     <div className="hidden md:flex items-center gap-bz-md">
                         {NAV_ITEMS.map((item) => (
                             <NavLink
@@ -89,22 +83,29 @@ export function Header() {
                                 {item.label}
                             </NavLink>
                         ))}
+                        <a
+                            href="https://wa.me/56937662776"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-[6px] font-body text-bz-label font-bold uppercase tracking-[2px] text-[#25D366] hover:text-[#1da851] transition-colors ml-bz-xs"
+                        >
+                            <i className="fa-brands fa-whatsapp text-bz-base" />
+                            WhatsApp
+                        </a>
                     </div>
 
-                    {/* Toggle mobile */}
                     <button
                         type="button"
                         onClick={() => setOpen((v) => !v)}
                         aria-expanded={open}
-                        aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
+                        aria-label={open ? 'Cerrar menu' : 'Abrir menu'}
                         className="md:hidden font-body text-bz-label font-bold text-bz-negro tracking-[2px]"
                     >
-                        {open ? 'CERRAR ×' : 'MENÚ'}
+                        {open ? 'CERRAR x' : 'MENU'}
                     </button>
                 </nav>
             </Container>
 
-            {/* Panel mobile */}
             {open && (
                 <div
                     className={cn(
@@ -131,6 +132,16 @@ export function Header() {
                                     {item.label}
                                 </NavLink>
                             ))}
+                            <a
+                                href="https://wa.me/56937662776"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={() => setOpen(false)}
+                                className="inline-flex items-center gap-[8px] font-body text-bz-md font-bold tracking-[1px] text-[#25D366] border-b border-bz-negro/10 pb-bz-sm"
+                            >
+                                <i className="fa-brands fa-whatsapp" />
+                                WhatsApp
+                            </a>
                         </nav>
                     </Container>
                 </div>

@@ -5,14 +5,16 @@ import { WebDesignSection } from '@/components/sections/WebDesignSection'
 import { SocialMediaSection } from '@/components/sections/SocialMediaSection'
 import { AutomationSection } from '@/components/sections/AutomationSection'
 import { SelfHostSection } from '@/components/sections/SelfHostSection'
-import { Contact } from '@/components/sections/Contact'
+import { MetaAdsSection } from '@/components/sections/MetaAdsSection'
+import { IntegrationsSection } from '@/components/sections/IntegrationsSection'
+import { PythonSection } from '@/components/sections/PythonSection'
 
 export default function ServicesPage() {
     return (
         <>
             <SeoMeta
                 title="Servicios"
-                description="Automatización de procesos, CRM open source, infraestructura propia y desarrollo web. Cuatro formas de resolver lo técnico sin tercerizar el criterio."
+                description="Automatización de procesos, CRM open source, Meta & Google Ads con datos reales, integraciones SII y banca, y desarrollo de sistemas propios. Siete formas de resolver lo técnico sin tercerizar el criterio."
                 path="/servicios"
             />
             <section className="pt-bz-2xl pb-bz-md">
@@ -22,9 +24,8 @@ export default function ServicesPage() {
                         Lo que <span className="text-bz-ambar">construyo</span> cuando me contratas.
                     </h1>
                     <p className="font-body text-bz-lead text-bz-grafito max-w-[600px] mt-bz-md">
-                        Cuatro áreas, explicadas como problema y solución — sin asumir que ya sabes
-                        qué es n8n, SEO técnico o self-hosting. Si entiendes el problema, el resto
-                        se explica solo.
+                        Siete áreas, explicadas como problema y solución — sin asumir que ya sabes
+                        qué es n8n, API o DTE. Si entiendes el problema, el resto se explica solo.
                     </p>
                 </Container>
             </section>
@@ -33,8 +34,9 @@ export default function ServicesPage() {
             <SocialMediaSection />
             <AutomationSection />
             <SelfHostSection />
-
-            <Contact />
+            <MetaAdsSection />
+            <IntegrationsSection />
+            <PythonSection />
         </>
     )
 }

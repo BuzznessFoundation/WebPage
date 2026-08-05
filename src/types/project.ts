@@ -4,8 +4,10 @@ export interface Project {
     id: string
     title: string
     category: string
-    description: string
-    stack: string[]
+    problem: string
+    solution: string
+    result: string
+    tools: string[]
     status: ProjectStatus
     href?: string
 }
