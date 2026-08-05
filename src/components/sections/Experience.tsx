@@ -1,13 +1,7 @@
 import { Container } from '@/components/layout/Container'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { experience } from '@/data/experience'
-
-const STATS = [
-    { value: '6', label: 'Dimensiones conformadas en BuzzINT' },
-    { value: '3', label: 'Capas de pipeline — Bronze · Silver · Gold' },
-    { value: '100%', label: 'Infraestructura self-hosted' },
-    { value: '0', label: 'Dependencias de SaaS de terceros para lo operable en casa' },
-]
+import { stats } from '@/data/stats'
 
 /**
  * Bloque de origen + stats — equivalente funcional a la sección de
@@ -37,7 +31,7 @@ export function Experience() {
 
                 {/* Stats */}
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-bz-md mb-bz-2xl">
-                    {STATS.map((stat) => (
+                    {stats.map((stat) => (
                         <div key={stat.label}>
                             <span className="font-display text-bz-ambar text-[14vw] sm:text-bz-2xl leading-none block">
                                 {stat.value}

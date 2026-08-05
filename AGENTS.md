@@ -81,11 +81,27 @@ src/
 
 - Fuente única de verdad en `src/data/`:
   - `navigation.ts` — items compartidos entre Header y Footer
-  - `services.ts` — 4 servicios
-  - `projects.ts` — 4 proyectos
+  - `services.ts` — **generado por `npm run contentful:pull`** desde Contentful
+  - `projects.ts` — **generado por `npm run contentful:pull`** desde Contentful
+  - `stats.ts` — **generado por `npm run contentful:pull`** desde Contentful
   - `experience.ts` — timeline (3 entradas)
 - Nunca hardcodear arrays de navegación o datos en componentes que ya existan en `data/`
 - Si se agrega una ruta nueva, actualizar también `sitemap.xml` en `public/`
+
+### Contentful CMS
+
+- Contentful es el CMS headless que alimenta `services`, `projects` y `stats`
+- **Build-time, no runtime**: los datos se fetchean con `npm run contentful:pull` antes del build
+- **Content types**: `service`, `project`, `stat`, `blogPost` (en espacio `t6tsl8dyv5xe`)
+- **Setup inicial**: `npm run contentful:setup` crea modelos + popula con datos iniciales
+- API keys en `.env.local` (gitignored):
+  - `CONTENTFUL_SPACE_ID`
+  - `CONTENTFUL_DELIVERY_ACCESS_TOKEN` (CDA — público, lectura)
+  - `CONTENTFUL_MANAGEMENT_ACCESS_TOKEN` (CMA — secreto, escritura)
+  - `CONTENTFUL_ENVIRONMENT` (default: `master`)
+- `scripts/contentful-pull.ts` genera `src/data/services.ts`, `projects.ts`, `stats.ts`
+- Los archivos generados **se commitean** — son la fuente que Vite compila
+- `scripts/contentful-setup.ts` usa el CMA token para crear/actualizar content types y entradas
 
 ### Router
 
@@ -156,11 +172,12 @@ npm run preview  # Vite preview
 | Sin Prettier configurado | Pendiente |
 | Sin meta tags dinámicos por página (SEO) | Pendiente |
 | Datos de empresas cliente son placeholder | Pendiente |
-| Sin scroll-to-top al navegar entre rutas | Pendiente |
-| `PortfolioPage` existe pero no está en el router | Corregir ahora |
-| Font Awesome cargado dos veces (Footer duplicado) | Corregir ahora |
-| `src/styles/` vacío (archivos huérfanos) | Corregir ahora |
+| Sin scroll-to-top al navegar entre rutas | Corregido |
+| `PortfolioPage` existe pero no está en el router | Corregido |
+| Font Awesome cargado dos veces (Footer duplicado) | Corregido |
+| `src/styles/` vacío (archivos huérfanos) | Corregido |
 | CSS custom properties duplican tokens `bz-` de Tailwind | Evaluar |
+| Contentful CMS + datos reales de GitHub | Integrado |
 
 ---
 
