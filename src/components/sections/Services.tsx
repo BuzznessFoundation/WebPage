@@ -3,8 +3,6 @@ import { SectionLabel } from '@/components/ui/SectionLabel'
 import { Card } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Badge'
 import { services } from '@/data/services'
-import { useStaggerReveal } from '@/lib/useStaggerReveal'
-import { cn } from '@/lib/utils'
 
 interface ServicesProps {
     limit?: number
@@ -13,7 +11,6 @@ interface ServicesProps {
 
 export function Services({ limit, showCta = true }: ServicesProps) {
     const items = limit ? services.slice(0, limit) : services
-    const { ref, visibleItems } = useStaggerReveal(items.length, { staggerMs: 150 })
 
     return (
         <section className="py-bz-2xl">
@@ -25,37 +22,24 @@ export function Services({ limit, showCta = true }: ServicesProps) {
                     criterio.
                 </h2>
 
-                <div
-                    ref={ref}
-                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-bz-cards-gap"
-                >
-                    {items.map((service, i) => (
-                        <div
-                            key={service.id}
-                            className={cn(
-                                'transition-all duration-500',
-                                i < visibleItems
-                                    ? 'opacity-100 translate-y-0'
-                                    : 'opacity-0 translate-y-4',
-                            )}
-                        >
-                            <Card variant="crema">
-                                <span className="font-mono text-bz-xs text-bz-ambar block mb-bz-sm">
-                                    {service.eyebrow}
-                                </span>
-                                <h3 className="font-body text-bz-md font-bold text-bz-negro leading-[1.25] mb-[10px]">
-                                    {service.title}
-                                </h3>
-                                <p className="font-body text-bz-sm text-bz-grafito leading-[1.55] mb-bz-sm">
-                                    {service.description}
-                                </p>
-                                <div className="flex flex-wrap gap-[6px]">
-                                    {service.tags.map((tag) => (
-                                        <Badge key={tag}>{tag}</Badge>
-                                    ))}
-                                </div>
-                            </Card>
-                        </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-bz-cards-gap">
+                    {items.map((service) => (
+                        <Card key={service.id} variant="crema">
+                            <span className="font-mono text-bz-xs text-bz-ambar block mb-bz-sm">
+                                {service.eyebrow}
+                            </span>
+                            <h3 className="font-body text-bz-md font-bold text-bz-negro leading-[1.25] mb-[10px]">
+                                {service.title}
+                            </h3>
+                            <p className="font-body text-bz-sm text-bz-grafito leading-[1.55] mb-bz-sm">
+                                {service.description}
+                            </p>
+                            <div className="flex flex-wrap gap-[6px]">
+                                {service.tags.map((tag) => (
+                                    <Badge key={tag}>{tag}</Badge>
+                                ))}
+                            </div>
+                        </Card>
                     ))}
                 </div>
 

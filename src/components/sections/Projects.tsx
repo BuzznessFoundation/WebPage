@@ -2,7 +2,6 @@ import { Container } from '@/components/layout/Container'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { Card } from '@/components/ui/Card'
 import { projects } from '@/data/projects'
-import { useStaggerReveal } from '@/lib/useStaggerReveal'
 import { cn } from '@/lib/utils'
 import type { ProjectStatus } from '@/types/project'
 
@@ -59,7 +58,6 @@ interface ProjectsProps {
 
 export function Projects({ limit, showCta = true }: ProjectsProps) {
     const items = limit ? projects.slice(0, limit) : projects
-    const { ref, visibleItems } = useStaggerReveal(items.length, { staggerMs: 180 })
 
     return (
         <section className="py-bz-2xl">
@@ -71,65 +69,55 @@ export function Projects({ limit, showCta = true }: ProjectsProps) {
                     <span className="text-bz-ambar">soluciones concretas.</span>
                 </h2>
 
-                <div ref={ref} className="grid grid-cols-1 md:grid-cols-2 gap-bz-cards-gap">
-                    {items.map((project, i) => (
-                        <div
-                            key={project.id}
-                            className={cn(
-                                'transition-all duration-500',
-                                i < visibleItems
-                                    ? 'opacity-100 translate-y-0'
-                                    : 'opacity-0 translate-y-4',
-                            )}
-                        >
-                            <Card variant="negro">
-                                <div className="flex items-start justify-between gap-bz-sm mb-bz-sm">
-                                    <span className="font-body text-bz-meta text-bz-beige/60 uppercase tracking-[1.5px]">
-                                        {project.category}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-bz-cards-gap">
+                    {items.map((project) => (
+                        <Card key={project.id} variant="negro">
+                            <div className="flex items-start justify-between gap-bz-sm mb-bz-sm">
+                                <span className="font-body text-bz-meta text-bz-beige/60 uppercase tracking-[1.5px]">
+                                    {project.category}
+                                </span>
+                                <span className="font-mono text-bz-xs text-bz-ambar whitespace-nowrap">
+                                    {STATUS_LABEL[project.status]}
+                                </span>
+                            </div>
+
+                            <h3 className="font-display uppercase text-bz-lg text-bz-ambar tracking-[-0.5px] mb-bz-sm">
+                                {project.title}
+                            </h3>
+
+                            <div className="space-y-bz-xs mb-bz-sm">
+                                <div>
+                                    <span className="font-mono text-bz-xs text-bz-beige/40 uppercase tracking-[1.5px]">
+                                        El problema
                                     </span>
-                                    <span className="font-mono text-bz-xs text-bz-ambar whitespace-nowrap">
-                                        {STATUS_LABEL[project.status]}
+                                    <p className="font-body text-bz-sm text-bz-beige/80 leading-[1.55] mt-[4px]">
+                                        {project.problem}
+                                    </p>
+                                </div>
+                                <div>
+                                    <span className="font-mono text-bz-xs text-bz-beige/40 uppercase tracking-[1.5px]">
+                                        La solución
                                     </span>
+                                    <p className="font-body text-bz-sm text-bz-beige/80 leading-[1.55] mt-[4px]">
+                                        {project.solution}
+                                    </p>
                                 </div>
-
-                                <h3 className="font-display uppercase text-bz-lg text-bz-ambar tracking-[-0.5px] mb-bz-sm">
-                                    {project.title}
-                                </h3>
-
-                                <div className="space-y-bz-xs mb-bz-sm">
-                                    <div>
-                                        <span className="font-mono text-bz-xs text-bz-beige/40 uppercase tracking-[1.5px]">
-                                            El problema
-                                        </span>
-                                        <p className="font-body text-bz-sm text-bz-beige/80 leading-[1.55] mt-[4px]">
-                                            {project.problem}
-                                        </p>
-                                    </div>
-                                    <div>
-                                        <span className="font-mono text-bz-xs text-bz-beige/40 uppercase tracking-[1.5px]">
-                                            La solución
-                                        </span>
-                                        <p className="font-body text-bz-sm text-bz-beige/80 leading-[1.55] mt-[4px]">
-                                            {project.solution}
-                                        </p>
-                                    </div>
-                                    <div>
-                                        <span className="font-mono text-bz-xs text-bz-ambar/70 uppercase tracking-[1.5px]">
-                                            Resultado
-                                        </span>
-                                        <p className="font-body text-bz-sm text-bz-beige/90 leading-[1.55] mt-[4px]">
-                                            {project.result}
-                                        </p>
-                                    </div>
+                                <div>
+                                    <span className="font-mono text-bz-xs text-bz-ambar/70 uppercase tracking-[1.5px]">
+                                        Resultado
+                                    </span>
+                                    <p className="font-body text-bz-sm text-bz-beige/90 leading-[1.55] mt-[4px]">
+                                        {project.result}
+                                    </p>
                                 </div>
+                            </div>
 
-                                <div className="flex flex-wrap gap-[6px]">
-                                    {project.tools.map((tool) => (
-                                        <ToolBadge key={tool} tool={tool} />
-                                    ))}
-                                </div>
-                            </Card>
-                        </div>
+                            <div className="flex flex-wrap gap-[6px]">
+                                {project.tools.map((tool) => (
+                                    <ToolBadge key={tool} tool={tool} />
+                                ))}
+                            </div>
+                        </Card>
                     ))}
                 </div>
 
