@@ -207,10 +207,7 @@ export default function AboutPage() {
                                         className="w-full aspect-[3/4] object-cover block"
                                     />
                                     {/* Filtro ámbar — 10% */}
-                                    <div
-                                        className="absolute inset-0 pointer-events-none"
-                                        style={{ backgroundColor: '#D4820A', opacity: 0.10 }}
-                                    />
+                                    <div className="absolute inset-0 pointer-events-none bg-bz-ambar/10" />
                                 </div>
                             </div>
                         </div>

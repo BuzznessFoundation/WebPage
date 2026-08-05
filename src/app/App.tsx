@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom'
 import { Header } from '../components/layout/Header'
 import { Footer } from '../components/layout/Footer'
+import { useScrollToTop } from '../lib/useScrollToTop'
 
 /**
  * Layout raíz. El grid de fondo (.bz-grid-bg) vive aquí, una sola vez,
@@ -8,6 +9,8 @@ import { Footer } from '../components/layout/Footer'
  * Spec: buzzdesign 02-color.md §7, 04-composition.md §Capas de z-index
  */
 export default function App() {
+    useScrollToTop()
+
     return (
         <div className="relative min-h-screen bz-grid-bg overflow-x-hidden">
             <Header />

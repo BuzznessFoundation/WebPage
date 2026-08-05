@@ -2,13 +2,7 @@ import { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { Container } from './Container'
 import { cn } from '@/lib/utils'
-
-const NAV_ITEMS = [
-    { label: 'SOBRE MÍ', to: '/sobre-mi' },
-    { label: 'SERVICIOS', to: '/servicios' },
-    { label: 'BLOG', to: '/blog' },
-    { label: 'CONTACTO', to: '/contacto' },
-]
+import { NAV_ITEMS } from '@/data/navigation'
 
 /**
  * Navbar editorial — sin chrome flotante al inicio (sigue grid),
@@ -18,7 +12,9 @@ const NAV_ITEMS = [
 export function Header() {
     const [open, setOpen] = useState(false)
     const [scrolled, setScrolled] = useState(false)
-    const [darkMode, setDarkMode] = useState(false)
+    const [darkMode, setDarkMode] = useState(
+        () => window.matchMedia('(prefers-color-scheme: dark)').matches
+    )
 
     useEffect(() => {
         const handleScroll = () => {
@@ -26,7 +22,6 @@ export function Header() {
         }
 
         const darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)')
-        setDarkMode(darkModeQuery.matches)
 
         const handleDarkModeChange = (e: MediaQueryListEvent) => {
             setDarkMode(e.matches)

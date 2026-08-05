@@ -1,9 +1,4 @@
-const NAV_LINKS = [
-    { label: 'SOBRE MÍ', to: '/sobre-mi' },
-    { label: 'SERVICIOS', to: '/servicios' },
-    { label: 'BLOG', to: '/blog' },
-    { label: 'CONTACTO', to: '/contacto' },
-]
+import { NAV_ITEMS } from '@/data/navigation'
 
 const LEGAL_LINKS = [
     { label: 'Privacidad', to: '#' },
@@ -21,10 +16,6 @@ const SOCIAL_LINKS = [
 export function Footer() {
     return (
         <footer className="bg-bz-negro text-bz-beige pt-bz-2xl pb-bz-lg">
-            <link
-                rel="stylesheet"
-                href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-            />
             <div className="w-full mx-auto px-[10%]">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-bz-2xl mb-bz-2xl">
                     {/* Columna 1: Logo y descripción */}
@@ -50,7 +41,7 @@ export function Footer() {
                             Navegación
                         </span>
                         <nav className="flex flex-col gap-bz-xs">
-                            {NAV_LINKS.map((link) => (
+                            {NAV_ITEMS.map((link) => (
                                 <a
                                     key={link.to}
                                     href={link.to}
