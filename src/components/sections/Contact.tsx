@@ -26,7 +26,7 @@ export function Contact({ compact = false }: ContactProps) {
                 `${(e.target as HTMLFormElement).mensaje?.value || ''}`,
         )
 
-        window.location.href = `mailto:hola@buzzness.cl?subject=${subject}&body=${body}`
+        window.location.href = `mailto:cristian.alvarado@buzzness.cl?subject=${subject}&body=${body}`
         setSent(true)
         setSending(false)
     }
@@ -66,7 +66,7 @@ export function Contact({ compact = false }: ContactProps) {
                                     Se abrirá tu cliente de correo. Si no funciona, escríbeme
                                     directamente a{' '}
                                     <span className="text-bz-ambar font-bold">
-                                        hola@buzzness.cl
+                                        cristian.alvarado@buzzness.cl
                                     </span>
                                 </p>
                             </div>

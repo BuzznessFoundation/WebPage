@@ -77,7 +77,7 @@ export default function ContactPage() {
                 `${(e.target as HTMLFormElement).mensaje?.value || ''}`,
         )
 
-        window.location.href = `mailto:hola@buzzness.cl?subject=${subject}&body=${body}`
+        window.location.href = `mailto:cristian.alvarado@buzzness.cl?subject=${subject}&body=${body}`
         setSent(true)
         setSending(false)
     }
@@ -113,7 +113,7 @@ export default function ContactPage() {
                             <p className="font-body text-bz-sm text-bz-negro/70 mt-[6px]">
                                 Se abrirá tu cliente de correo. Si no funciona, escríbeme
                                 directamente a{' '}
-                                <span className="text-bz-negro font-bold">hola@buzzness.cl</span>
+                                <span className="text-bz-negro font-bold">cristian.alvarado@buzzness.cl</span>
                             </p>
                         </Card>
                     ) : (

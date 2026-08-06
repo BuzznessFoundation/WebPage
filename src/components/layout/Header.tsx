@@ -87,9 +87,9 @@ export function Header() {
                             href="https://wa.me/56937662776"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-[6px] font-body text-bz-label font-bold uppercase tracking-[2px] text-[#25D366] hover:text-[#1da851] transition-colors ml-bz-xs"
+                            className="inline-flex items-center justify-center font-body text-bz-base font-black uppercase tracking-[0.5px] px-bz-md py-[8px] rounded-bz border-bz border-bz-negro transition-transform duration-150 hover:-translate-y-[2px] active:translate-y-0 bg-bz-ambar text-bz-negro shadow-[6px_6px_0px_#0A0A0A] hover:shadow-[8px_8px_0px_#0A0A0A] active:shadow-[3px_3px_0px_#0A0A0A] ml-bz-xs"
                         >
-                            <i className="fa-brands fa-whatsapp text-bz-base" />
+                            <i className="fa-brands fa-whatsapp text-bz-md mr-[6px]" />
                             WhatsApp
                         </a>
                     </div>
@@ -137,9 +137,9 @@ export function Header() {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 onClick={() => setOpen(false)}
-                                className="inline-flex items-center gap-[8px] font-body text-bz-md font-bold tracking-[1px] text-[#25D366] border-b border-bz-negro/10 pb-bz-sm"
+                                className="inline-flex items-center justify-center font-body text-bz-base font-black uppercase tracking-[0.5px] px-bz-md py-[10px] rounded-bz border-bz border-bz-negro bg-bz-ambar text-bz-negro shadow-[4px_4px_0px_#0A0A0A] mt-bz-sm"
                             >
-                                <i className="fa-brands fa-whatsapp" />
+                                <i className="fa-brands fa-whatsapp text-bz-md mr-[6px]" />
                                 WhatsApp
                             </a>
                         </nav>

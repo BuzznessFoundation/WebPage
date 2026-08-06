@@ -7,10 +7,10 @@ const LEGAL_LINKS = [
 ]
 
 const SOCIAL_LINKS = [
-    { label: 'GitHub', icon: 'fa-brands fa-github', url: '#' },
-    { label: 'Instagram', icon: 'fa-brands fa-instagram', url: '#' },
-    { label: 'WhatsApp', icon: 'fa-brands fa-whatsapp', url: '#' },
-    { label: 'LinkedIn', icon: 'fa-brands fa-linkedin', url: '#' },
+    { label: 'GitHub', icon: 'fa-brands fa-github', url: 'https://github.com/CrisAlva1414' },
+    { label: 'Instagram', icon: 'fa-brands fa-instagram', url: 'https://www.instagram.com/buzzness.cl/' },
+    { label: 'WhatsApp', icon: 'fa-brands fa-whatsapp', url: 'https://wa.me/56937662776' },
+    { label: 'LinkedIn', icon: 'fa-brands fa-linkedin', url: 'https://www.linkedin.com/in/crisalva1414/' },
 ]
 
 export function Footer() {
