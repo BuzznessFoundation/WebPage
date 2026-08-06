@@ -1,8 +1,19 @@
 import { Container } from '@/components/layout/Container'
 import { Button } from '@/components/ui/Button'
 
-const SECTORS = [
-    { name: 'Salud', icon: 'fa-solid fa-tooth' },
+interface SectorItem {
+    name: string
+    icon?: string
+    src?: string
+    href?: string
+}
+
+const SECTORS: SectorItem[] = [
+    {
+        name: 'Dra. Macarena Rioseco',
+        src: '/icons/mca-rioseco.ico',
+        href: 'https://www.macarenarioseco.cl/',
+    },
     { name: 'Retail', icon: 'fa-solid fa-store' },
     { name: 'Educación', icon: 'fa-solid fa-graduation-cap' },
     { name: 'Logística', icon: 'fa-solid fa-truck-fast' },
@@ -24,16 +35,35 @@ function SectorsSection() {
                     </p>
                 </div>
                 <div className="flex justify-center items-center gap-bz-lg md:gap-bz-2xl flex-wrap">
-                    {SECTORS.map((sector) => (
-                        <div key={sector.name} className="text-center group">
-                            <i
-                                className={`${sector.icon} text-3xl md:text-5xl text-bz-ambar transition-transform duration-200 group-hover:scale-110`}
-                            />
-                            <span className="block font-body text-bz-xs text-bz-beige/50 mt-bz-xs uppercase tracking-[1.5px]">
-                                {sector.name}
-                            </span>
-                        </div>
-                    ))}
+                    {SECTORS.map((sector) =>
+                        sector.href ? (
+                            <a
+                                key={sector.name}
+                                href={sector.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-center group"
+                            >
+                                <img
+                                    src={sector.src}
+                                    alt={sector.name}
+                                    className="w-[48px] h-[48px] md:w-[56px] md:h-[56px] mx-auto rounded-bz-sm transition-transform duration-200 group-hover:scale-110"
+                                />
+                                <span className="block font-body text-bz-xs text-bz-beige/50 mt-bz-xs uppercase tracking-[1.5px]">
+                                    {sector.name}
+                                </span>
+                            </a>
+                        ) : (
+                            <div key={sector.name} className="text-center group">
+                                <i
+                                    className={`${sector.icon} text-3xl md:text-5xl text-bz-ambar transition-transform duration-200 group-hover:scale-110`}
+                                />
+                                <span className="block font-body text-bz-xs text-bz-beige/50 mt-bz-xs uppercase tracking-[1.5px]">
+                                    {sector.name}
+                                </span>
+                            </div>
+                        ),
+                    )}
                 </div>
             </Container>
         </div>
