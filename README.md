@@ -87,3 +87,5 @@ Maggie, pero con una frase que ya es tuya — no copy inventado — y respeta
 - **El grid de fondo vive una sola vez**, en `src/app/App.tsx` — nunca se
   replica dentro de componentes individuales, tal como especifica
   `04-composition.md`.
+
+<!-- Vercel rebuild trigger: restore original version -->
