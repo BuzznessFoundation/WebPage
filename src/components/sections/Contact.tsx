@@ -1,6 +1,7 @@
 import { type FormEvent, useState } from 'react'
 import { Container } from '@/components/layout/Container'
 import { Button } from '@/components/ui/Button'
+import { Reveal } from '@/components/ui/Reveal'
 import { cn } from '@/lib/utils'
 
 interface ContactProps {
@@ -36,7 +37,7 @@ export function Contact({ compact = false }: ContactProps) {
             <Container size="wide">
                 <div className="bg-bz-negro rounded-bz px-bz-lg py-bz-2xl">
                     {!compact && (
-                        <>
+                        <Reveal>
                             <h2 className="font-display uppercase text-bz-beige leading-[0.98] text-[10vw] sm:text-bz-xl md:text-[56px] tracking-[-1px] mb-bz-md">
                                 Hablemos de tu{' '}
                                 <span className="text-bz-ambar">próximo sistema.</span>
@@ -45,13 +46,15 @@ export function Contact({ compact = false }: ContactProps) {
                                 Sin formularios largos. Cuéntame qué proceso te está quitando tiempo
                                 y te respondo en 24 horas.
                             </p>
-                        </>
+                        </Reveal>
                     )}
 
                     {compact && (
-                        <h2 className="font-display uppercase text-bz-beige leading-[0.98] text-[8vw] sm:text-bz-xl tracking-[-1px] mb-bz-md">
-                            Cuéntame qué necesitas.
-                        </h2>
+                        <Reveal>
+                            <h2 className="font-display uppercase text-bz-beige leading-[0.98] text-[8vw] sm:text-bz-xl tracking-[-1px] mb-bz-md">
+                                Cuéntame qué necesitas.
+                            </h2>
+                        </Reveal>
                     )}
 
                     {sent ? (

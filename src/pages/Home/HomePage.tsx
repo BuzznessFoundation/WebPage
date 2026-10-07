@@ -1,4 +1,5 @@
 import { Hero } from '@/components/sections/Hero'
+import { SoftwareSection } from '@/components/sections/SoftwareSection'
 import { Services } from '@/components/sections/Services'
 import { Projects } from '@/components/sections/Projects'
 import { Experience } from '@/components/sections/Experience'
@@ -14,6 +15,7 @@ export default function HomePage() {
                 path="/"
             />
             <Hero />
+            <SoftwareSection />
             <Services limit={3} />
             <Projects limit={4} />
             <Experience />

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { prefersReducedMotion, supportsIntersectionObserver } from './motion'
 
 interface UseScrollRevealOptions {
     threshold?: number
@@ -10,27 +11,23 @@ interface UseScrollRevealOptions {
  * Hook de revelado por scroll. Devuelve un ref a adjuntar al elemento
  * observado y `isVisible`, que se activa cuando el elemento entra al viewport.
  *
- * Respeta `prefers-reduced-motion`: si el usuario lo activa, el elemento
- * se marca visible de inmediato, sin animación de entrada.
+ * Respeta `prefers-reduced-motion` y, además, nace visible si el navegador
+ * no soporta `IntersectionObserver`: así el contenido nunca queda oculto
+ * esperando un observer que no puede dispararse.
  */
 export function useScrollReveal<T extends HTMLElement>(options: UseScrollRevealOptions = {}) {
     const { threshold = 0.3, rootMargin = '0px 0px -10% 0px', once = true } = options
     const ref = useRef<T | null>(null)
     const [isVisible, setIsVisible] = useState(
-        () =>
-            typeof window !== 'undefined' &&
-            window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+        () => prefersReducedMotion() || !supportsIntersectionObserver(),
     )
 
     useEffect(() => {
         const node = ref.current
         if (!node) return
 
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-
-        if (prefersReducedMotion) {
-            return
-        }
+        // El estado inicial ya es `true` en estos casos; no hace falta animar.
+        if (prefersReducedMotion() || !supportsIntersectionObserver()) return
 
         const observer = new IntersectionObserver(
             ([entry]) => {

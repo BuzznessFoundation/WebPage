@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
+import { prefersReducedMotion, supportsIntersectionObserver } from './motion'
 
 interface UseCountUpOptions {
     duration?: number
@@ -13,18 +14,17 @@ export function useCountUp(target: string, options: UseCountUpOptions = {}) {
     const suffix = target.replace(/[\d.]/g, '')
     const isNumeric = !isNaN(numericValue)
 
-    const prefersReducedMotion =
-        typeof window !== 'undefined' &&
-        window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const reduceMotion = prefersReducedMotion() || !supportsIntersectionObserver()
 
     const [display, setDisplay] = useState(() => {
         if (!isNumeric) return target
-        return prefersReducedMotion ? target : '0'
+        return reduceMotion ? target : '0'
     })
 
     useEffect(() => {
         if (!isNumeric) return
-        if (prefersReducedMotion) return
+        // El estado inicial ya muestra el valor final en estos casos.
+        if (reduceMotion) return
 
         const node = nodeRef.current
         if (!node) return
@@ -52,7 +52,7 @@ export function useCountUp(target: string, options: UseCountUpOptions = {}) {
 
         observer.observe(node)
         return () => observer.disconnect()
-    }, [target, duration, threshold, isNumeric, numericValue, suffix, prefersReducedMotion])
+    }, [target, duration, threshold, isNumeric, numericValue, suffix, reduceMotion])
 
     const ref = useCallback((el: HTMLElement | null) => {
         nodeRef.current = el

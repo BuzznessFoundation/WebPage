@@ -1,13 +1,21 @@
 import { Container } from '@/components/layout/Container'
 import { SectionLabel } from '@/components/ui/SectionLabel'
+import { Reveal } from '@/components/ui/Reveal'
 import { experience } from '@/data/experience'
 import { stats } from '@/data/stats'
 import { useCountUp } from '@/lib/useCountUp'
+import { useTextReveal } from '@/lib/useTextReveal'
+import { cn } from '@/lib/utils'
 
 interface StatItem {
     value: string
     label: string
 }
+
+const MANIFESTO_LINES = [
+    { text: 'Buzzness no muestra trabajo.', accent: false },
+    { text: 'Buzzness es el trabajo.', accent: true },
+]
 
 function StatCount({ stat }: { stat: StatItem }) {
     const { ref, display } = useCountUp(stat.value)
@@ -24,23 +32,43 @@ function StatCount({ stat }: { stat: StatItem }) {
     )
 }
 
+function Manifesto() {
+    const { ref, visibleLines } = useTextReveal(MANIFESTO_LINES.length)
+
+    return (
+        <div className="relative mb-bz-2xl">
+            <div className="absolute top-bz-shadow left-bz-shadow w-full h-full bg-bz-negro rounded-bz" />
+            <blockquote
+                ref={ref}
+                className="relative bg-bz-beige border border-bz-negro rounded-bz px-bz-lg py-bz-xl"
+            >
+                <p className="font-display uppercase text-bz-negro leading-[1.05] text-[8vw] sm:text-bz-xl md:text-[44px]">
+                    {MANIFESTO_LINES.map((line, i) => (
+                        <span
+                            key={line.text}
+                            className={cn(
+                                'block',
+                                line.accent && 'text-bz-ambar',
+                                i < visibleLines ? 'animate-bz-rise' : 'opacity-0',
+                            )}
+                        >
+                            {line.text}
+                        </span>
+                    ))}
+                </p>
+                <cite className="block font-body text-bz-meta text-bz-muted uppercase tracking-[2px] mt-bz-md not-italic">
+                    Buzzness · Manifiesto de marca
+                </cite>
+            </blockquote>
+        </div>
+    )
+}
+
 export function Experience() {
     return (
         <section className="py-bz-2xl bg-bz-crema border-y border-bz-negro/15">
             <Container size="wide">
-                <div className="relative mb-bz-2xl">
-                    <div className="absolute top-bz-shadow left-bz-shadow w-full h-full bg-bz-negro rounded-bz" />
-                    <blockquote className="relative bg-bz-beige border border-bz-negro rounded-bz px-bz-lg py-bz-xl">
-                        <p className="font-display uppercase text-bz-negro leading-[1.05] text-[8vw] sm:text-bz-xl md:text-[44px]">
-                            Buzzness no muestra trabajo.
-                            <br />
-                            <span className="text-bz-ambar">Buzzness es el trabajo.</span>
-                        </p>
-                        <cite className="block font-body text-bz-meta text-bz-muted uppercase tracking-[2px] mt-bz-md not-italic">
-                            Buzzness · Manifiesto de marca
-                        </cite>
-                    </blockquote>
-                </div>
+                <Manifesto />
 
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-bz-md mb-bz-2xl">
                     {stats.map((stat) => (
@@ -48,27 +76,29 @@ export function Experience() {
                     ))}
                 </div>
 
-                <SectionLabel>Trayectoria</SectionLabel>
-                <div className="flex flex-col gap-bz-md">
-                    {experience.map((item) => (
-                        <div
-                            key={item.title}
-                            className="flex flex-col sm:flex-row sm:items-baseline gap-[4px] sm:gap-bz-md border-b border-bz-negro/10 pb-bz-sm"
-                        >
-                            <span className="font-mono text-bz-xs text-bz-muted w-[120px] shrink-0">
-                                {item.year}
-                            </span>
-                            <div>
-                                <span className="font-body text-bz-md font-bold text-bz-negro block">
-                                    {item.title}
+                <Reveal>
+                    <SectionLabel>Trayectoria</SectionLabel>
+                    <div className="flex flex-col gap-bz-md">
+                        {experience.map((item) => (
+                            <div
+                                key={item.title}
+                                className="flex flex-col sm:flex-row sm:items-baseline gap-[4px] sm:gap-bz-md border-b border-bz-negro/10 pb-bz-sm"
+                            >
+                                <span className="font-mono text-bz-xs text-bz-muted w-[120px] shrink-0">
+                                    {item.year}
                                 </span>
-                                <span className="font-body text-bz-sm text-bz-grafito leading-[1.5]">
-                                    {item.description}
-                                </span>
+                                <div>
+                                    <span className="font-body text-bz-md font-bold text-bz-negro block">
+                                        {item.title}
+                                    </span>
+                                    <span className="font-body text-bz-sm text-bz-grafito leading-[1.5]">
+                                        {item.description}
+                                    </span>
+                                </div>
                             </div>
-                        </div>
-                    ))}
-                </div>
+                        ))}
+                    </div>
+                </Reveal>
             </Container>
         </section>
     )
