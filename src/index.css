@@ -103,6 +103,34 @@ ul {
     z-index: -1;
 }
 
+/* Marquee continuo — carrusel infinito de clientes.
+   El track contiene dos filas idénticas; al desplazarse exactamente -50%
+   la segunda fila queda donde estaba la primera y el reset es invisible. */
+@keyframes bz-marquee {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+.bz-marquee {
+    overflow: hidden;
+}
+
+.bz-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: bz-marquee 40s linear infinite;
+}
+
+/* Pausa accesible: nunca obliga a leer contenido en movimiento. */
+.bz-marquee:hover .bz-marquee-track,
+.bz-marquee:focus-within .bz-marquee-track {
+    animation-play-state: paused;
+}
+
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -111,5 +139,30 @@ ul {
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
+    }
+
+    /* Fallback estático: sin animación, la fila clonada se oculta y las 9
+       tarjetas reales se envuelven para que TODAS queden visibles y
+       anunciadas. Nunca se recorta contenido por overflow. */
+    .bz-marquee {
+        overflow: visible;
+    }
+
+    .bz-marquee-track {
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: center;
+        animation: none !important;
+    }
+
+    .bz-client-row {
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding-right: 0;
+    }
+
+    .bz-client-row-clone {
+        display: none !important;
     }
 }

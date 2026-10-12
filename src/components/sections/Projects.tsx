@@ -45,8 +45,8 @@ const TOOL_ICONS: Record<string, string> = {
 function ToolBadge({ tool }: { tool: string }) {
     const icon = TOOL_ICONS[tool] ?? 'fa-solid fa-tag'
     return (
-        <span className="inline-flex items-center gap-[6px] font-mono text-bz-xs text-bz-ambar bg-[var(--color-amber-subtle)] border border-bz-ambar/25 rounded-[4px] px-[8px] py-[3px]">
-            <i className={cn(icon, 'text-[11px]')} />
+        <span className="inline-flex items-center gap-[6px] font-mono text-bz-xs text-bz-negro bg-[var(--color-amber-subtle)] border border-bz-ambar/40 rounded-[4px] px-[8px] py-[3px]">
+            <i className={cn(icon, 'text-bz-negro text-[11px]')} />
             {tool}
         </span>
     )
@@ -75,42 +75,42 @@ export function Projects({ limit, showCta = true }: ProjectsProps) {
                 <Reveal threshold={0.1}>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-bz-cards-gap">
                         {items.map((project) => (
-                            <Card key={project.id} variant="negro">
+                            <Card key={project.id} variant="proyecto">
                                 <div className="flex items-start justify-between gap-bz-sm mb-bz-sm">
-                                    <span className="font-body text-bz-meta text-bz-beige/60 uppercase tracking-[1.5px]">
+                                    <span className="font-body text-bz-meta text-bz-grafito uppercase tracking-[1.5px]">
                                         {project.category}
                                     </span>
-                                    <span className="font-mono text-bz-xs text-bz-ambar whitespace-nowrap">
+                                    <span className="inline-flex items-center rounded-[4px] bg-bz-ambar px-[8px] py-[3px] font-mono text-bz-xs text-bz-negro whitespace-nowrap">
                                         {STATUS_LABEL[project.status]}
                                     </span>
                                 </div>
 
-                                <h3 className="font-display uppercase text-bz-lg text-bz-ambar tracking-[-0.5px] mb-bz-sm">
+                                <h3 className="font-display uppercase text-bz-lg text-bz-negro tracking-[-0.5px] mb-bz-sm">
                                     {project.title}
                                 </h3>
 
                                 <div className="space-y-bz-xs mb-bz-sm">
                                     <div>
-                                        <span className="font-mono text-bz-xs text-bz-beige/40 uppercase tracking-[1.5px]">
+                                        <span className="font-mono text-bz-xs text-bz-grafito uppercase tracking-[1.5px]">
                                             El problema
                                         </span>
-                                        <p className="font-body text-bz-sm text-bz-beige/80 leading-[1.55] mt-[4px]">
+                                        <p className="font-body text-bz-sm text-bz-grafito leading-[1.55] mt-[4px]">
                                             {project.problem}
                                         </p>
                                     </div>
                                     <div>
-                                        <span className="font-mono text-bz-xs text-bz-beige/40 uppercase tracking-[1.5px]">
+                                        <span className="font-mono text-bz-xs text-bz-grafito uppercase tracking-[1.5px]">
                                             La solución
                                         </span>
-                                        <p className="font-body text-bz-sm text-bz-beige/80 leading-[1.55] mt-[4px]">
+                                        <p className="font-body text-bz-sm text-bz-grafito leading-[1.55] mt-[4px]">
                                             {project.solution}
                                         </p>
                                     </div>
                                     <div>
-                                        <span className="font-mono text-bz-xs text-bz-ambar/70 uppercase tracking-[1.5px]">
+                                        <span className="font-mono text-bz-xs text-bz-negro uppercase tracking-[1.5px]">
                                             Resultado
                                         </span>
-                                        <p className="font-body text-bz-sm text-bz-beige/90 leading-[1.55] mt-[4px]">
+                                        <p className="font-body text-bz-sm text-bz-negro leading-[1.55] mt-[4px]">
                                             {project.result}
                                         </p>
                                     </div>

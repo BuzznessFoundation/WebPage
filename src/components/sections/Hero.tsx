@@ -2,12 +2,10 @@ import { Container } from '@/components/layout/Container'
 import { Button } from '@/components/ui/Button'
 import { Reveal } from '@/components/ui/Reveal'
 import { clients, type Client } from '@/data/clients'
-import { useStaggerReveal } from '@/lib/useStaggerReveal'
 import { cn } from '@/lib/utils'
 
-interface ClientCardProps {
+interface ClientItemProps {
     client: Client
-    visible: boolean
 }
 
 /** Iniciales para el slot de las marcas sin logo (no repite el nombre completo). */
@@ -31,7 +29,7 @@ function isLinkable(client: Client): client is Extract<Client, { href: string }>
     return client.private !== true && typeof client.href === 'string'
 }
 
-function ClientCard({ client, visible }: ClientCardProps) {
+function ClientItem({ client }: ClientItemProps) {
     const content = (
         <>
             <span className="block min-h-bz-sm mb-bz-xs">
@@ -46,9 +44,12 @@ function ClientCard({ client, visible }: ClientCardProps) {
                 {client.logo ? (
                     <img
                         src={client.logo}
-                        alt=""
-                        className="h-bz-xl w-28 object-contain"
+                        alt={`Logo de ${client.name}`}
+                        width={112}
+                        height={64}
+                        decoding="async"
                         loading="lazy"
+                        className="h-bz-xl w-28 object-contain"
                     />
                 ) : (
                     <span
@@ -79,7 +80,7 @@ function ClientCard({ client, visible }: ClientCardProps) {
         'flex h-full flex-col bg-bz-crema border-bz border-bz-negro/15 rounded-bz p-bz-sm text-center'
 
     return (
-        <div className={cn('h-full', visible ? 'animate-bz-rise' : 'opacity-0')}>
+        <div className="flex w-48 shrink-0 sm:w-56">
             {isLinkable(client) ? (
                 <a
                     href={client.href}
@@ -87,21 +88,41 @@ function ClientCard({ client, visible }: ClientCardProps) {
                     rel="noopener noreferrer"
                     className={cn(
                         cardClass,
-                        'transition-transform duration-200 hover:-translate-y-1',
+                        'w-full transition-transform duration-200 hover:-translate-y-1',
                     )}
                 >
                     {content}
                 </a>
             ) : (
-                <div className={cardClass}>{content}</div>
+                <div className={cn(cardClass, 'w-full')}>{content}</div>
             )}
         </div>
     )
 }
 
-function ClientsSection() {
-    const { ref, visibleItems } = useStaggerReveal(clients.length, { staggerMs: 110 })
+/**
+ * Una fila de clientes. El carrusel monta dos filas idénticas: la segunda
+ * (aria-hidden + inert) existe solo para que el loop sea continuo, no para
+ * lectores de pantalla ni para navegación por teclado.
+ */
+function ClientRow({ ariaHidden = false }: { ariaHidden?: boolean }) {
+    return (
+        <div
+            className={cn(
+                'bz-client-row flex shrink-0 gap-bz-cards-gap pr-bz-cards-gap',
+                ariaHidden ? 'bz-client-row-clone' : null,
+            )}
+            aria-hidden={ariaHidden || undefined}
+            inert={ariaHidden}
+        >
+            {clients.map((client) => (
+                <ClientItem key={client.name} client={client} />
+            ))}
+        </div>
+    )
+}
 
+function ClientsSection() {
     return (
         <section className="bg-bz-crema py-bz-2xl">
             <Container size="wide">
@@ -117,13 +138,17 @@ function ClientsSection() {
                         </p>
                     </div>
                 </Reveal>
-
-                <div ref={ref} className="grid grid-cols-2 md:grid-cols-3 gap-bz-cards-gap">
-                    {clients.map((client, i) => (
-                        <ClientCard key={client.name} client={client} visible={i < visibleItems} />
-                    ))}
-                </div>
             </Container>
+
+            {/* Marquee infinito: CSS nativo, pausa en hover/focus y se detiene con
+                prefers-reduced-motion. La fila duplicada es aria-hidden + inert.
+                `py-bz-xs` da aire vertical para que el realce hover no se recorte. */}
+            <div className="bz-marquee py-bz-xs" role="region" aria-label="Clientes reales">
+                <div className="bz-marquee-track">
+                    <ClientRow />
+                    <ClientRow ariaHidden />
+                </div>
+            </div>
         </section>
     )
 }
@@ -151,7 +176,7 @@ export function Hero() {
                         <Button href="/proyectos" variant="primary">
                             Ver proyectos
                         </Button>
-                        <Button href="/contacto" variant="ghost">
+                        <Button href="/contacto" variant="crema">
                             Hablemos
                         </Button>
                     </div>

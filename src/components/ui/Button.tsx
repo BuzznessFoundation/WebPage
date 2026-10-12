@@ -1,7 +1,7 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'react'
 import { cn } from '@/lib/utils'
 
-type Variant = 'primary' | 'ghost' | 'invert'
+type Variant = 'primary' | 'ghost' | 'invert' | 'crema'
 
 interface BaseProps {
     children: ReactNode
@@ -32,6 +32,8 @@ const variants: Record<Variant, string> = {
     ghost: 'bg-transparent text-bz-negro border-bz-negro shadow-[6px_6px_0px_#0A0A0A] hover:shadow-[8px_8px_0px_#0A0A0A] active:shadow-[3px_3px_0px_#0A0A0A] hover:bg-bz-negro hover:text-bz-beige',
     // Sobre fondos negros (hero invertido)
     invert: 'bg-bz-beige text-bz-negro border-bz-beige hover:bg-bz-ambar hover:border-bz-ambar',
+    // Secundario sólido sobre superficie clara (beige/crema), con offset del sistema
+    crema: 'bg-bz-crema text-bz-negro border-bz-negro shadow-[6px_6px_0px_#0A0A0A] hover:shadow-[8px_8px_0px_#0A0A0A] active:shadow-[3px_3px_0px_#0A0A0A] hover:bg-bz-negro hover:text-bz-beige',
 }
 
 /**
