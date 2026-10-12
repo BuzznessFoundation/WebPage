@@ -37,6 +37,7 @@ export const clients: Client[] = [
         sector: 'Soluciones educativas',
         location: 'Providencia',
         href: 'https://edutecnica.cl',
+        logo: '/icons/clients/edutecnica.png',
     },
     {
         name: 'Premat',
@@ -50,6 +51,7 @@ export const clients: Client[] = [
         sector: 'Educación pública · PIE',
         location: 'Cerro Navia',
         href: 'https://www.instagram.com/escuela_provincia_de_arauco/',
+        logo: '/icons/clients/provincia-arauco.png',
         partner: true,
     },
     {
