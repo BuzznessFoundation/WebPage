@@ -4,6 +4,7 @@ import HomePage from '@/pages/Home'
 import AboutPage from '@/pages/About'
 import ServicesPage from '@/pages/Services'
 import BlogPage from '@/pages/Blog'
+import BlogPostPage from '@/pages/BlogPost'
 import ContactPage from '@/pages/Contact'
 import PortfolioPage from '@/pages/Portfolio'
 import NotFoundPage from '@/pages/NotFound'
@@ -19,6 +20,7 @@ export const router = createBrowserRouter([
             { path: 'sobre-mi', element: <AboutPage /> },
             { path: 'servicios', element: <ServicesPage /> },
             { path: 'blog', element: <BlogPage /> },
+            { path: 'blog/:slug', element: <BlogPostPage /> },
             { path: 'contacto', element: <ContactPage /> },
             { path: 'proyectos', element: <PortfolioPage /> },
             { path: 'privacidad', element: <PrivacyPage /> },

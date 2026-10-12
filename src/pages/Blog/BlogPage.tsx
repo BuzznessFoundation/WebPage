@@ -2,38 +2,11 @@ import { Container } from '@/components/layout/Container'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { Card } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Badge'
+import { Button } from '@/components/ui/Button'
+import { Reveal } from '@/components/ui/Reveal'
 import { SeoMeta } from '@/components/ui/SeoMeta'
-
-const ARTICLE = {
-    title: 'De Excel y WhatsApp a un CRM que trabaja solo',
-    excerpt:
-        'Así pasé de perseguir clientes en hojas de cálculo a construir un tablero Kanban integrado con Chatwoot que etiqueta contactos automáticamente según su etapa de venta.',
-    date: 'Julio 2026',
-    tags: ['CRM', 'Chatwoot', 'Automatización', 'Python & FastAPI'],
-    readTime: '8 min',
-    body: [
-        'La mayoría de las pequeñas empresas chilenas manejan sus clientes igual: WhatsApp para hablar, Excel para anotar y la memoria para no olvidar a quién llamar mañana. Funciona cuando tienes diez clientes. Cuando tienes cincuenta, se te empiezan a caer.',
-        'El problema no es la herramienta. Es que ninguna de esas tres cosas habla con las otras. Lo que escribiste en Excel no le avisa a WhatsApp que ese cliente ya te pagó. Y tu memoria no te dice que hace tres semanas no hablas con alguien que estaba a punto de comprar.',
-        'Chatwoot es un CRM open source que unifica WhatsApp, Instagram, correo y chat en un solo lugar. Pero la funcionalidad que viene de fábrica es gestión de conversaciones — no tiene un tablero visual para hacer seguimiento de ventas. Así que construí uno.',
-    ],
-    howItWorks: [
-        {
-            step: 'Unificación de canales',
-            detail: 'Todas las conversaciones — WhatsApp, Instagram, correo — llegan a un solo lugar. Sin copiar y pegar entre apps. Sin perder el hilo de quién dijo qué.',
-        },
-        {
-            step: 'Tablero Kanban por etapas de venta',
-            detail: 'Cada contacto vive en una columna: Nuevo, En conversación, Propuesta enviada, Cerrado. Movés un contacto de columna con drag & drop y el CRM se actualiza solo.',
-        },
-        {
-            step: 'Etiquetado automático',
-            detail: 'El sistema aplica etiquetas según reglas que vos definís: "llamar-mañana" si no respondió en 48 horas, "prioridad-alta" si pidió cotización, "inactivo" si pasaron dos semanas sin contacto.',
-        },
-    ],
-    result: 'Una clínica dental que probó esto pasó de perder el 30% de sus consultas por falta de seguimiento a tener un tablero donde cada paciente potencial tiene una etapa clara. El sistema no vende por ellos — pero se asegura de que nadie se caiga por olvido.',
-    closing:
-        'No necesitás un equipo de ingenieros ni pagar una suscripción de cientos de dólares al mes. Necesitás que las herramientas que ya usás hablen entre sí. El resto es construir el puente.',
-}
+import { allBlogPosts } from '@/data/blog'
+import { formatDate } from '@/lib/formatDate'
 
 export default function BlogPage() {
     return (
@@ -57,91 +30,56 @@ export default function BlogPage() {
             </section>
 
             <section className="pb-bz-2xl">
-                <Container size="narrow">
-                    <article className="bg-bz-negro rounded-bz p-bz-lg md:p-bz-xl border border-bz-negro">
-                        {/* Header */}
-                        <div className="flex items-center gap-bz-sm mb-bz-md">
-                            <span className="font-mono text-bz-xs text-bz-ambar uppercase">
-                                {ARTICLE.date}
-                            </span>
-                            <span className="text-bz-beige/20">·</span>
-                            <span className="font-body text-bz-xs text-bz-beige/50">
-                                {ARTICLE.readTime} de lectura
-                            </span>
-                        </div>
-
-                        <h2 className="font-display uppercase text-bz-beige leading-[1.02] text-bz-xl md:text-[44px] tracking-[-1px] mb-bz-sm">
-                            {ARTICLE.title}
-                        </h2>
-
-                        <p className="font-body text-bz-md text-bz-beige/80 leading-[1.55] mb-bz-lg">
-                            {ARTICLE.excerpt}
-                        </p>
-
-                        <div className="flex flex-wrap gap-[6px] mb-bz-xl">
-                            {ARTICLE.tags.map((tag) => (
-                                <Badge key={tag}>{tag}</Badge>
-                            ))}
-                        </div>
-
-                        {/* Divider */}
-                        <hr className="border-bz-beige/15 mb-bz-xl" />
-
-                        {/* Problem */}
-                        {ARTICLE.body.map((p, i) => (
-                            <p
-                                key={i}
-                                className="font-body text-bz-sm text-bz-beige/75 leading-[1.7] mb-bz-sm"
-                            >
-                                {p}
+                <Container size="wide">
+                    {allBlogPosts.length === 0 ? (
+                        <div className="bg-bz-crema border-bz border-bz-negro rounded-bz p-bz-xl text-center">
+                            <p className="font-body text-bz-md text-bz-grafito mb-bz-md">
+                                Todavía no hay artículos publicados. Volvé pronto.
                             </p>
-                        ))}
-
-                        {/* How it works */}
-                        <h3 className="font-display uppercase text-bz-ambar text-bz-lg tracking-[-0.5px] mt-bz-lg mb-bz-md">
-                            Cómo funciona
-                        </h3>
-
-                        <div className="flex flex-col gap-bz-sm mb-bz-lg">
-                            {ARTICLE.howItWorks.map((item, i) => (
-                                <Card key={i} variant="crema">
-                                    <span className="font-mono text-bz-xs text-bz-ambar block mb-[4px]">
-                                        {String(i + 1).padStart(2, '0')}
-                                    </span>
-                                    <span className="font-body text-bz-sm font-bold text-bz-negro block mb-[4px]">
-                                        {item.step}
-                                    </span>
-                                    <p className="font-body text-bz-xs text-bz-grafito leading-[1.6]">
-                                        {item.detail}
-                                    </p>
-                                </Card>
-                            ))}
+                            <Button href="/" variant="ghost">
+                                Volver al inicio
+                            </Button>
                         </div>
+                    ) : (
+                        <Reveal threshold={0.1}>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-bz-cards-gap">
+                                {allBlogPosts.map((post) => (
+                                    <Card key={post.id} variant="crema" className="relative h-full">
+                                        <article className="flex h-full flex-col">
+                                            <time className="font-mono text-bz-xs text-bz-ambar uppercase tracking-[1.5px]">
+                                                {formatDate(post.publishedAt)}
+                                            </time>
 
-                        {/* Result */}
-                        <div className="relative mt-bz-lg">
-                            <div className="absolute top-bz-shadow left-bz-shadow w-full h-full bg-bz-ambar rounded-bz" />
-                            <blockquote className="relative bg-bz-negro border border-bz-ambar rounded-bz px-bz-md py-bz-lg">
-                                <i className="fa-solid fa-quote-right text-bz-ambar text-2xl block mb-bz-xs" />
-                                <p className="font-body text-bz-sm text-bz-beige/90 leading-[1.65]">
-                                    {ARTICLE.result}
-                                </p>
-                            </blockquote>
-                        </div>
+                                            <h2 className="font-display uppercase text-bz-negro text-bz-lg leading-[1.05] tracking-[-0.5px] mt-bz-xs mb-bz-sm">
+                                                {post.title}
+                                            </h2>
 
-                        {/* Closing */}
-                        <p className="font-body text-bz-md text-bz-beige/85 leading-[1.6] mt-bz-lg">
-                            {ARTICLE.closing}
-                        </p>
+                                            <p className="font-body text-bz-sm text-bz-grafito leading-[1.55] mb-bz-sm line-clamp-3">
+                                                {post.excerpt}
+                                            </p>
 
-                        {/* CTA inline */}
-                        <a
-                            href="/contacto"
-                            className="inline-block mt-bz-lg font-body text-bz-label font-bold text-bz-ambar tracking-[2px] uppercase hover:text-bz-beige transition-colors"
-                        >
-                            ¿Querés algo así para tu negocio? →
-                        </a>
-                    </article>
+                                            <div className="flex flex-wrap gap-[6px] mb-bz-md">
+                                                {post.tags.map((tag) => (
+                                                    <Badge key={tag}>{tag}</Badge>
+                                                ))}
+                                            </div>
+
+                                            <div className="mt-auto">
+                                                <Button
+                                                    href={`/blog/${post.slug}`}
+                                                    variant="primary"
+                                                    aria-label={`Saber más: ${post.title}`}
+                                                    className="after:absolute after:inset-0 after:content-['']"
+                                                >
+                                                    Saber más
+                                                </Button>
+                                            </div>
+                                        </article>
+                                    </Card>
+                                ))}
+                            </div>
+                        </Reveal>
+                    )}
                 </Container>
             </section>
         </>

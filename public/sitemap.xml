@@ -17,6 +17,18 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://buzzness.cl/blog/auditoria-infraestructura-monitoreo-seguridad-ia-2-capas</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://buzzness.cl/blog/agentes-ia-sin-estado-vs-mcp-memoria-persistente</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://buzzness.cl/blog/de-excel-y-whatsapp-a-un-crm-que-trabaja-solo</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://buzzness.cl/contacto</loc>
     <priority>0.8</priority>
   </url>
