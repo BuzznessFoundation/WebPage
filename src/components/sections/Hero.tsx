@@ -20,6 +20,56 @@ function monogram(name: string): string {
     return (initials || name.charAt(0)).slice(0, 3).toUpperCase()
 }
 
+interface LogoDisplay {
+    /** Token Tailwind de altura: es lo que fija el tamaño óptico percibido. */
+    heightClass: string
+    /** Dimensiones intrínsecas del archivo ya recortado (aspect-ratio y reserva de espacio, no layout). */
+    intrinsicWidth?: number
+    intrinsicHeight?: number
+}
+
+/**
+ * Altura de render por logo (mapa explícito, no lógica mágica en el JSX).
+ *
+ * La altura base es `h-14` (56px) para todos: alinear wordmarks, escudos y
+ * emblemas a un mismo registro visual da una fila cohesionada. Sobre esa base
+ * hay sólo dos ajustes, y son perceptuales, no geométricos:
+ *
+ *   - Arauco y KOVA bajan a `h-12` (48px): son emblemas macizos/centrados que,
+ *     a la altura base, se perciben como manchas más pesadas que los wordmarks.
+ *   - Lima Verde sube a `h-16` (64px): su arte es angosto y apilado
+ *     (`LIMA VERDE` sobre `CEVICHE PERUANO`), así que a la altura base se
+ *     percibe más chico y se pierde.
+ *
+ * Los wordmarks (i-Labs, Edutécnica, Premat, Mar Azul, Flip & Vive) y el
+ * emblema vectorial `mca-rioseco.svg` quedan en la base `h-14`.
+ *
+ * Estos valores se validaron a ojo sobre un mockup de la fila (PIL sobre el
+ * fondo crema, gap 40px), comparando propuestas; no salen de una fórmula de
+ * masa/área. El criterio es cómo se percibe cada marca en conjunto.
+ */
+const LOGO_DISPLAY: Record<string, LogoDisplay> = {
+    'ilabs-on-light.png': { heightClass: 'h-14', intrinsicWidth: 868, intrinsicHeight: 296 },
+    'edutecnica.png': { heightClass: 'h-14', intrinsicWidth: 599, intrinsicHeight: 133 },
+    'premat-on-light.png': { heightClass: 'h-14', intrinsicWidth: 685, intrinsicHeight: 282 },
+    // Emblema macizo: baja a la altura base para no verse como mancha pesada.
+    'provincia-arauco.png': { heightClass: 'h-12', intrinsicWidth: 444, intrinsicHeight: 444 },
+    // Emblema macizo: baja a la altura base para no verse como mancha pesada.
+    'kova.png': { heightClass: 'h-12', intrinsicWidth: 426, intrinsicHeight: 344 },
+    'mar-azul.png': { heightClass: 'h-14', intrinsicWidth: 602, intrinsicHeight: 339 },
+    'flip-and-vive.png': { heightClass: 'h-14', intrinsicWidth: 602, intrinsicHeight: 134 },
+    // Arte angosto y apilado: sube sobre la base para no perderse.
+    'lima-verde.png': { heightClass: 'h-16', intrinsicWidth: 250, intrinsicHeight: 300 },
+    // Vectorial · altura base.
+    'mca-rioseco.svg': { heightClass: 'h-14', intrinsicWidth: 189, intrinsicHeight: 208 },
+}
+
+const DEFAULT_LOGO_HEIGHT = 'h-14'
+
+function logoDisplay(src: string): LogoDisplay | undefined {
+    return LOGO_DISPLAY[src.split('/').pop() ?? src]
+}
+
 /**
  * Un enlace solo existe si el cliente lo autorizó (`!private`) y tiene URL.
  * El tipo `Client` ya impide la combinación privada + href, pero la decisión
@@ -30,18 +80,21 @@ function isLinkable(client: Client): client is Extract<Client, { href: string }>
 }
 
 function ClientItem({ client }: ClientItemProps) {
-    // Sin nombre visible: el logo (o el monograma) es toda la pieza. El slot
-    // tiene ancho y alto FIJOS para que ambas filas midan exactamente igual y
-    // el `translateX(-50%)` siga cayendo sobre una fila completa.
+    // Sin nombre visible: el logo (o el monograma) es toda la pieza. La altura la
+    // fija el mapa LOGO_DISPLAY y el ancho es automático (`w-auto`): así cada item
+    // ocupa exactamente lo que ocupa su logo. Los PNG ya vienen recortados sin
+    // padding transparente, por lo que no hace falta `object-contain` ni un slot fijo.
+    const display = client.logo ? logoDisplay(client.logo) : undefined
+
     const content = client.logo ? (
         <img
             src={client.logo}
             alt={client.name}
-            width={176}
-            height={96}
+            width={display?.intrinsicWidth}
+            height={display?.intrinsicHeight}
             decoding="async"
             loading="lazy"
-            className="h-full w-full object-contain"
+            className={cn('block w-auto', display?.heightClass ?? DEFAULT_LOGO_HEIGHT)}
         />
     ) : (
         <span
@@ -52,7 +105,7 @@ function ClientItem({ client }: ClientItemProps) {
         </span>
     )
 
-    const itemClass = 'flex h-24 w-44 shrink-0 items-center justify-center'
+    const itemClass = 'flex h-24 w-max shrink-0 items-center justify-center'
 
     return isLinkable(client) ? (
         <a
@@ -78,7 +131,7 @@ function ClientRow({ ariaHidden = false }: { ariaHidden?: boolean }) {
     return (
         <div
             className={cn(
-                'bz-client-row flex shrink-0 gap-bz-cards-gap pr-bz-cards-gap',
+                'bz-client-row flex shrink-0 gap-10 pr-10',
                 ariaHidden ? 'bz-client-row-clone' : null,
             )}
             aria-hidden={ariaHidden || undefined}
