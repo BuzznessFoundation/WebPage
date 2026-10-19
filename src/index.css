@@ -122,7 +122,7 @@ ul {
 .bz-marquee-track {
     display: flex;
     width: max-content;
-    animation: bz-marquee 40s linear infinite;
+    animation: bz-marquee 54.79s linear infinite;
 }
 
 /* Pausa accesible: nunca obliga a leer contenido en movimiento. */

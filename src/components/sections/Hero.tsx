@@ -31,40 +31,33 @@ interface LogoDisplay {
 /**
  * Altura de render por logo (mapa explícito, no lógica mágica en el JSX).
  *
- * La altura base es `h-14` (56px) para todos: alinear wordmarks, escudos y
- * emblemas a un mismo registro visual da una fila cohesionada. Sobre esa base
- * hay sólo dos ajustes, y son perceptuales, no geométricos:
+ * Base `h-16` (64px) para todos: alinear wordmarks, escudos y emblemas a un
+ * mismo registro evita el efecto de línea base irregular (Arauco y KOVA
+ * quedaban 8px por debajo del resto y se leían "caídos").
  *
- *   - Arauco y KOVA bajan a `h-12` (48px): son emblemas macizos/centrados que,
- *     a la altura base, se perciben como manchas más pesadas que los wordmarks.
- *   - Lima Verde sube a `h-16` (64px): su arte es angosto y apilado
- *     (`LIMA VERDE` sobre `CEVICHE PERUANO`), así que a la altura base se
- *     percibe más chico y se pierde.
+ * Sobre esa base hay un solo ajuste, perceptual y no geométrico: Lima Verde
+ * sube a `h-20` (80px) porque su arte es angosto y apilado (`LIMA VERDE` sobre
+ * `CEVICHE PERUANO`); a la altura base se percibe diminuta junto a los
+ * wordmarks anchos.
  *
- * Los wordmarks (i-Labs, Edutécnica, Premat, Mar Azul, Flip & Vive) y el
- * emblema vectorial `mca-rioseco.svg` quedan en la base `h-14`.
- *
- * Estos valores se validaron a ojo sobre un mockup de la fila (PIL sobre el
- * fondo crema, gap 40px), comparando propuestas; no salen de una fórmula de
- * masa/área. El criterio es cómo se percibe cada marca en conjunto.
+ * Validado sobre mockup renderizado (PIL sobre el fondo crema, gap 80px) y
+ * captura real del sitio; no sale de una fórmula de masa/área. El criterio es
+ * cómo se percibe cada marca en conjunto.
  */
 const LOGO_DISPLAY: Record<string, LogoDisplay> = {
-    'ilabs-on-light.png': { heightClass: 'h-14', intrinsicWidth: 868, intrinsicHeight: 296 },
-    'edutecnica.png': { heightClass: 'h-14', intrinsicWidth: 599, intrinsicHeight: 133 },
-    'premat-on-light.png': { heightClass: 'h-14', intrinsicWidth: 685, intrinsicHeight: 282 },
-    // Emblema macizo: baja a la altura base para no verse como mancha pesada.
-    'provincia-arauco.png': { heightClass: 'h-12', intrinsicWidth: 444, intrinsicHeight: 444 },
-    // Emblema macizo: baja a la altura base para no verse como mancha pesada.
-    'kova.png': { heightClass: 'h-12', intrinsicWidth: 426, intrinsicHeight: 344 },
-    'mar-azul.png': { heightClass: 'h-14', intrinsicWidth: 602, intrinsicHeight: 339 },
-    'flip-and-vive.png': { heightClass: 'h-14', intrinsicWidth: 602, intrinsicHeight: 134 },
+    'ilabs-on-light.png': { heightClass: 'h-16', intrinsicWidth: 868, intrinsicHeight: 296 },
+    'edutecnica.png': { heightClass: 'h-16', intrinsicWidth: 599, intrinsicHeight: 133 },
+    'premat-on-light.png': { heightClass: 'h-16', intrinsicWidth: 685, intrinsicHeight: 282 },
+    'provincia-arauco.png': { heightClass: 'h-16', intrinsicWidth: 444, intrinsicHeight: 444 },
+    'kova.png': { heightClass: 'h-16', intrinsicWidth: 426, intrinsicHeight: 344 },
+    'mar-azul.png': { heightClass: 'h-16', intrinsicWidth: 602, intrinsicHeight: 339 },
+    'flip-and-vive.png': { heightClass: 'h-16', intrinsicWidth: 602, intrinsicHeight: 134 },
     // Arte angosto y apilado: sube sobre la base para no perderse.
-    'lima-verde.png': { heightClass: 'h-16', intrinsicWidth: 250, intrinsicHeight: 300 },
-    // Vectorial · altura base.
-    'mca-rioseco.svg': { heightClass: 'h-14', intrinsicWidth: 189, intrinsicHeight: 208 },
+    'lima-verde.png': { heightClass: 'h-20', intrinsicWidth: 250, intrinsicHeight: 300 },
+    'mca-rioseco.svg': { heightClass: 'h-16', intrinsicWidth: 189, intrinsicHeight: 208 },
 }
 
-const DEFAULT_LOGO_HEIGHT = 'h-14'
+const DEFAULT_LOGO_HEIGHT = 'h-16'
 
 function logoDisplay(src: string): LogoDisplay | undefined {
     return LOGO_DISPLAY[src.split('/').pop() ?? src]
@@ -131,7 +124,7 @@ function ClientRow({ ariaHidden = false }: { ariaHidden?: boolean }) {
     return (
         <div
             className={cn(
-                'bz-client-row flex shrink-0 gap-10 pr-10',
+                'bz-client-row flex shrink-0 gap-20 pr-20',
                 ariaHidden ? 'bz-client-row-clone' : null,
             )}
             aria-hidden={ariaHidden || undefined}
