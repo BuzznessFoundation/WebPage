@@ -30,73 +30,42 @@ function isLinkable(client: Client): client is Extract<Client, { href: string }>
 }
 
 function ClientItem({ client }: ClientItemProps) {
-    const content = (
-        <>
-            <span className="block min-h-bz-sm mb-bz-xs">
-                {client.partner && (
-                    <span className="font-mono text-bz-meta uppercase tracking-[1.5px] text-bz-grafito">
-                        Socio estratégico
-                    </span>
-                )}
-            </span>
-
-            <span className="flex h-bz-xl items-center justify-center">
-                {client.logo ? (
-                    <img
-                        src={client.logo}
-                        alt={`Logo de ${client.name}`}
-                        width={112}
-                        height={64}
-                        decoding="async"
-                        loading="lazy"
-                        className="h-bz-xl w-28 object-contain"
-                    />
-                ) : (
-                    <span
-                        aria-hidden="true"
-                        className="flex h-14 w-14 items-center justify-center rounded-bz border-bz border-bz-negro/20 font-display uppercase text-bz-negro text-bz-md"
-                    >
-                        {monogram(client.name)}
-                    </span>
-                )}
-            </span>
-
-            <span className="block font-body font-bold uppercase text-bz-xs tracking-[1.5px] text-bz-negro mt-bz-sm">
-                {client.name}
-            </span>
-            <span className="block font-mono text-bz-meta uppercase text-bz-grafito mt-bz-xs">
-                {client.sector}
-                {client.location ? ` · ${client.location}` : null}
-            </span>
-            {client.private && (
-                <span className="block font-mono text-bz-meta uppercase text-bz-grafito mt-bz-xs">
-                    Uso autorizado de marca
-                </span>
-            )}
-        </>
+    // Sin nombre visible: el logo (o el monograma) es toda la pieza. El slot
+    // tiene ancho y alto FIJOS para que ambas filas midan exactamente igual y
+    // el `translateX(-50%)` siga cayendo sobre una fila completa.
+    const content = client.logo ? (
+        <img
+            src={client.logo}
+            alt={client.name}
+            width={176}
+            height={96}
+            decoding="async"
+            loading="lazy"
+            className="h-full w-full object-contain"
+        />
+    ) : (
+        <span
+            aria-hidden="true"
+            className="flex h-16 w-16 items-center justify-center rounded-bz border-bz border-bz-negro/20 font-display uppercase text-bz-negro text-bz-md"
+        >
+            {monogram(client.name)}
+        </span>
     )
 
-    const cardClass =
-        'flex h-full flex-col bg-bz-crema border-bz border-bz-negro/15 rounded-bz p-bz-sm text-center'
+    const itemClass = 'flex h-24 w-44 shrink-0 items-center justify-center'
 
-    return (
-        <div className="flex w-48 shrink-0 sm:w-56">
-            {isLinkable(client) ? (
-                <a
-                    href={client.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={cn(
-                        cardClass,
-                        'w-full transition-transform duration-200 hover:-translate-y-1',
-                    )}
-                >
-                    {content}
-                </a>
-            ) : (
-                <div className={cn(cardClass, 'w-full')}>{content}</div>
-            )}
-        </div>
+    return isLinkable(client) ? (
+        <a
+            href={client.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Ver sitio de ${client.name}`}
+            className={cn(itemClass, 'transition-transform duration-200 hover:-translate-y-1')}
+        >
+            {content}
+        </a>
+    ) : (
+        <div className={itemClass}>{content}</div>
     )
 }
 
