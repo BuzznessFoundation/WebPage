@@ -2,7 +2,6 @@ import { Container } from '@/components/layout/Container'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { Card } from '@/components/ui/Card'
 import { Reveal } from '@/components/ui/Reveal'
-import { ImagePlaceholder } from '@/components/ui/Placeholder'
 import { projects } from '@/data/projects'
 import { cn } from '@/lib/utils'
 import type { Project, ProjectLane, ProjectStatus } from '@/types/project'
@@ -87,24 +86,6 @@ function ToolBadge({ tool }: { tool: string }) {
 function ProjectCard({ project }: { project: Project }) {
     return (
         <Card variant="proyecto">
-            <div className="mb-bz-sm -mt-[2px]">
-                {project.image ? (
-                    <img
-                        src={project.image}
-                        alt={project.imageDescription}
-                        loading="lazy"
-                        className="w-full aspect-[16/9] object-cover rounded-bz border-bz border-bz-negro/15 block"
-                    />
-                ) : (
-                    <ImagePlaceholder
-                        label={project.category}
-                        description={project.imageDescription}
-                        icon="fa-solid fa-image"
-                        aspect="wide"
-                        className="!py-bz-sm !gap-[4px] bg-transparent"
-                    />
-                )}
-            </div>
             <div className="flex items-start justify-between gap-bz-sm mb-bz-sm">
                 <span className="font-body text-bz-meta text-bz-grafito uppercase tracking-[1.5px]">
                     {project.category}

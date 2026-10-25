@@ -20,8 +20,6 @@ export const projects: Project[] = [
         status: 'activo',
         lane: 'produccion',
         extracted: true,
-        imageDescription:
-            'Captura del panel de operación de la flota, con el estado de cada unidad y las alertas en curso.',
     },
     {
         id: 'mca-rioseco',
@@ -37,8 +35,6 @@ export const projects: Project[] = [
         status: 'activo',
         lane: 'produccion',
         extracted: true,
-        imageDescription:
-            'Mockup de la plataforma, mostrando la sincronización con el sistema externo vía API.',
     },
     {
         id: 'chatwoot-kanban',
@@ -54,8 +50,6 @@ export const projects: Project[] = [
         status: 'activo',
         lane: 'produccion',
         href: 'https://github.com/CrisAlva1414/Chatwoot-Kanban',
-        imageDescription:
-            'Captura del tablero Kanban dentro de Chatwoot, con las tarjetas moviéndose entre etapas del pipeline.',
     },
     {
         id: 'chatwoot-tags',
@@ -71,8 +65,6 @@ export const projects: Project[] = [
         status: 'activo',
         lane: 'produccion',
         href: 'https://github.com/CrisAlva1414/Chatwoot-Tags',
-        imageDescription:
-            'Captura de una conversación con las etiquetas aplicadas automáticamente según el mensaje del cliente.',
     },
     {
         id: 'ruki-system',
@@ -88,8 +80,6 @@ export const projects: Project[] = [
         status: 'activo',
         lane: 'produccion',
         href: 'https://github.com/CrisAlva1414/NAS-System',
-        imageDescription:
-            'Esquema de la arquitectura self-hosted en Caddy, Docker y Nextcloud sobre el servidor propio.',
     },
 
     // ─── Laboratorio ──────────────────────────────────────────────────────────
@@ -107,8 +97,6 @@ export const projects: Project[] = [
         status: 'completado',
         lane: 'laboratorio',
         href: 'https://github.com/CrisAlva1414/IOT-Tailscale',
-        imageDescription:
-            'Fotografía del ESP32 con el cliente Tailscale compilado corriendo en la placa.',
     },
     {
         id: 'buzzint',
@@ -124,8 +112,6 @@ export const projects: Project[] = [
         status: 'activo',
         lane: 'laboratorio',
         href: 'https://github.com/CrisAlva1414/BuzzINT',
-        imageDescription:
-            'Captura del dashboard con el modelo dimensional: un establecimiento consultado contra las tres fuentes.',
     },
     {
         id: 'dobot-chess',
@@ -141,8 +127,6 @@ export const projects: Project[] = [
         status: 'completado',
         lane: 'laboratorio',
         href: 'https://github.com/CrisAlva1414/Dobot-Chess',
-        imageDescription:
-            'Fotografía del brazo Dobot frente al tablero físico, con la interfaz de la partida al lado.',
     },
     {
         id: 'mcp-knowledge',
@@ -158,8 +142,6 @@ export const projects: Project[] = [
         status: 'activo',
         lane: 'laboratorio',
         href: 'https://github.com/CrisAlva1414/MCP-Knowledge',
-        imageDescription:
-            'Diagrama del flujo de memoria: el agente consultando notas, entidades y relaciones por herramientas.',
     },
 
     // ─── Académico ────────────────────────────────────────────────────────────
@@ -177,8 +159,6 @@ export const projects: Project[] = [
         status: 'completado',
         lane: 'academico',
         href: 'https://github.com/CrisAlva1414/ENDDEIE',
-        imageDescription:
-            'Gráfico del clustering de los 1.174 establecimientos, con los grupos separados por desempeño.',
     },
     {
         id: 'integra-lab',
@@ -194,8 +174,6 @@ export const projects: Project[] = [
         status: 'completado',
         lane: 'academico',
         href: 'https://github.com/CrisAlva1414/IntegraLab',
-        imageDescription:
-            'Captura del dashboard de administración con accesos, visitantes y paquetería en una vista.',
     },
     {
         id: 'one-pos',
@@ -211,7 +189,5 @@ export const projects: Project[] = [
         status: 'completado',
         lane: 'academico',
         href: 'https://github.com/CrisAlva1414/ONE-POS-Frontend',
-        imageDescription:
-            'Captura del punto de venta con el dashboard de inventario y la orden de despacho abierta.',
     },
 ]

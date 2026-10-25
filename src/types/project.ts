@@ -22,12 +22,4 @@ export interface Project {
     /** Trabajo bajo contrato ajeno: se muestra el problema y la solución, no el resultado. */
     extracted?: boolean
     href?: string
-    /**
-     * Imagen real del proyecto (`/images/proyectos/<id>.webp`). Mientras no
-     * exista, la card muestra un placeholder con la descripción del asset que
-     * falta, en vez de quedar sin bloque visual.
-     */
-    image?: string
-    /** Qué debe mostrar la imagen — texto que se ve en el placeholder. */
-    imageDescription: string
 }
