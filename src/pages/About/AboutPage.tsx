@@ -24,7 +24,7 @@ export default function AboutPage() {
                                 <div className="absolute top-bz-shadow left-bz-shadow w-full h-full bg-bz-negro rounded-bz" />
                                 <div className="relative rounded-bz border-bz border-bz-negro overflow-hidden">
                                     <img
-                                        src="/images/personalmage.png"
+                                        src="/images/perfil.webp"
                                         alt="Cristián Alvarado"
                                         className="w-full aspect-[3/4] object-cover block"
                                     />

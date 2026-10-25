@@ -1,3 +1,10 @@
 {
-    "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+    "rewrites": [
+        { "source": "/blog/(.*)", "destination": "/index.html" },
+        { "source": "/servicios", "destination": "/servicios/index.html" },
+        { "source": "/proyectos", "destination": "/proyectos/index.html" },
+        { "source": "/sobre-mi", "destination": "/sobre-mi/index.html" },
+        { "source": "/contacto", "destination": "/contacto/index.html" },
+        { "source": "/(.*)", "destination": "/index.html" }
+    ]
 }
