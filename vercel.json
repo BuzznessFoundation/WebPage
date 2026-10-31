@@ -1,10 +1,15 @@
 {
-    "rewrites": [
-        { "source": "/blog/(.*)", "destination": "/index.html" },
-        { "source": "/servicios", "destination": "/servicios/index.html" },
-        { "source": "/proyectos", "destination": "/proyectos/index.html" },
-        { "source": "/sobre-mi", "destination": "/sobre-mi/index.html" },
-        { "source": "/contacto", "destination": "/contacto/index.html" },
-        { "source": "/(.*)", "destination": "/index.html" }
+    "outputDirectory": "dist",
+    "redirects": [
+        {
+            "source": "/:path*",
+            "has": [{ "type": "host", "value": "www\\.buzzness\\.cl" }],
+            "destination": "https://buzzness.cl/:path*",
+            "permanent": true
+        }
+    ],
+    "routes": [
+        { "handle": "filesystem" },
+        { "src": "/.*", "status": 404, "dest": "/404.html" }
     ]
 }

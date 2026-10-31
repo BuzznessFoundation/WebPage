@@ -154,6 +154,76 @@ const serializeJsonLd = (value: unknown): string =>
 const escapeAttr = (value: string): string =>
     value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 
+/** Prioridad de cada ruta estática en el sitemap. */
+const SITEMAP_PRIORITY: Record<string, string> = {
+    '/': '1.0',
+    '/servicios': '0.9',
+    '/proyectos': '0.8',
+    '/sobre-mi': '0.8',
+    '/contacto': '0.8',
+    '/blog': '0.7',
+    '/privacidad': '0.3',
+    '/terminos': '0.3',
+}
+const BLOG_POST_PRIORITY = '0.6'
+const SITEMAP_DATE = /^(\d{4}-\d{2}-\d{2})(?:T|$)/
+
+const postPublishedAt = new Map(
+    allBlogPosts.map((post) => [`/blog/${post.slug}`, post.publishedAt]),
+)
+
+function sitemapPriority(path: string): string {
+    if (path.startsWith('/blog/')) return BLOG_POST_PRIORITY
+    const priority = SITEMAP_PRIORITY[path]
+    // Una ruta estática nueva sin prioridad explícita debe romper el build en
+    // vez de publicarse con un valor inventado.
+    if (priority === undefined) {
+        throw new Error(`prerender: falta prioridad de sitemap para "${sanitizeLog(path)}"`)
+    }
+    return priority
+}
+
+/** Fecha de publicación del post en ISO 8601 (solo fecha), si existe. */
+function sitemapLastMod(path: string): string | undefined {
+    const publishedAt = postPublishedAt.get(path)
+    if (publishedAt === undefined) return undefined
+    const match = SITEMAP_DATE.exec(publishedAt)
+    const date = match?.[1]
+    const parsed = date === undefined ? undefined : new Date(`${date}T00:00:00Z`)
+    if (
+        date === undefined ||
+        parsed === undefined ||
+        Number.isNaN(parsed.getTime()) ||
+        parsed.toISOString().slice(0, 10) !== date
+    ) {
+        throw new Error(
+            `prerender: fecha inválida "${sanitizeLog(publishedAt)}" para "${sanitizeLog(path)}"`,
+        )
+    }
+    return date
+}
+
+function buildSitemap(entries: SeoEntry[]): string {
+    const urls = entries.map(({ path }) => {
+        const loc = `${BASE_URL}${path === '/' ? '/' : path}`
+        const lastmod = sitemapLastMod(path)
+        return [
+            '  <url>',
+            `    <loc>${escapeAttr(loc)}</loc>`,
+            ...(lastmod === undefined ? [] : [`    <lastmod>${lastmod}</lastmod>`]),
+            `    <priority>${sitemapPriority(path)}</priority>`,
+            '  </url>',
+        ].join('\n')
+    })
+    return [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+        ...urls,
+        '</urlset>',
+        '',
+    ].join('\n')
+}
+
 function buildHead({ path, title, description, noindex, type }: SeoEntry) {
     const url = `${BASE_URL}${path === '/' ? '/' : path}`
     return [
@@ -199,6 +269,10 @@ for (const { route, outPath } of outputs) {
 assertSafePath(NOT_FOUND_SEO.path)
 const notFoundOutPath = join(DIST, '404.html')
 
+// Se arma antes de escribir cualquier HTML para que un error de prioridad o de
+// fecha deje `dist/` intacto.
+const sitemap = buildSitemap(routes)
+
 const template = stripPrerendered(readFileSync(join(DIST, 'index.html'), 'utf8'))
 
 for (const { route, outPath } of outputs) {
@@ -216,3 +290,8 @@ writeFileSync(
     template.replace('</head>', () => `    ${buildHead(NOT_FOUND_SEO)}\n    </head>`),
 )
 console.log('prerender', sanitizeLog(NOT_FOUND_SEO.path), '→', sanitizeLog(notFoundOutPath))
+
+// El sitemap sale de la misma lista que los HTML: si un post entra al blog,
+// entra al sitemap sin edición manual. `NOT_FOUND_SEO` queda fuera a propósito.
+writeFileSync(join(DIST, 'sitemap.xml'), sitemap)
+console.log('prerender sitemap →', join(DIST, 'sitemap.xml'))
