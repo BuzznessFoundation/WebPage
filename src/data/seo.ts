@@ -9,6 +9,8 @@
  * páginas y no debe arrastrar el corpus completo del blog al bundle.
  */
 
+import { sanitizeLog } from './sanitizeLog.ts'
+
 export const SITE_URL = 'https://buzzness.cl'
 
 export interface SeoEntry {
@@ -99,7 +101,8 @@ export function seoForPath(path: string): SeoEntry | undefined {
 export function blogSeo(post: { title: string; excerpt: string; slug: string }): SeoEntry {
     if (post.slug.trim() === '') {
         throw new Error(
-            `seo: el post "${post.title}" tiene un slug vacío; no se puede generar una ruta de blog`,
+            `seo: el post "${sanitizeLog(post.title)}" tiene un slug vacío; ` +
+                'no se puede generar una ruta de blog',
         )
     }
     return {

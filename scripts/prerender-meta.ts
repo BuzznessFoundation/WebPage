@@ -16,6 +16,7 @@ import { dirname, join, resolve, sep } from 'node:path'
 import { NOT_FOUND_SEO, STATIC_SEO, SITE_URL, blogSeo } from '../src/data/seo.ts'
 import type { SeoEntry } from '../src/data/seo.ts'
 import { allBlogPosts } from '../src/data/blog.ts'
+import { sanitizeLog } from '../src/data/sanitizeLog.ts'
 
 const DIST = 'dist'
 const BASE_URL = SITE_URL
@@ -77,15 +78,6 @@ function outPathFor(path: string): string {
     }
     return outPath
 }
-
-/** Evita inyectar caracteres de control en los logs del build. */
-const sanitizeLog = (value: string): string =>
-    Array.from(value)
-        .filter((char) => {
-            const code = char.codePointAt(0) ?? 0
-            return code > 0x1f && code !== 0x7f
-        })
-        .join('')
 
 const services = [
     'Automatización de procesos',
