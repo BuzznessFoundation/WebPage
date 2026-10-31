@@ -9,11 +9,7 @@ import { SeoMeta } from '@/components/ui/SeoMeta'
 export default function HomePage() {
     return (
         <>
-            <SeoMeta
-                title="Buzzness"
-                description="Automatización, CRM y sistemas a medida para pequeñas y medianas empresas en Chile. Sin suscripciones sorpresa, sin depender de plataformas de terceros."
-                path="/"
-            />
+            <SeoMeta path="/" />
             <Hero />
             <SoftwareSection />
             <Services limit={3} />

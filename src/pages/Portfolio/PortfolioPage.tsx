@@ -6,11 +6,7 @@ import { Projects } from '@/components/sections/Projects'
 export default function PortfolioPage() {
     return (
         <>
-            <SeoMeta
-                title="Proyectos"
-                description="Evidencia real de sistemas construidos: CRM, automatización, ERP, analítica de datos. Cada proyecto parte de un problema concreto de negocio."
-                path="/proyectos"
-            />
+            <SeoMeta path="/proyectos" />
             <section className="pt-bz-2xl pb-bz-md">
                 <Container size="wide">
                     <SectionLabel>Proyectos</SectionLabel>

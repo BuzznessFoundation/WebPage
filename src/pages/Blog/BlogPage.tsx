@@ -11,11 +11,7 @@ import { formatDate } from '@/lib/formatDate'
 export default function BlogPage() {
     return (
         <>
-            <SeoMeta
-                title="Blog"
-                description="Casos reales de implementación: CRM, automatización, infraestructura y decisiones técnicas explicadas desde el problema de negocio."
-                path="/blog"
-            />
+            <SeoMeta path="/blog" />
             <section className="pt-bz-2xl pb-bz-md">
                 <Container size="wide">
                     <SectionLabel>Blog</SectionLabel>

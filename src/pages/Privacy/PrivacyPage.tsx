@@ -5,11 +5,7 @@ import { SeoMeta } from '@/components/ui/SeoMeta'
 export default function PrivacyPage() {
     return (
         <>
-            <SeoMeta
-                title="Política de privacidad"
-                description="Cómo recopilamos y usamos tus datos en Buzzness. Sin cookies de tracking, sin analytics de terceros, sin compartir información con nadie."
-                path="/privacidad"
-            />
+            <SeoMeta path="/privacidad" />
             <section className="py-bz-2xl">
                 <Container size="narrow">
                     <SectionLabel>Legal</SectionLabel>

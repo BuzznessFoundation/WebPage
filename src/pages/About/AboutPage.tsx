@@ -8,11 +8,7 @@ import { Contact } from '@/components/sections/Contact'
 export default function AboutPage() {
     return (
         <>
-            <SeoMeta
-                title="Sobre mí"
-                description="Cristián Alvarado — ingeniero que construye sistemas. Automatización, datos e infraestructura propia. Buzzness es la evidencia de cómo trabajo."
-                path="/sobre-mi"
-            />
+            <SeoMeta path="/sobre-mi" />
 
             {/* ── 1. Hero ──────────────────────────────────────────────── */}
             <section className="pt-bz-2xl pb-bz-2xl">

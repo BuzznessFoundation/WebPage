@@ -5,11 +5,7 @@ import { SeoMeta } from '@/components/ui/SeoMeta'
 export default function TermsPage() {
     return (
         <>
-            <SeoMeta
-                title="Términos y condiciones"
-                description="Términos de servicio de Buzzness. Trabajo profesional, comunicación directa y responsabilidad compartida. Sin suscripciones escondidas."
-                path="/terminos"
-            />
+            <SeoMeta path="/terminos" />
             <section className="py-bz-2xl">
                 <Container size="narrow">
                     <SectionLabel>Legal</SectionLabel>

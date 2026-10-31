@@ -5,11 +5,7 @@ import { SeoMeta } from '@/components/ui/SeoMeta'
 export default function NotFoundPage() {
     return (
         <>
-            <SeoMeta
-                title="Página no encontrada"
-                description="Error 404 — esta página no existe."
-                path="/404"
-            />
+            <SeoMeta path="/404" noindex />
             <section className="py-bz-2xl">
                 <Container size="narrow" className="text-center">
                     <h1 className="font-display uppercase text-bz-negro leading-[0.95] text-[16vw] sm:text-bz-hero tracking-[-2px] mb-bz-md">

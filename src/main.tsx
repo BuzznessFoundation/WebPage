@@ -17,6 +17,14 @@ const updateFavicon = () => {
 updateFavicon()
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateFavicon)
 
+// Los crawlers sin JS leen el HTML estático con sus metas prerenderizadas.
+// Al hidratar, Helmet reconstruye ese set: limpiamos el prerenderizado por marca.
+// El JSON-LD prerenderizado NO se borra porque Helmet no lo reconstruye.
+const prerendered = document.head.querySelectorAll(
+    'meta[data-seo="prerender"], link[data-seo="prerender"], title[data-seo="prerender"]',
+)
+prerendered.forEach((node) => node.remove())
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
         <HelmetProvider>

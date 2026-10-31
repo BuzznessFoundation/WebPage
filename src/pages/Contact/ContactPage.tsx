@@ -84,11 +84,7 @@ export default function ContactPage() {
 
     return (
         <>
-            <SeoMeta
-                title="Contacto"
-                description="Cuéntame qué proceso te está quitando tiempo o qué sistema necesita tu negocio. Respondo en 24 horas. Sin formularios de relleno."
-                path="/contacto"
-            />
+            <SeoMeta path="/contacto" />
             <section className="pt-bz-2xl pb-bz-md">
                 <Container size="narrow">
                     <SectionLabel>Contacto</SectionLabel>

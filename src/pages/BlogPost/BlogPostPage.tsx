@@ -17,7 +17,7 @@ export default function BlogPostPage() {
 
     return (
         <>
-            <SeoMeta title={post.title} description={post.excerpt} path={`/blog/${post.slug}`} />
+            <SeoMeta path={`/blog/${post.slug}`} post={post} />
 
             <section className="pt-bz-2xl pb-bz-xl">
                 <Container size="narrow">
