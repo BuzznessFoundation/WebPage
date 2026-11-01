@@ -1,5 +1,5 @@
 {
-    "buildCommand": "(npx --yes playwright@1.64.1 install chromium || true) && npm run build",
+    "buildCommand": "npm run build",
     "outputDirectory": "dist",
     "redirects": [
         {

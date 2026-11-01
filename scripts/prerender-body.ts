@@ -55,7 +55,20 @@
  * Escape manual — `SKIP_BODY_PRERENDER=1`: salta este paso en cualquier
  * entorno con el mismo warning `⚠️ BODY-PRERENDER-SKIP:`.
  *
+ * Elección del ejecutable de Chromium:
+ * - En Vercel (`VERCEL=1`) la imagen de build es Amazon Linux 2023 y no trae
+ *   Chromium. Se usa `@sparticuz/chromium`, que empaqueta un headless shell
+ *   para esa plataforma, con `executablePath()` y un set mínimo de flags
+ *   (`--no-sandbox`, `--disable-setuid-sandbox`, `--disable-dev-shm-usage`,
+ *   `--disable-gpu`) en vez del `args` completo del paquete, que rompe la
+ *   navegación. Se importa dinámicamente para no cargarlo en el build local.
+ * - En local (sin `VERCEL`) se usa el Chromium que descarga Playwright, sin
+ *   `executablePath`, exactamente como antes.
+ *
  * Cómo verificar en los logs de Vercel si el body se prerenderizó:
+ * - `prerender-body: VERCEL detectado → preparando @sparticuz/chromium`
+ *   confirma que se eligió la rama de Vercel.
+ * - `prerender-body: ejecutable de Chromium → <ruta>` muestra el binario usado.
  * - Buscá las líneas `prerender-body <ruta> → <archivo>` (corrió bien).
  * - Buscá el marcador `BODY-PRERENDER-SKIP` (se saltó: el body quedó vacío).
  */
@@ -72,6 +85,9 @@ const DIST = resolve('dist')
 const DIST_ROOT = DIST + sep
 const HOST = '127.0.0.1'
 const NAV_TIMEOUT_MS = 30_000
+
+/** Vercel setea `VERCEL=1` durante el build; define qué Chromium usar. */
+const IS_VERCEL = Boolean(process.env.VERCEL)
 
 /** Misma fuente de rutas que `prerender-meta.ts`: no se duplica la lista. */
 const routes: SeoEntry[] = [...STATIC_SEO, ...allBlogPosts.map(blogSeo)]
@@ -368,6 +384,77 @@ function warnSkipBodyPrerender(reason: string): void {
     )
 }
 
+interface BrowserLaunchOptions {
+    executablePath?: string
+    args?: string[]
+    headless?: boolean
+}
+
+/**
+ * Elige el Chromium según el entorno de build.
+ *
+ * En Vercel la imagen (Amazon Linux 2023) no trae Chromium: `@sparticuz/chromium`
+ * empaqueta uno compatible y lo descomprime a `/tmp`. El import es dinámico para
+ * que el build local no cargue ese paquete. En local se deja que Playwright use
+ * su propio Chromium (comportamiento anterior).
+ *
+ * Los errores de import/`executablePath()` se lanzan con contexto propio; la
+ * etapa `launch de Chromium` los convierte en soft-fail en CI/Vercel.
+ */
+async function resolveBrowserLaunchOptions(): Promise<BrowserLaunchOptions> {
+    if (!IS_VERCEL) {
+        console.log(
+            'prerender-body: entorno local (sin VERCEL) → Chromium de Playwright ' +
+                '(executablePath por defecto)',
+        )
+        return {}
+    }
+
+    console.log('prerender-body: VERCEL detectado → preparando @sparticuz/chromium')
+
+    let sparticuz: (typeof import('@sparticuz/chromium'))['default']
+    try {
+        sparticuz = (await import('@sparticuz/chromium')).default
+    } catch (error) {
+        const detail = error instanceof Error ? error.message : String(error)
+        throw new Error(
+            `no se pudo importar @sparticuz/chromium: ${sanitizeLog(detail)}. ` +
+                'Verificá que la devDependency esté instalada en el build de Vercel.',
+            { cause: error },
+        )
+    }
+
+    let executablePath: string
+    try {
+        executablePath = await sparticuz.executablePath()
+    } catch (error) {
+        const detail = error instanceof Error ? error.message : String(error)
+        throw new Error(
+            `executablePath() de @sparticuz/chromium falló: ${sanitizeLog(detail)}. ` +
+                'La imagen de build debe ser Amazon Linux 2023 y /tmp debe ser escribible.',
+            { cause: error },
+        )
+    }
+
+    console.log(`prerender-body: ejecutable de Chromium → ${sanitizeLog(executablePath)}`)
+
+    // NO usar `sparticuz.args` completo: con ese set la navegación falla con
+    // `page.goto: Target page, context or browser has been closed` (regresión
+    // reproducida; quitar `--single-process`/`--no-zygote` no alcanza). El set
+    // mínimo verificado que navega bien es este. El binario de @sparticuz es un
+    // headless shell, así que `headless: true` es el modo correcto.
+    return {
+        executablePath,
+        args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-dev-shm-usage',
+            '--disable-gpu',
+        ],
+        headless: true,
+    }
+}
+
 async function main(): Promise<void> {
     if (process.env.SKIP_BODY_PRERENDER === '1') {
         warnSkipBodyPrerender(
@@ -422,7 +509,8 @@ async function main(): Promise<void> {
         const origin = `http://${HOST}:${address.port}`
 
         currentStage = 'launch de Chromium'
-        browser = await chromium.launch()
+        const launchOptions = await resolveBrowserLaunchOptions()
+        browser = await chromium.launch(launchOptions)
 
         currentStage = 'creación de contexto'
         const context = await browser.newContext({
@@ -536,8 +624,11 @@ async function main(): Promise<void> {
 
         const hint =
             currentStage === 'launch de Chromium'
-                ? ' Instalalo con `npx playwright install chromium` o usá ' +
-                  'SKIP_BODY_PRERENDER=1 para un deploy de emergencia.'
+                ? IS_VERCEL
+                    ? ' Revisá el log de @sparticuz/chromium: el binario requiere ' +
+                      'la imagen de build Amazon Linux 2023 y /tmp escribible.'
+                    : ' Instalalo con `npx playwright install chromium` o usá ' +
+                      'SKIP_BODY_PRERENDER=1 para un deploy de emergencia.'
                 : ''
         throw new Error(`prerender-body: falló ${context}${hint}`, { cause: error })
     } finally {
