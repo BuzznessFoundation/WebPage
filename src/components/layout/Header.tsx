@@ -39,7 +39,7 @@ export function Header() {
             )}
         >
             <Container>
-                <nav className="flex items-center justify-between py-bz-md">
+                <nav className="grid grid-cols-[1fr_auto_1fr] items-center py-bz-md">
                     <NavLink
                         to="/"
                         className="flex items-center gap-[8px]"
@@ -66,7 +66,7 @@ export function Header() {
                         </span>
                     </NavLink>
 
-                    <div className="hidden md:flex items-center gap-bz-md">
+                    <div className="hidden md:flex items-center justify-self-center gap-bz-md">
                         {NAV_ITEMS.map((item) => (
                             <NavLink
                                 key={item.to}
@@ -83,26 +83,28 @@ export function Header() {
                                 {item.label}
                             </NavLink>
                         ))}
+                    </div>
+
+                    <div className="col-start-3 flex items-center justify-self-end">
                         <a
                             href="https://wa.me/56937662776"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center font-body text-bz-base font-black uppercase tracking-[0.5px] px-bz-md py-[8px] rounded-bz border-bz border-bz-negro transition-transform duration-150 hover:-translate-y-[2px] active:translate-y-0 bg-bz-ambar text-bz-negro shadow-[6px_6px_0px_#0A0A0A] hover:shadow-[8px_8px_0px_#0A0A0A] active:shadow-[3px_3px_0px_#0A0A0A] ml-bz-xs"
+                            className="hidden md:inline-flex items-center justify-center font-body text-bz-base font-black uppercase tracking-[0.5px] px-bz-md py-[8px] rounded-bz border-bz border-bz-negro transition-transform duration-150 hover:-translate-y-[2px] active:translate-y-0 bg-bz-ambar text-bz-negro shadow-[6px_6px_0px_#0A0A0A] hover:shadow-[8px_8px_0px_#0A0A0A] active:shadow-[3px_3px_0px_#0A0A0A]"
                         >
                             <i className="fa-brands fa-whatsapp text-bz-md mr-[6px]" />
                             WhatsApp
                         </a>
+                        <button
+                            type="button"
+                            onClick={() => setOpen((v) => !v)}
+                            aria-expanded={open}
+                            aria-label={open ? 'Cerrar menu' : 'Abrir menu'}
+                            className="md:hidden font-body text-bz-label font-bold text-bz-negro tracking-[2px]"
+                        >
+                            {open ? 'CERRAR x' : 'MENU'}
+                        </button>
                     </div>
-
-                    <button
-                        type="button"
-                        onClick={() => setOpen((v) => !v)}
-                        aria-expanded={open}
-                        aria-label={open ? 'Cerrar menu' : 'Abrir menu'}
-                        className="md:hidden font-body text-bz-label font-bold text-bz-negro tracking-[2px]"
-                    >
-                        {open ? 'CERRAR x' : 'MENU'}
-                    </button>
                 </nav>
             </Container>
 

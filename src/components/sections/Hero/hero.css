@@ -10,13 +10,9 @@
   /* Igual a tailwind bz-ambar (#D4820A): se conserva el token local por encapsulamiento. */
   --color-amber: #d4820a;
   --color-amber-hover: #e08f0f;
-  --color-surface: #f0ead6;
-  --color-surface-rgb: 240, 234, 214;
   --color-surface-alt: #f5f1e8;
   --color-text-secondary: #2c2c2a;
   --color-muted: #888780;
-  --color-grid-major: rgba(180, 110, 0, 0.1);
-  --color-grid-minor: rgba(180, 110, 0, 0.04);
   --font-display: 'Anton', 'Impact', sans-serif;
   --font-body: 'Darker Grotesque', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
@@ -39,8 +35,8 @@
   overflow: hidden;
   /* --bz-hero-nav: alto de tu navbar si es fija/transparente y queda encima del hero. */
   padding: var(--bz-hero-nav, 0px) 0 0;
-  /* Opaco: cubre la grilla global de App.tsx; el hero aporta su propio GridField. */
-  background: var(--color-surface);
+  /* Transparente: deja ver la grilla global de App.tsx, que arranca en y=0. */
+  background: transparent;
   color: var(--color-black);
   font-family: var(--font-body);
 }
@@ -73,19 +69,8 @@
 .bz-grid-paper {
   position: absolute;
   inset: 0;
-  /* Paper grain sits in the paper itself, under every ink layer. */
-  background-image:
-    var(--grain-dark, none),
-    linear-gradient(var(--color-grid-major) 1px, transparent 1px),
-    linear-gradient(90deg, var(--color-grid-major) 1px, transparent 1px),
-    linear-gradient(var(--color-grid-minor) 1px, transparent 1px),
-    linear-gradient(90deg, var(--color-grid-minor) 1px, transparent 1px);
-  background-size:
-    auto,
-    40px 40px,
-    40px 40px,
-    8px 8px,
-    8px 8px;
+  /* Solo grano de papel: la grilla base es la global de App.tsx. */
+  background-image: var(--grain-dark, none);
   animation: km-fade 320ms ease-out both;
 }
 
@@ -122,30 +107,6 @@
   z-index: 20;
   width: var(--bz-hero-copy-width);
   max-width: 100%;
-}
-
-/* Velo de papel: aclara solo la zona del texto y se funde con la superficie.
-   No es un panel: no hay borde ni borde duro, el degradado cae a transparente. */
-.bz-hero__copy::before {
-  position: absolute;
-  z-index: -1;
-  inset: -14% -10% -8% -14%;
-  background:
-    radial-gradient(
-      120% 100% at 22% 42%,
-      rgba(var(--color-surface-rgb), 0.98) 0%,
-      rgba(var(--color-surface-rgb), 0.93) 38%,
-      rgba(var(--color-surface-rgb), 0.55) 62%,
-      rgba(var(--color-surface-rgb), 0) 82%
-    ),
-    linear-gradient(
-      100deg,
-      rgba(var(--color-surface-rgb), 0.92) 0%,
-      rgba(var(--color-surface-rgb), 0.35) 55%,
-      rgba(var(--color-surface-rgb), 0) 78%
-    );
-  content: '';
-  pointer-events: none;
 }
 
 .bz-hero__meta {
@@ -706,14 +667,16 @@
   }
 
   /* La composición pasa a capa de fondo: cubre el alto del hero y queda detrás
-     del copy (z-index 1 vs. 20). El arte se recorta con el pico a la derecha. */
+     del copy (z-index 1 vs. 20). El arte se recorta con el pico a la derecha.
+     Sin velo, el lead cae sobre la tinta: 0.5 conserva el arte y sube el
+     contraste del texto (>3:1) sin tapar la grilla global. */
   .km {
     position: absolute;
     z-index: 1;
     inset: 0;
     height: auto;
     margin: 0;
-    opacity: 0.68;
+    opacity: 0.5;
   }
 
   .km-art {
@@ -721,18 +684,6 @@
     bottom: 0;
     left: auto;
     transform: none;
-  }
-
-  /* El velo en móvil cae hacia abajo-derecha para dejar ver el macizo. */
-  .bz-hero__copy::before {
-    inset: -10% -8% -12% -10%;
-    background: radial-gradient(
-      140% 95% at 28% 30%,
-      rgba(var(--color-surface-rgb), 0.96) 0%,
-      rgba(var(--color-surface-rgb), 0.84) 46%,
-      rgba(var(--color-surface-rgb), 0.42) 66%,
-      rgba(var(--color-surface-rgb), 0) 82%
-    );
   }
 
   /* The artboard is cropped on phones; annotations would be cut, so the image speaks alone. */

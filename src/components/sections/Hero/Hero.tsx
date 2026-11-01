@@ -51,7 +51,7 @@ export function Hero({ projectsHref = '/proyectos', contactHref = '/contacto' }:
                 de terceros. Todo tuyo.
               </p>
 
-              <div className="flex flex-wrap gap-bz-sm">
+              <div className="flex flex-wrap gap-bz-sm mt-bz-lg">
                 <Button href={projectsHref} variant="primary">
                   Ver proyectos
                 </Button>
