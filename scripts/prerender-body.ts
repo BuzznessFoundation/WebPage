@@ -203,6 +203,75 @@ function assertSnapshotSafe(routePath: string, body: string): void {
 
 const ROOT_OPEN = '<div id="root">'
 
+const STYLE_ATTR = /(\sstyle\s*=\s*)(?:"([^"]*)"|'([^']*)')/gi
+
+/**
+ * Separa declaraciones CSS por `;` de nivel superior. Un data URI incluye
+ * `;` (`data:image/png;base64,...`) dentro de `url(...)`, así que un split
+ * plano rompería la declaración; hay que respetar paréntesis y comillas.
+ */
+function splitDeclarations(value: string): string[] {
+    const parts: string[] = []
+    let start = 0
+    let depth = 0
+    let quote: string | null = null
+
+    for (let i = 0; i < value.length; i++) {
+        const char = value[i]
+        if (quote !== null) {
+            if (char === quote) quote = null
+        } else if (char === '"' || char === "'") {
+            quote = char
+        } else if (char === '(') {
+            depth += 1
+        } else if (char === ')') {
+            depth = Math.max(0, depth - 1)
+        } else if (char === ';' && depth === 0) {
+            parts.push(value.slice(start, i))
+            start = i + 1
+        }
+    }
+
+    parts.push(value.slice(start))
+    return parts
+}
+
+/**
+ * Elimina del snapshot las custom properties cuyo valor embeba un
+ * `data:image/...` (típicamente `--grain-dark: url(data:image/png;base64,...)`).
+ *
+ * El hero genera esas texturas procedurales en el cliente; Playwright las
+ * serializa dentro del `style` y el HTML estático carga con bytes que el
+ * navegador vuelve a generar al hidratar. Se quitan solo esas declaraciones:
+ * posiciones, transforms y variables numéricas del mismo `style` se
+ * conservan, y el atributo desaparece únicamente si queda vacío.
+ *
+ * Solo procesa atributos `style`; no toca el `<head>` ni otros atributos.
+ * La validación de seguridad corre sobre el snapshot completo antes de esta
+ * limpieza, así que `<script>`, `on*=` y `javascript:` se siguen detectando.
+ */
+function stripDataUriCustomProps(html: string): string {
+    return html.replace(
+        STYLE_ATTR,
+        (_match, prefix: string, doubleQuoted?: string, singleQuoted?: string) => {
+            const quote = doubleQuoted !== undefined ? '"' : "'"
+            const value = doubleQuoted ?? singleQuoted ?? ''
+            const kept = splitDeclarations(value)
+                .map((declaration) => declaration.trim())
+                .filter((declaration) => {
+                    if (declaration === '') return false
+                    const colon = declaration.indexOf(':')
+                    if (colon === -1) return true
+                    const name = declaration.slice(0, colon).trim()
+                    if (!name.startsWith('--')) return true
+                    return !/data:image\//i.test(declaration.slice(colon + 1))
+                })
+            if (kept.length === 0) return ''
+            return `${prefix}${quote}${kept.join('; ')}${quote}`
+        },
+    )
+}
+
 /**
  * Reemplaza el contenido del root de `html` por `body`.
  *
@@ -417,9 +486,15 @@ async function main(): Promise<void> {
 
             // No se limpia: se verifica. Un `<script>`, un `on*=` o un
             // `javascript:` en el snapshot debe romper el build, no pasar.
+            // Se valida el snapshot completo, antes de quitar texturas, para
+            // que ninguna declaración eliminada pueda ocultar una violación.
             currentStage = 'validación del snapshot'
             assertSnapshotSafe(target.routePath, raw)
-            snapshots.set(target, raw)
+
+            // Las texturas procedurales (grain, fog) se serializan como data
+            // URIs dentro de `style`; el cliente las regenera al hidratar, así
+            // que no tienen por qué viajar en el HTML estático.
+            snapshots.set(target, stripDataUriCustomProps(raw))
         }
 
         for (const target of targets) {
