@@ -71,6 +71,25 @@
  * - `prerender-body: ejecutable de Chromium → <ruta>` muestra el binario usado.
  * - Buscá las líneas `prerender-body <ruta> → <archivo>` (corrió bien).
  * - Buscá el marcador `BODY-PRERENDER-SKIP` (se saltó: el body quedó vacío).
+ *
+ * Cabeceras de seguridad (viven en `vercel.json`, no acá):
+ * - `Content-Security-Policy` es la política de entrega del sitio. `script-src
+ *   'self'` alcanza porque el build no emite scripts inline (el JS es un módulo
+ *   de `/assets`); nunca se agrega `'unsafe-inline'` ni `'unsafe-eval'` ahí.
+ * - `style-src 'self' 'unsafe-inline'`: el hero escribe `style` inline en SVG y
+ *   custom properties; Google Fonts y Font Awesome se sirven como hojas
+ *   externas, por eso sus orígenes están en la lista.
+ * - `font-src` incluye `fonts.gstatic.com` (archivos de Google Fonts) y
+ *   `cdnjs.cloudflare.com` (webfonts de Font Awesome), más `data:` por si una
+ *   fuente viaja embebida.
+ * - `img-src 'self' data: blob:`: las texturas procedurales del hero son data
+ *   URIs generadas en runtime; `blob:` queda por si se agrega un asset creado
+ *   con `URL.createObjectURL`.
+ * - `form-action 'self' mailto:`: el único formulario es el de contacto y no
+ *   debe poder postear a un origen ajeno.
+ * - `upgrade-insecure-requests` no tiene efecto en local (HTTP) y en Vercel
+ *   fuerza HTTPS. HSTS va sin `preload` a propósito: entrar a la lista de
+ *   preload es una decisión de dominio, no de este repo.
  */
 import { createServer, type Server } from 'node:http'
 import { existsSync, readFileSync, statSync, writeFileSync, mkdirSync } from 'node:fs'
