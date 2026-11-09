@@ -73,9 +73,15 @@
  * - Buscá el marcador `BODY-PRERENDER-SKIP` (se saltó: el body quedó vacío).
  *
  * Cabeceras de seguridad (viven en `vercel.json`, no acá):
- * - `Content-Security-Policy` es la política de entrega del sitio. `script-src
- *   'self'` alcanza porque el build no emite scripts inline (el JS es un módulo
- *   de `/assets`); nunca se agrega `'unsafe-inline'` ni `'unsafe-eval'` ahí.
+ * - `Content-Security-Policy` es la política de entrega del sitio. `script-src`
+ *   ya no es `'self'` a secas: el snippet base de Meta Pixel vive inline en
+ *   `index.html` y `fbevents.js` se sirve desde `connect.facebook.net`, así
+ *   que ambos orígenes están autorizados (más `'unsafe-inline'` para ese
+ *   snippet). Cuando entre GA4 se suman `googletagmanager.com`,
+ *   `google-analytics.com` y `googleads.g.doubleclick.net`; sus píxeles de
+ *   respaldo (`img-src`, `connect-src`) también están listados, si no el
+ *   navegador bloquea el envío y Meta/SEoptimer reportan el píxel como no
+ *   detectado. Nunca se agrega `'unsafe-eval'`.
  * - `style-src 'self' 'unsafe-inline'`: el hero escribe `style` inline en SVG y
  *   custom properties; Google Fonts y Font Awesome se sirven como hojas
  *   externas, por eso sus orígenes están en la lista.
