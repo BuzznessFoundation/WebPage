@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom'
 import { Header } from '../components/layout/Header'
 import { Footer } from '../components/layout/Footer'
 import { useScrollToTop } from '../lib/useScrollToTop'
+import { usePageTracking } from '../lib/analytics'
 
 /**
  * Layout raíz. El grid de fondo (.bz-grid-bg) vive aquí, una sola vez,
@@ -10,6 +11,7 @@ import { useScrollToTop } from '../lib/useScrollToTop'
  */
 export default function App() {
     useScrollToTop()
+    usePageTracking()
 
     return (
         <div className="relative min-h-screen bz-grid-bg overflow-x-hidden">

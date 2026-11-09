@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import { router } from './app/router'
+import { initAnalytics } from './lib/analytics'
 import './index.css'
 
 // Favicon dinámico según dark mode
@@ -13,6 +14,8 @@ const updateFavicon = () => {
         link.href = isDark ? '/icons/logo-amber.svg' : '/icons/logo-black.svg'
     }
 }
+
+initAnalytics()
 
 updateFavicon()
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateFavicon)

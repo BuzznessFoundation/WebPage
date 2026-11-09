@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { Container } from './Container'
 import { cn } from '@/lib/utils'
+import { trackLead } from '@/lib/analytics'
 import { NAV_ITEMS } from '@/data/navigation'
 
 export function Header() {
@@ -90,6 +91,7 @@ export function Header() {
                             href="https://wa.me/56937662776"
                             target="_blank"
                             rel="noopener noreferrer"
+                            onClick={() => trackLead('header-desktop')}
                             className="hidden md:inline-flex items-center justify-center font-body text-bz-base font-black uppercase tracking-[0.5px] px-bz-md py-[8px] rounded-bz border-bz border-bz-negro transition-transform duration-150 hover:-translate-y-[2px] active:translate-y-0 bg-bz-ambar text-bz-negro shadow-[6px_6px_0px_#0A0A0A] hover:shadow-[8px_8px_0px_#0A0A0A] active:shadow-[3px_3px_0px_#0A0A0A]"
                         >
                             <i className="fa-brands fa-whatsapp text-bz-md mr-[6px]" />
@@ -138,7 +140,10 @@ export function Header() {
                                 href="https://wa.me/56937662776"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                onClick={() => setOpen(false)}
+                                onClick={() => {
+                                    trackLead('header-mobile')
+                                    setOpen(false)
+                                }}
                                 className="inline-flex items-center justify-center font-body text-bz-base font-black uppercase tracking-[0.5px] px-bz-md py-[10px] rounded-bz border-bz border-bz-negro bg-bz-ambar text-bz-negro shadow-[4px_4px_0px_#0A0A0A] mt-bz-sm"
                             >
                                 <i className="fa-brands fa-whatsapp text-bz-md mr-[6px]" />

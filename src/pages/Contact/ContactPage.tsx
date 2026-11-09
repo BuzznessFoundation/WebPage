@@ -5,6 +5,7 @@ import { SectionLabel } from '@/components/ui/SectionLabel'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
 import { SeoMeta } from '@/components/ui/SeoMeta'
+import { trackFormSubmit } from '@/lib/analytics'
 import { allContactServices } from '@/data/serviceCatalog'
 import { cn } from '@/lib/utils'
 
@@ -90,6 +91,7 @@ export default function ContactPage() {
                 `\n${(e.target as HTMLFormElement).mensaje?.value || ''}`,
         )
 
+        trackFormSubmit(service?.slug)
         window.location.href = `mailto:cristian.alvarado@buzzness.cl?subject=${subject}&body=${body}`
         setSent(true)
         setSending(false)

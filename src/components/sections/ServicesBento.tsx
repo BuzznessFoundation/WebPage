@@ -15,6 +15,7 @@ import {
 } from '@/data/serviceCatalog'
 import type { AuditService, CatalogService } from '@/data/serviceCatalog'
 import { cn } from '@/lib/utils'
+import { trackLead } from '@/lib/analytics'
 
 function Arrow({ className }: { className?: string }) {
     return (
@@ -373,6 +374,7 @@ function FinalCta() {
                             )}
                             target="_blank"
                             rel="noopener noreferrer"
+                            onClick={() => trackLead('servicios-cierre')}
                         >
                             Hablar por WhatsApp
                         </Button>
@@ -421,6 +423,7 @@ export function ServicesBento() {
                                     )}
                                     target="_blank"
                                     rel="noopener noreferrer"
+                                    onClick={() => trackLead('servicios-hero')}
                                 >
                                     Hablar por WhatsApp
                                 </Button>
