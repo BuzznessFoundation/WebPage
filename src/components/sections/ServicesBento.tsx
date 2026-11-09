@@ -441,7 +441,13 @@ export function ServicesBento() {
                         </aside>
                     </div>
 
-                    <div id="servicios" className="mt-bz-xl grid gap-bz-section-gap">
+                    <p className="mt-bz-md max-w-[720px] font-body text-bz-xs text-bz-grafito">
+                        Precios de entrada, netos y en pesos chilenos, con IVA aparte. El
+                        presupuesto final depende del alcance y se entrega por escrito antes de
+                        empezar.
+                    </p>
+
+                    <div id="servicios" className="mt-bz-md grid gap-bz-section-gap">
                         <h2 className="sr-only">Servicios</h2>
 
                         <BentoRow
