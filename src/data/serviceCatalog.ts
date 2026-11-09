@@ -1,9 +1,8 @@
 /**
  * Catálogo de /servicios — fuente única del modelo de datos de la página.
  *
- * S4 renderiza los servicios; auditorías, proceso, prueba, precios y FAQ
- * quedan modelados acá para que S5 los consuma sin redefinir contenido.
- * Los precios son de entrada ("desde") y no incluyen inversión publicitaria.
+ * Los servicios de nivel 01/02 exponen precio de entrada ("desde").
+ * Los especializados y las auditorías se coordinan por propuesta.
  */
 
 export interface CatalogService {
@@ -11,7 +10,7 @@ export interface CatalogService {
     title: string
     hook: string
     includes: string[]
-    price: string
+    price?: string
     tag: string
     tier: 'primary' | 'implementation' | 'specialist'
 }
@@ -21,7 +20,6 @@ export interface AuditService {
     title: string
     hook: string
     includes: string[]
-    price: string
     detail: string
     limitation: string
 }
@@ -164,7 +162,6 @@ export const specialistServices: CatalogService[] = [
         title: 'Herramientas propietarias',
         hook: 'Software hecho para tu operación y solo para tu operación.',
         includes: ['Módulos a medida', 'Integración con lo existente', 'Código tuyo'],
-        price: 'desde $900.000',
         tag: 'A MEDIDA',
         tier: 'specialist',
     },
@@ -173,7 +170,6 @@ export const specialistServices: CatalogService[] = [
         title: 'Gestión de servidores e infraestructura',
         hook: 'Monitoreo, backups, actualizaciones y alertas.',
         includes: ['Monitoreo', 'Backups probados', 'Actualizaciones y alertas'],
-        price: 'desde 5 UF/mes',
         tag: 'INFRAESTRUCTURA',
         tier: 'specialist',
     },
@@ -182,7 +178,6 @@ export const specialistServices: CatalogService[] = [
         title: 'Nube privada y NAS',
         hook: 'Tus archivos y sistemas en tu propia infraestructura, sin depender de un SaaS.',
         includes: ['NAS propio', 'Accesos y respaldos', 'Sin cuota por usuario'],
-        price: 'desde $450.000',
         tag: 'SELF-HOSTED',
         tier: 'specialist',
     },
@@ -191,7 +186,6 @@ export const specialistServices: CatalogService[] = [
         title: 'Agentes de IA en tu infraestructura',
         hook: 'Un agente conectado a tus datos y sistemas.',
         includes: ['Datos y herramientas propias', 'Permisos acotados', 'Operación monitoreada'],
-        price: 'desde $1.200.000',
         tag: 'IA PRIVADA',
         tier: 'specialist',
     },
@@ -217,7 +211,6 @@ export const auditServices: AuditService[] = [
             'Seguridad mínima y accesos',
             'Hallazgos priorizados y hoja de ruta',
         ],
-        price: 'desde 40 UF',
         detail: 'Informe PDF 25–40 páginas + matriz de hallazgos + sesión de 60 min. Plazo: 2–3 semanas.',
         limitation:
             'No es asesoría legal ni reemplaza al abogado. Es el diagnóstico técnico y documental que tu abogado va a necesitar igual.',
@@ -236,7 +229,6 @@ export const auditServices: AuditService[] = [
             'Dependencias y secretos expuestos',
             'Plan de remediación priorizado',
         ],
-        price: 'desde 35 UF (externa) / 70 UF (completa)',
         detail: 'Externa: 5–7 días. Completa con accesos, respaldos e identidades: 2–3 semanas.',
         limitation:
             'Ninguna auditoría garantiza inmunidad. Garantiza que sabés dónde estás parado y qué arreglar primero.',
@@ -252,7 +244,6 @@ export const auditServices: AuditService[] = [
             'Accesibilidad AA',
             'Seguridad básica de cabeceras',
         ],
-        price: 'desde $180.000',
         detail: 'Informe PDF + plan priorizado.',
         limitation: 'Es un diagnóstico, no una implementación.',
     },
@@ -285,58 +276,6 @@ export const processSteps: ProcessStep[] = [
     {
         title: 'Ejecución',
         description: 'Construimos, medimos y operamos. El código y los datos quedan tuyos.',
-    },
-]
-
-export interface ProofProject {
-    name: string
-    description: string
-}
-
-export const proofProjects: ProofProject[] = [
-    {
-        name: 'iBots',
-        description:
-            'Plataforma de flota robótica: backend, panel de control y telemetría para operación real, bajo contrato.',
-    },
-    {
-        name: 'MCA Rioseco',
-        description:
-            'Plataforma a medida con módulos de automatización e integración de API para un cliente real.',
-    },
-    {
-        name: 'BuzzINT',
-        description:
-            'Datos de MINEDUC, SIMCE y SIGE consolidados en un modelo dimensional con pipeline ETL y API.',
-    },
-    {
-        name: 'NAS-System',
-        description:
-            'Infraestructura self-hosted con contenedores, reverse proxy, monitoreo y backups versionados.',
-    },
-]
-
-export interface EntryPrice {
-    label: string
-    price: string
-    description: string
-}
-
-export const entryPrices: EntryPrice[] = [
-    {
-        label: 'Proyectos digitales',
-        price: 'desde $180.000',
-        description: 'Analytics, correo, copywriting y automatizaciones acotadas.',
-    },
-    {
-        label: 'Implementación y desarrollo',
-        price: 'desde $390.000',
-        description: 'Sitios, apps, CRM, pagos e integraciones SII.',
-    },
-    {
-        label: 'Auditorías',
-        price: 'desde 35 UF',
-        description: 'Datos, ciberseguridad y diagnóstico técnico.',
     },
 ]
 

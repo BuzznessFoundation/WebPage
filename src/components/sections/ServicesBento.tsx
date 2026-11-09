@@ -5,18 +5,15 @@ import { Card } from '@/components/ui/Card'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import {
     auditServices,
-    entryPrices,
     faqs,
     implementationServices,
     primaryServices,
     processSteps,
-    proofProjects,
     serviceContactHref,
     specialistServices,
     whatsappHref,
 } from '@/data/serviceCatalog'
 import type { AuditService, CatalogService } from '@/data/serviceCatalog'
-import { useTextReveal } from '@/lib/useTextReveal'
 import { cn } from '@/lib/utils'
 
 function Arrow({ className }: { className?: string }) {
@@ -42,6 +39,9 @@ interface ServiceCardProps {
 }
 
 function ServiceCard({ service, index, dark = false, className }: ServiceCardProps) {
+    const isSpecialist = service.tier === 'specialist'
+    const actionLabel = isSpecialist ? 'SABER MÁS' : 'COTIZAR'
+
     return (
         <div className={cn('relative h-full', className)}>
             <span
@@ -103,7 +103,11 @@ function ServiceCard({ service, index, dark = false, className }: ServiceCardPro
                             </li>
                         ))}
                     </ul>
-                    <span className="mt-auto pt-bz-sm font-mono text-bz-xs">{service.price}</span>
+                    {!isSpecialist && service.price && (
+                        <span className="mt-auto pt-bz-sm font-mono text-bz-xs">
+                            {service.price}
+                        </span>
+                    )}
                 </div>
 
                 <div
@@ -112,7 +116,7 @@ function ServiceCard({ service, index, dark = false, className }: ServiceCardPro
                         dark ? 'border-bz-beige/20' : 'border-bz-negro/20',
                     )}
                 >
-                    <span>COTIZAR</span>
+                    <span>{actionLabel}</span>
                     <Arrow className="transition-transform group-hover:translate-x-1 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0" />
                 </div>
             </Link>
@@ -156,51 +160,6 @@ function BentoRow({
                     />
                 ))}
             </div>
-        </div>
-    )
-}
-
-function Statement() {
-    const { ref, visibleLines } = useTextReveal(2)
-
-    return (
-        <div
-            ref={ref}
-            className="relative flex min-h-[320px] flex-col justify-between gap-bz-lg rounded-bz border-bz border-bz-negro bg-bz-negro p-bz-lg text-bz-beige lg:ml-[96px]"
-        >
-            <span className="font-mono text-bz-meta uppercase tracking-[2px]">
-                COMPROMISO · BUZZNESS
-            </span>
-            <p
-                aria-label="Todo lo que ves acá lo construimos y operamos nosotros."
-                className="max-w-4xl font-display text-bz-xl uppercase leading-[0.95] md:text-bz-2xl"
-            >
-                <span
-                    aria-hidden="true"
-                    className={cn(
-                        'block transition-opacity duration-500',
-                        visibleLines >= 1 ? 'opacity-100' : 'opacity-0',
-                    )}
-                >
-                    Todo lo que ves acá
-                </span>
-                <span
-                    aria-hidden="true"
-                    className={cn(
-                        'block text-bz-ambar transition-opacity duration-500',
-                        visibleLines >= 2 ? 'opacity-100' : 'opacity-0',
-                    )}
-                >
-                    lo construimos y operamos nosotros.
-                </span>
-            </p>
-            <Link
-                to="/contacto"
-                className="flex items-center justify-between gap-bz-xs border-t border-b border-bz-beige/40 py-bz-sm font-mono text-bz-meta uppercase tracking-[2px] transition-colors hover:text-bz-ambar"
-            >
-                <span>HABLEMOS DE TU PROYECTO</span>
-                <Arrow />
-            </Link>
         </div>
     )
 }
@@ -251,8 +210,7 @@ function AuditCard({ audit, index, className }: AuditCardProps) {
                 </ul>
 
                 <div className="mt-bz-sm border-t border-bz-negro/20 pt-bz-sm">
-                    <p className="font-mono text-bz-sm text-bz-negro">{audit.price}</p>
-                    <p className="mt-bz-xs font-body text-bz-xs text-bz-grafito">{audit.detail}</p>
+                    <p className="font-body text-bz-xs text-bz-grafito">{audit.detail}</p>
                 </div>
 
                 <div className="mt-bz-sm rounded-bz border border-bz-negro/20 bg-bz-beige p-bz-sm">
@@ -268,7 +226,7 @@ function AuditCard({ audit, index, className }: AuditCardProps) {
                     to={serviceContactHref(audit.slug)}
                     className="mt-auto border-t border-bz-negro/20 pt-bz-sm font-body text-bz-label font-bold uppercase tracking-[2px] text-bz-negro transition-colors hover:text-bz-ambar"
                 >
-                    PEDIR AUDITORÍA →
+                    SABER MÁS →
                 </Link>
             </div>
         </div>
@@ -286,11 +244,11 @@ function AuditsSection() {
                         id="auditorias-title"
                         className="max-w-[820px] font-display text-bz-xl uppercase leading-[1.02] tracking-[-1px]"
                     >
-                        Auditorías con precio cerrado y entregable con tu nombre.
+                        Auditorías con alcance cerrado y entregable con tu nombre.
                     </h2>
                 </div>
                 <p className="max-w-[480px] font-body text-bz-sm text-bz-grafito lg:col-span-4">
-                    La puerta de entrada más barata para saber dónde estás parado. Informe en PDF,
+                    La puerta de entrada más directa para saber dónde estás parado. Informe en PDF,
                     plan priorizado y una sesión para revisarlo. No vendemos miedo: vendemos
                     control.
                 </p>
@@ -308,8 +266,8 @@ function AuditsSection() {
             </div>
 
             <p className="mt-bz-sm max-w-[720px] font-body text-bz-xs text-bz-grafito">
-                Los plazos y valores se confirman en la propuesta. Esto no es asesoría legal ni
-                reemplaza al abogado.
+                Los plazos se confirman en la propuesta. Esto no es asesoría legal ni reemplaza al
+                abogado.
             </p>
         </section>
     )
@@ -352,112 +310,6 @@ function ProcessSection() {
                             </p>
                         </Card>
                     ))}
-                </div>
-            </Container>
-        </section>
-    )
-}
-
-function ProofSection() {
-    return (
-        <section className="py-bz-2xl" aria-labelledby="prueba-title">
-            <Container size="wide">
-                <SectionLabel>Prueba real</SectionLabel>
-
-                <div className="grid grid-cols-1 items-end gap-bz-sm lg:grid-cols-12">
-                    <div className="lg:col-span-7">
-                        <h2
-                            id="prueba-title"
-                            className="max-w-[680px] font-display text-bz-xl uppercase leading-[1.02] tracking-[-1px]"
-                        >
-                            Proyectos con cliente, código y operación detrás.
-                        </h2>
-                    </div>
-                    <p className="max-w-[420px] font-body text-bz-sm text-bz-grafito lg:col-span-5">
-                        Sin métricas inventadas. Lo que se puede mostrar, se muestra; lo que está
-                        bajo contrato, se describe.
-                    </p>
-                </div>
-
-                <div className="mt-bz-lg grid grid-cols-1 gap-bz-cards-gap md:grid-cols-2">
-                    {proofProjects.map((project) => (
-                        <Card key={project.name} variant="negro">
-                            <h3 className="font-body text-bz-md font-bold text-bz-beige">
-                                {project.name}
-                            </h3>
-                            <p className="mt-bz-xs font-body text-bz-sm text-bz-beige/75">
-                                {project.description}
-                            </p>
-                        </Card>
-                    ))}
-                </div>
-
-                <Link
-                    to="/proyectos"
-                    className="mt-bz-md inline-flex font-mono text-bz-meta uppercase tracking-[2px] text-bz-negro transition-colors hover:text-bz-ambar"
-                >
-                    Ver todos los proyectos →
-                </Link>
-            </Container>
-        </section>
-    )
-}
-
-function PricingSection() {
-    return (
-        <section
-            id="precios"
-            className="bg-bz-negro py-bz-2xl text-bz-beige"
-            aria-labelledby="precios-title"
-        >
-            <Container size="wide">
-                <SectionLabel invert>Precios de entrada</SectionLabel>
-
-                <div className="grid grid-cols-1 items-end gap-bz-sm lg:grid-cols-12">
-                    <div className="lg:col-span-7">
-                        <h2
-                            id="precios-title"
-                            className="max-w-[680px] font-display text-bz-xl uppercase leading-[1.02] tracking-[-1px]"
-                        >
-                            Precios desde, con el entregable al lado.
-                        </h2>
-                    </div>
-                    <p className="max-w-[420px] font-body text-bz-sm text-bz-beige/70 lg:col-span-5">
-                        El precio final se confirma después del diagnóstico. La inversión
-                        publicitaria la define el cliente y se paga aparte.
-                    </p>
-                </div>
-
-                <div className="mt-bz-lg grid grid-cols-1 gap-bz-cards-gap md:grid-cols-3">
-                    {entryPrices.map((entry) => (
-                        <Card key={entry.label} variant="crema" className="flex flex-col">
-                            <p className="font-mono text-bz-meta uppercase tracking-[2px] text-bz-grafito">
-                                {entry.label}
-                            </p>
-                            <p className="mt-bz-xs font-display text-bz-xl text-bz-negro">
-                                {entry.price}
-                            </p>
-                            <p className="mt-bz-xs font-body text-bz-sm text-bz-grafito">
-                                {entry.description}
-                            </p>
-                        </Card>
-                    ))}
-                </div>
-
-                <div className="mt-bz-md flex flex-col items-start justify-between gap-bz-sm md:flex-row md:items-center">
-                    <p className="max-w-[720px] font-body text-bz-xs text-bz-beige/70">
-                        Los valores en UF se convierten al valor del día. Todos los precios son{' '}
-                        &ldquo;desde&rdquo; y se confirman en la propuesta.
-                    </p>
-                    <Button
-                        href={whatsappHref(
-                            'Hola, vengo de buzzness.cl. Quiero un diagnóstico de 20 minutos.',
-                        )}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Pedir diagnóstico
-                    </Button>
                 </div>
             </Container>
         </section>
@@ -535,8 +387,8 @@ function FinalCta() {
 }
 
 /**
- * Núcleo de /servicios: hero + bento de 16 servicios + statement.
- * S5 agrega auditorías, proceso, prueba, precios, FAQ y CTA final.
+ * Núcleo de /servicios: hero + bento de 16 servicios + auditorías,
+ * proceso, FAQ y CTA final.
  */
 export function ServicesBento() {
     return (
@@ -549,11 +401,11 @@ export function ServicesBento() {
                         <div className="lg:col-span-8">
                             <h1
                                 id="servicios-title"
-                                className="max-w-[920px] font-display text-[40px] uppercase leading-[0.95] tracking-[-1px] sm:text-bz-xl md:text-[56px]"
+                                className="max-w-[920px] font-display text-[40px] uppercase leading-[1.15] tracking-[-1px] sm:text-bz-xl md:text-[56px]"
                             >
                                 Software, publicidad e infraestructura para negocios que ya venden y
                                 quieren{' '}
-                                <span className="inline bg-bz-ambar px-[0.12em] text-bz-negro box-decoration-clone">
+                                <span className="inline text-bz-negro underline decoration-bz-ambar decoration-[0.12em] underline-offset-[0.12em]">
                                     dejar de improvisar.
                                 </span>
                             </h1>
@@ -572,8 +424,8 @@ export function ServicesBento() {
                                 >
                                     Hablar por WhatsApp
                                 </Button>
-                                <Button variant="ghost" href="#precios">
-                                    Ver precios
+                                <Button variant="ghost" href="#servicios">
+                                    Ver servicios
                                 </Button>
                             </div>
                         </div>
@@ -616,15 +468,11 @@ export function ServicesBento() {
                         />
 
                         <AuditsSection />
-
-                        <Statement />
                     </div>
                 </Container>
             </section>
 
             <ProcessSection />
-            <ProofSection />
-            <PricingSection />
             <FaqSection />
             <FinalCta />
         </>
