@@ -69,25 +69,73 @@ export function trackPageView(path: string) {
 }
 
 /**
+ * Precio de entrada de cada servicio, en CLP neto.
+ *
+ * Meta necesita `value` + `currency` para que Events Manager calcule el
+ * retorno de la campaña; sin eso el evento cuenta como conversión pero
+ * vale 0. Solo los servicios con precio publicado en /servicios entran
+ * aquí: los especialistas y las auditorías cotizan por propuesta y su
+ * ausencia de esta tabla es intencional (no se inventa un ticket).
+ *
+ * Al cambiar un precio en `src/data/serviceCatalog.ts`, actualizarlo acá:
+ * son dos listas y la de precios la renderiza el sitio, esta la lee el píxel.
+ */
+const SERVICE_VALUE_CLP: Record<string, number> = {
+    'desarrollo-web': 200000,
+    'desarrollo-movil': 800000,
+    'meta-ads': 120000,
+    'google-ads': 120000,
+    'crm-y-conversaciones': 180000,
+    automatizaciones: 140000,
+    'analytics-y-medicion': 90000,
+    'pasarelas-de-pago': 120000,
+    'integraciones-sii-facturacion-y-banca': 250000,
+    'correo-transaccional-y-dominio': 60000,
+    'optimizacion-para-ia': 100000,
+    'copywriting-web': 80000,
+}
+
+/** Bloque `value`/`currency` para Meta. `{}` si el servicio no tiene precio. */
+function currencyParams(service?: string): Record<string, unknown> {
+    const value = service ? SERVICE_VALUE_CLP[service] : undefined
+    return value === undefined ? {} : { value, currency: 'CLP' }
+}
+
+/**
  * Clic en un CTA que saca al usuario del sitio (WhatsApp).
  * `surface` identifica dónde estaba el botón: hero, cierre del bento, header.
+ * `service` es el slug del catálogo; si viene, el evento lleva su valor.
  */
 export function trackLead(surface: string, service?: string) {
     const params = {
         content_name: service ?? surface,
         content_category: 'whatsapp',
         surface,
+        ...currencyParams(service),
     }
     metaTrack('Contact', params)
     metaTrack('Lead', params)
     gaTrack('generate_lead', { method: 'whatsapp', surface, service: service ?? '' })
 }
 
-/** Envío del formulario de /contacto. */
+/** Envío del formulario de /contacto (y el bloque Contact de la home). */
 export function trackFormSubmit(service?: string) {
-    const params = { content_name: service ?? 'contacto', content_category: 'formulario' }
+    const params = {
+        content_name: service ?? 'contacto',
+        content_category: 'formulario',
+        ...currencyParams(service),
+    }
     metaTrack('Lead', params)
     gaTrack('generate_lead', { method: 'formulario', service: service ?? '' })
+}
+
+/**
+ * Vista de la página de servicios. Es el evento que necesita el pixel para
+ * armar audiencia de remarketing sobre quien miró la oferta y no escribió.
+ */
+export function trackViewContent(contentName: string, contentCategory = 'servicios') {
+    metaTrack('ViewContent', { content_name: contentName, content_category: contentCategory })
+    gaTrack('view_item', { content_name: contentName, content_category: contentCategory })
 }
 
 /** Carga GA4 sólo si hay ID configurado. Idempotente. */
