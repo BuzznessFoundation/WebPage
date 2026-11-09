@@ -30,9 +30,9 @@ export const STATIC_SEO: SeoEntry[] = [
     },
     {
         path: '/servicios',
-        title: 'Servicios — Buzzness',
+        title: 'Servicios — desarrollo, publicidad, auditorías e infraestructura | Buzzness',
         description:
-            'Automatización de procesos, CRM con Chatwoot, desarrollo web con SEO, sistemas self-hosted y campañas con datos reales. Sin mensualidades de plataforma.',
+            'Desarrollo web y móvil, Meta y Google Ads, auditorías de protección de datos y ciberseguridad, e implementación de herramientas. Precios desde, en Chile.',
     },
     {
         path: '/proyectos',

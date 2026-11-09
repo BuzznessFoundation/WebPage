@@ -1,9 +1,11 @@
 import { type FormEvent, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { Container } from '@/components/layout/Container'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
 import { SeoMeta } from '@/components/ui/SeoMeta'
+import { allContactServices } from '@/data/serviceCatalog'
 import { cn } from '@/lib/utils'
 
 function FormField({
@@ -13,6 +15,7 @@ function FormField({
     placeholder,
     isTextarea = false,
     error,
+    defaultValue,
 }: {
     label: string
     name: string
@@ -20,6 +23,7 @@ function FormField({
     placeholder: string
     isTextarea?: boolean
     error?: string
+    defaultValue?: string
 }) {
     const baseClasses = cn(
         'w-full font-body text-bz-sm text-bz-negro bg-bz-crema',
@@ -44,6 +48,7 @@ function FormField({
                         required
                         rows={4}
                         placeholder={placeholder}
+                        defaultValue={defaultValue}
                         className={cn(baseClasses, 'relative resize-none')}
                     />
                 ) : (
@@ -63,6 +68,12 @@ function FormField({
 export default function ContactPage() {
     const [sent, setSent] = useState(false)
     const [sending, setSending] = useState(false)
+    const [searchParams] = useSearchParams()
+
+    const requestedSlug = searchParams.get('servicio')
+    const service = requestedSlug
+        ? allContactServices.find((item) => item.slug === requestedSlug)
+        : undefined
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -71,10 +82,12 @@ export default function ContactPage() {
         await new Promise((r) => setTimeout(r, 600))
 
         const subject = encodeURIComponent('Consulta desde buzzness.cl')
+        const serviceLine = service ? `Servicio: ${service.title}\n` : ''
         const body = encodeURIComponent(
             `Nombre: ${(e.target as HTMLFormElement).nombre?.value || ''}\n` +
-                `Email: ${(e.target as HTMLFormElement).correo?.value || ''}\n\n` +
-                `${(e.target as HTMLFormElement).mensaje?.value || ''}`,
+                `Email: ${(e.target as HTMLFormElement).correo?.value || ''}\n` +
+                serviceLine +
+                `\n${(e.target as HTMLFormElement).mensaje?.value || ''}`,
         )
 
         window.location.href = `mailto:cristian.alvarado@buzzness.cl?subject=${subject}&body=${body}`
@@ -102,59 +115,80 @@ export default function ContactPage() {
                 <Container size="narrow">
                     {sent ? (
                         <Card variant="ambar">
-                            <i className="fa-solid fa-paper-plane text-3xl text-bz-negro block mb-bz-xs" />
+                            <i
+                                aria-hidden="true"
+                                className="fa-solid fa-paper-plane text-3xl text-bz-negro block mb-bz-xs"
+                            />
                             <p className="font-body text-bz-md font-bold text-bz-negro">
                                 Mensaje listo.
                             </p>
                             <p className="font-body text-bz-sm text-bz-negro/70 mt-[6px]">
                                 Se abrirá tu cliente de correo. Si no funciona, escríbeme
                                 directamente a{' '}
-                                <span className="text-bz-negro font-bold">cristian.alvarado@buzzness.cl</span>
+                                <span className="text-bz-negro font-bold">
+                                    cristian.alvarado@buzzness.cl
+                                </span>
                             </p>
                         </Card>
                     ) : (
-                        <form
-                            onSubmit={handleSubmit}
-                            className="flex flex-col gap-bz-md max-w-[480px]"
-                            noValidate
-                        >
-                            <FormField
-                                label="Nombre"
-                                name="nombre"
-                                placeholder="¿Cómo te llamas?"
-                            />
+                        <>
+                            {service && (
+                                <div className="mb-bz-md inline-flex flex-wrap items-center gap-bz-xs rounded-bz border-bz border-bz-negro bg-bz-ambar px-bz-sm py-bz-xs">
+                                    <span className="font-mono text-bz-meta uppercase tracking-[2px] text-bz-negro">
+                                        Consulta sobre:
+                                    </span>{' '}
+                                    <span className="font-body text-bz-sm font-bold text-bz-negro">
+                                        {service.title}
+                                    </span>
+                                </div>
+                            )}
+                            <form
+                                onSubmit={handleSubmit}
+                                className="flex flex-col gap-bz-md max-w-[480px]"
+                                noValidate
+                            >
+                                <FormField
+                                    label="Nombre"
+                                    name="nombre"
+                                    placeholder="¿Cómo te llamas?"
+                                />
 
-                            <FormField
-                                label="Correo"
-                                name="correo"
-                                type="email"
-                                placeholder="tu@correo.com"
-                            />
+                                <FormField
+                                    label="Correo"
+                                    name="correo"
+                                    type="email"
+                                    placeholder="tu@correo.com"
+                                />
 
-                            <FormField
-                                label="¿Qué necesitas?"
-                                name="mensaje"
-                                placeholder="Cuéntame qué proceso te quita tiempo o qué sistema necesitas."
-                                isTextarea
-                            />
+                                <FormField
+                                    key={service?.slug ?? 'sin-servicio'}
+                                    label="¿Qué necesitas?"
+                                    name="mensaje"
+                                    placeholder="Cuéntame qué proceso te quita tiempo o qué sistema necesitas."
+                                    isTextarea
+                                    defaultValue={
+                                        service ? `Hola, me interesa ${service.title}. ` : undefined
+                                    }
+                                />
 
-                            <div className="mt-bz-xs">
-                                <Button type="submit" variant="primary">
-                                    {sending ? 'Enviando...' : 'Enviar mensaje'}
-                                </Button>
-                            </div>
+                                <div className="mt-bz-xs">
+                                    <Button type="submit" variant="primary">
+                                        {sending ? 'Enviando...' : 'Enviar mensaje'}
+                                    </Button>
+                                </div>
 
-                            <p className="font-body text-bz-xs text-bz-muted">
-                                Al enviar aceptas nuestra{' '}
-                                <a
-                                    href="/privacidad"
-                                    className="underline hover:text-bz-ambar transition-colors"
-                                >
-                                    política de privacidad
-                                </a>
-                                .
-                            </p>
-                        </form>
+                                <p className="font-body text-bz-xs text-bz-muted">
+                                    Al enviar aceptas nuestra{' '}
+                                    <a
+                                        href="/privacidad"
+                                        className="underline hover:text-bz-ambar transition-colors"
+                                    >
+                                        política de privacidad
+                                    </a>
+                                    .
+                                </p>
+                            </form>
+                        </>
                     )}
                 </Container>
             </section>
