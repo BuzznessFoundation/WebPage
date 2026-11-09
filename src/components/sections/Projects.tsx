@@ -4,6 +4,7 @@ import { Card } from '@/components/ui/Card'
 import { Reveal } from '@/components/ui/Reveal'
 import { projects } from '@/data/projects'
 import { cn } from '@/lib/utils'
+import { trackContentView } from '@/lib/analytics'
 import type { Project, ProjectLane, ProjectStatus } from '@/types/project'
 
 const STATUS_LABEL: Record<ProjectStatus, string> = {
@@ -137,6 +138,7 @@ function ProjectCard({ project }: { project: Project }) {
                     href={project.href}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => trackContentView('project', project.id, project.title)}
                     className="inline-block mt-bz-sm font-mono text-bz-xs text-bz-grafito uppercase tracking-[1.5px] hover:text-bz-ambar transition-colors"
                 >
                     Ver repositorio →

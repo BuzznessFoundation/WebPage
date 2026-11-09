@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { Container } from '@/components/layout/Container'
 import { SectionLabel } from '@/components/ui/SectionLabel'
@@ -7,11 +8,21 @@ import { SeoMeta } from '@/components/ui/SeoMeta'
 import { allBlogPosts } from '@/data/blog'
 import { formatDate } from '@/lib/formatDate'
 import { renderMarkdown } from '@/lib/markdown'
+import { trackContentView } from '@/lib/analytics'
 import NotFoundPage from '@/pages/NotFound'
 
 export default function BlogPostPage() {
     const { slug } = useParams<{ slug: string }>()
     const post = allBlogPosts.find((item) => item.slug === slug)
+
+    const postSlug = post?.slug
+    const postTitle = post?.title
+
+    // El hook va antes del early return para respetar las reglas de hooks.
+    useEffect(() => {
+        if (!postSlug || !postTitle) return
+        trackContentView('article', postSlug, postTitle)
+    }, [postSlug, postTitle])
 
     if (!post) return <NotFoundPage />
 

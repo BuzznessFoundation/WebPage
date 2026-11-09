@@ -1,9 +1,16 @@
+import { useEffect } from 'react'
 import { Container } from '@/components/layout/Container'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { SeoMeta } from '@/components/ui/SeoMeta'
 import { Projects } from '@/components/sections/Projects'
+import { trackContentView } from '@/lib/analytics'
 
 export default function PortfolioPage() {
+    // Vista de la página de proyectos: base para remarketing.
+    useEffect(() => {
+        trackContentView('project', 'proyectos', 'Proyectos')
+    }, [])
+
     return (
         <>
             <SeoMeta path="/proyectos" />

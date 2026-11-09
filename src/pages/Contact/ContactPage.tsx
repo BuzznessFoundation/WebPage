@@ -1,12 +1,12 @@
-import { type FormEvent, useState } from 'react'
+import { type FormEvent, useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { Container } from '@/components/layout/Container'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
 import { SeoMeta } from '@/components/ui/SeoMeta'
-import { trackFormSubmit } from '@/lib/analytics'
-import { allContactServices } from '@/data/serviceCatalog'
+import { trackFormSubmit, trackViewService } from '@/lib/analytics'
+import { allContactServices, getServiceTier } from '@/data/serviceCatalog'
 import { cn } from '@/lib/utils'
 
 function FormField({
@@ -69,32 +69,60 @@ function FormField({
 export default function ContactPage() {
     const [sent, setSent] = useState(false)
     const [sending, setSending] = useState(false)
+    const [error, setError] = useState('')
     const [searchParams] = useSearchParams()
+    const submittingRef = useRef(false)
 
     const requestedSlug = searchParams.get('servicio')
     const service = requestedSlug
         ? allContactServices.find((item) => item.slug === requestedSlug)
         : undefined
 
+    const serviceSlug = service?.slug
+    const serviceTitle = service?.title
+
+    // Vista del servicio cuando se llega por `?servicio=` (p. ej. desde una
+    // tarjeta de /servicios). `once` evita el doble evento del clic + montaje.
+    useEffect(() => {
+        if (!serviceSlug || !serviceTitle) return
+        trackViewService(serviceSlug, serviceTitle, getServiceTier(serviceSlug), { once: true })
+    }, [serviceSlug, serviceTitle])
+
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        if (submittingRef.current) return
+        setError('')
+
+        const form = e.currentTarget
+        const nombre =
+            (form.elements.namedItem('nombre') as HTMLInputElement)?.value.trim() ?? ''
+        const correo =
+            (form.elements.namedItem('correo') as HTMLInputElement)?.value.trim() ?? ''
+        const mensaje =
+            (form.elements.namedItem('mensaje') as HTMLTextAreaElement)?.value.trim() ?? ''
+        const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)
+        if (!nombre || !emailOk || !mensaje) {
+            setError('Completá nombre, un correo válido y el mensaje.')
+            setSending(false)
+            return
+        }
+
         setSending(true)
+        submittingRef.current = true
 
         await new Promise((r) => setTimeout(r, 600))
 
         const subject = encodeURIComponent('Consulta desde buzzness.cl')
         const serviceLine = service ? `Servicio: ${service.title}\n` : ''
         const body = encodeURIComponent(
-            `Nombre: ${(e.target as HTMLFormElement).nombre?.value || ''}\n` +
-                `Email: ${(e.target as HTMLFormElement).correo?.value || ''}\n` +
-                serviceLine +
-                `\n${(e.target as HTMLFormElement).mensaje?.value || ''}`,
+            `Nombre: ${nombre}\n` + `Email: ${correo}\n` + serviceLine + `\n${mensaje}`,
         )
 
         trackFormSubmit(service?.slug)
         window.location.href = `mailto:cristian.alvarado@buzzness.cl?subject=${subject}&body=${body}`
         setSent(true)
         setSending(false)
+        submittingRef.current = false
     }
 
     return (
@@ -173,8 +201,22 @@ export default function ContactPage() {
                                     }
                                 />
 
+                                {error && (
+                                    <p
+                                        role="alert"
+                                        className="font-body text-bz-xs text-red-600"
+                                    >
+                                        {error}
+                                    </p>
+                                )}
+
                                 <div className="mt-bz-xs">
-                                    <Button type="submit" variant="primary">
+                                    <Button
+                                        type="submit"
+                                        variant="primary"
+                                        disabled={sending}
+                                        aria-busy={sending}
+                                    >
                                         {sending ? 'Enviando...' : 'Enviar mensaje'}
                                     </Button>
                                 </div>

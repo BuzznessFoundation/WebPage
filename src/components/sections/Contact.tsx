@@ -1,7 +1,8 @@
-import { type FormEvent, useState } from 'react'
+import { type FormEvent, useRef, useState } from 'react'
 import { Container } from '@/components/layout/Container'
 import { Button } from '@/components/ui/Button'
 import { Reveal } from '@/components/ui/Reveal'
+import { trackFormSubmit } from '@/lib/analytics'
 import { cn } from '@/lib/utils'
 
 interface ContactProps {
@@ -12,24 +13,40 @@ export function Contact({ compact = false }: ContactProps) {
     const [sent, setSent] = useState(false)
     const [error, setError] = useState('')
     const [sending, setSending] = useState(false)
+    const submittingRef = useRef(false)
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        if (submittingRef.current) return
         setError('')
+
+        const form = e.currentTarget
+        const nombre =
+            (form.elements.namedItem('nombre') as HTMLInputElement)?.value.trim() ?? ''
+        const correo =
+            (form.elements.namedItem('correo') as HTMLInputElement)?.value.trim() ?? ''
+        const mensaje =
+            (form.elements.namedItem('mensaje') as HTMLTextAreaElement)?.value.trim() ?? ''
+        const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)
+        if (!nombre || !emailOk || !mensaje) {
+            setError('Completá nombre, un correo válido y el mensaje.')
+            setSending(false)
+            return
+        }
+
         setSending(true)
+        submittingRef.current = true
 
         await new Promise((r) => setTimeout(r, 600))
 
         const subject = encodeURIComponent('Consulta desde buzzness.cl')
-        const body = encodeURIComponent(
-            `Nombre: ${(e.target as HTMLFormElement).nombre?.value || ''}\n` +
-                `Email: ${(e.target as HTMLFormElement).correo?.value || ''}\n\n` +
-                `${(e.target as HTMLFormElement).mensaje?.value || ''}`,
-        )
+        const body = encodeURIComponent(`Nombre: ${nombre}\nEmail: ${correo}\n\n${mensaje}`)
 
+        trackFormSubmit()
         window.location.href = `mailto:cristian.alvarado@buzzness.cl?subject=${subject}&body=${body}`
         setSent(true)
         setSending(false)
+        submittingRef.current = false
     }
 
     return (
@@ -134,9 +151,19 @@ export function Contact({ compact = false }: ContactProps) {
                                 />
                             </div>
 
-                            {error && <p className="font-body text-bz-xs text-red-400">{error}</p>}
+                            {error && (
+                                <p role="alert" className="font-body text-bz-xs text-red-400">
+                                    {error}
+                                </p>
+                            )}
 
-                            <Button type="submit" variant="primary" className="mt-bz-xs">
+                            <Button
+                                type="submit"
+                                variant="primary"
+                                className="mt-bz-xs"
+                                disabled={sending}
+                                aria-busy={sending}
+                            >
                                 {sending ? 'Enviando...' : 'Enviar mensaje'}
                             </Button>
 

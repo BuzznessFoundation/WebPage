@@ -15,7 +15,7 @@ import {
 } from '@/data/serviceCatalog'
 import type { AuditService, CatalogService } from '@/data/serviceCatalog'
 import { cn } from '@/lib/utils'
-import { trackLead } from '@/lib/analytics'
+import { trackViewService, trackWhatsApp } from '@/lib/analytics'
 
 function Arrow({ className }: { className?: string }) {
     return (
@@ -51,6 +51,9 @@ function ServiceCard({ service, index, dark = false, className }: ServiceCardPro
             />
             <Link
                 to={serviceContactHref(service.slug)}
+                onClick={() =>
+                    trackViewService(service.slug, service.title, service.tier, { once: true })
+                }
                 aria-label={`${service.title}: ${service.hook}`}
                 className={cn(
                     'bz-service-card group relative z-[1] flex h-full flex-col justify-between rounded-bz border-bz p-bz-md transition-transform',
@@ -225,6 +228,9 @@ function AuditCard({ audit, index, className }: AuditCardProps) {
 
                 <Link
                     to={serviceContactHref(audit.slug)}
+                    onClick={() =>
+                        trackViewService(audit.slug, audit.title, 'audit', { once: true })
+                    }
                     className="mt-auto border-t border-bz-negro/20 pt-bz-sm font-body text-bz-label font-bold uppercase tracking-[2px] text-bz-negro transition-colors hover:text-bz-ambar"
                 >
                     SABER MÁS →
@@ -374,7 +380,7 @@ function FinalCta() {
                             )}
                             target="_blank"
                             rel="noopener noreferrer"
-                            onClick={() => trackLead('servicios-cierre')}
+                            onClick={() => trackWhatsApp('servicios-cierre')}
                         >
                             Hablar por WhatsApp
                         </Button>
@@ -423,7 +429,7 @@ export function ServicesBento() {
                                     )}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    onClick={() => trackLead('servicios-hero')}
+                                    onClick={() => trackWhatsApp('servicios-hero')}
                                 >
                                     Hablar por WhatsApp
                                 </Button>

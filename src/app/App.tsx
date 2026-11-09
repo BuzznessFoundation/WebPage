@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom'
 import { Header } from '../components/layout/Header'
 import { Footer } from '../components/layout/Footer'
+import { ConsentBanner } from '../components/ui/ConsentBanner'
 import { useScrollToTop } from '../lib/useScrollToTop'
 import { usePageTracking } from '../lib/analytics'
 
@@ -22,6 +23,7 @@ export default function App() {
                 </main>
                 <Footer />
             </div>
+            <ConsentBanner />
         </div>
     )
 }

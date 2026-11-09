@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import { router } from './app/router'
-import { initAnalytics } from './lib/analytics'
+import { initAnalytics, sanitizeTrackingUrl } from './lib/analytics'
+import { CONSENT_KEY } from './lib/consent'
 import './index.css'
 
 // Favicon dinámico según dark mode
@@ -15,7 +16,14 @@ const updateFavicon = () => {
     }
 }
 
+sanitizeTrackingUrl()
 initAnalytics()
+
+// Asegura que los trackers ya cargados se detengan/reinicien cuando el
+// consentimiento cambia o se revoca en otra pestaña.
+window.addEventListener('storage', (e) => {
+    if (e.key === CONSENT_KEY) window.location.reload()
+})
 
 updateFavicon()
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateFavicon)

@@ -1,8 +1,52 @@
 import { Container } from '@/components/layout/Container'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { SeoMeta } from '@/components/ui/SeoMeta'
+import { Button } from '@/components/ui/Button'
+import { CONSENT_KEY } from '@/lib/consent'
+
+/** Cookies de Meta y Google que se intentan expirar al revocar (best effort). */
+const TRACKING_COOKIE_PATTERNS = [/^_fbp$/, /^_fbc$/, /^_ga$/, /^_ga_.+$/, /^_gid$/]
+
+/**
+ * Expira las cookies de tracking que pueda leer el documento. No puede tocar
+ * cookies `HttpOnly` ni de otro dominio, por eso es best effort: se prueban
+ * el host actual y las variantes de dominio raíz.
+ */
+function expireTrackingCookies(): void {
+    const names = new Set(
+        document.cookie
+            .split(';')
+            .map((entry) => entry.split('=')[0]?.trim())
+            .filter((name): name is string => {
+                if (!name) return false
+                return TRACKING_COOKIE_PATTERNS.some((pattern) => pattern.test(name))
+            }),
+    )
+
+    const host = window.location.hostname
+    const baseDomain = host.replace(/^www\./, '')
+    const domains = new Set(['', host, `.${host}`, `.${baseDomain}`])
+
+    for (const name of names) {
+        for (const domain of domains) {
+            const attrs = [`${name}=`, 'Max-Age=0', 'path=/']
+            if (domain) attrs.push(`domain=${domain}`)
+            document.cookie = attrs.join('; ')
+        }
+    }
+}
 
 export default function PrivacyPage() {
+    const resetConsent = () => {
+        try {
+            window.localStorage.removeItem(CONSENT_KEY)
+        } catch {
+            // Storage bloqueado: recargar igual deja el banner disponible.
+        }
+        expireTrackingCookies()
+        window.location.reload()
+    }
+
     return (
         <>
             <SeoMeta path="/privacidad" />
@@ -16,9 +60,12 @@ export default function PrivacyPage() {
                     <div className="flex flex-col gap-bz-md font-body text-bz-sm text-bz-grafito leading-[1.65]">
                         <p>
                             Esta política se rige por la{' '}
-                            <strong>Ley 21.719 sobre Protección de Datos Personales</strong>{' '}
-                            de Chile, vigente desde diciembre de 2024. Al usar nuestro formulario
-                            de contacto, aceptás las condiciones aquí descritas.
+                            <strong>Ley 19.628 sobre Protección de la Vida Privada</strong> y,
+                            desde su entrada en vigencia el 1 de diciembre de 2026, por la{' '}
+                            <strong>Ley 21.719 sobre Protección de Datos Personales</strong> de
+                            Chile (publicada el 13 de diciembre de 2024). Al usar nuestro
+                            formulario de contacto y al navegar este sitio, aceptás las
+                            condiciones aquí descritas.
                         </p>
 
                         <h2 className="font-display uppercase text-bz-negro text-bz-lg tracking-[-0.5px] mt-bz-sm">
@@ -41,18 +88,75 @@ export default function PrivacyPage() {
                         <p>
                             Solo recopilamos los datos que vos nos entregás voluntariamente al
                             usar nuestro formulario de contacto: nombre, dirección de correo
-                            electrónico y el contenido de tu mensaje. No recopilamos datos
-                            sensibles, no usamos cookies de tracking, ni analytics de terceros.
+                            electrónico y el contenido de tu mensaje. Además, al navegar el sitio
+                            se recogen datos técnicos de navegación (IP, user-agent y páginas
+                            vistas) y, si otorgás tu consentimiento, medimos el uso del sitio con
+                            herramientas de analytics y publicidad (ver «Analytics y cookies»). No
+                            recopilamos datos sensibles.
                         </p>
+                        <p>
+                            Al cargar cualquier página se solicitan tipografías de Google Fonts e
+                            iconos de cdnjs (Font Awesome). Esos proveedores reciben la IP y el
+                            user-agent de tu navegador para servir los recursos, incluso antes de
+                            que otorgues consentimiento.
+                        </p>
+
+                        <h2 className="font-display uppercase text-bz-negro text-bz-lg tracking-[-0.5px] mt-bz-sm">
+                            Analytics y cookies
+                        </h2>
+                        <p>
+                            Con tu consentimiento usamos dos herramientas de medición:{' '}
+                            <strong>Meta Pixel</strong> (Meta Platforms) y{' '}
+                            <strong>Google Analytics 4</strong> (Google). Su finalidad es medir
+                            tráfico y conversiones: qué páginas se visitan, qué servicios generan
+                            interés y qué CTAs se usan.
+                        </p>
+                        <p>
+                            La base legal es tu <strong>consentimiento</strong>. Estas herramientas
+                            no se cargan hasta que aceptás desde el banner de cookies. No les
+                            enviamos tu nombre, correo electrónico, teléfono ni el mensaje que
+                            escribís en el formulario: solo datos de navegación, el slug del
+                            servicio o la superficie del botón, el título e identificador del
+                            contenido que ves (servicio, artículo o proyecto), la categoría/tier
+                            del servicio (<code>content_category</code>) y, cuando hay precio de
+                            entrada publicado, su <code>value</code> y <code>currency</code>.
+                            También se conservan la URL con parámetros UTM y click IDs de
+                            atribución (<code>fbclid</code>, <code>gclid</code>,{' '}
+                            <code>msclkid</code>). Los datos que ingresás en el formulario
+                            (nombre, email, mensaje) no se envían a Meta ni a Google.
+                        </p>
+                        <p>
+                            Podés revocar el consentimiento en cualquier momento con el botón de
+                            abajo, borrando la clave <code>bz-consent-v1</code> de localStorage o
+                            escribiéndonos a{' '}
+                            <a
+                                href="mailto:cristian.alvarado@buzzness.cl"
+                                className="text-bz-ambar font-bold hover:underline"
+                            >
+                                cristian.alvarado@buzzness.cl
+                            </a>
+                            . Al revocarlo, dejamos de cargar estas herramientas en tus próximas
+                            visitas.
+                        </p>
+                        <div className="mt-bz-xs">
+                            <Button type="button" variant="crema" onClick={resetConsent}>
+                                Cambiar preferencias de cookies
+                            </Button>
+                        </div>
 
                         <h2 className="font-display uppercase text-bz-negro text-bz-lg tracking-[-0.5px] mt-bz-sm">
                             Finalidad del tratamiento
                         </h2>
                         <p>
-                            Tus datos se usan exclusivamente para responder a tu consulta y, si
-                            corresponde, dar seguimiento a una relación comercial. No se utilizan
-                            para fines de marketing, elaboración de perfiles ni comunicación
-                            automatizada sin tu consentimiento expreso.
+                            Los datos que enviás por el formulario (nombre, correo electrónico y
+                            mensaje) se usan exclusivamente para responder a tu consulta y, si
+                            corresponde, dar seguimiento a una relación comercial. Con tu
+                            consentimiento, los datos de navegación (IP, identificadores del
+                            navegador y páginas vistas) pueden usarse además para medición de
+                            tráfico y para <strong>remarketing u optimización publicitaria</strong>{' '}
+                            en Meta y Google. Los datos del formulario no se envían a esas
+                            plataformas ni se usan para elaborar perfiles sin tu consentimiento
+                            expreso.
                         </p>
 
                         <h2 className="font-display uppercase text-bz-negro text-bz-lg tracking-[-0.5px] mt-bz-sm">
@@ -67,12 +171,19 @@ export default function PrivacyPage() {
                         </p>
 
                         <h2 className="font-display uppercase text-bz-negro text-bz-lg tracking-[-0.5px] mt-bz-sm">
-                            No compartimos tus datos
+                            No vendemos tus datos
                         </h2>
                         <p>
-                            Buzzness no vende, cede, transfiere ni comunica tus datos personales a
-                            terceros bajo ninguna circunstancia, salvo obligación legal expresa o
-                            requerimiento de autoridad competente en el marco de la ley chilena.
+                            Buzzness no vende tus datos personales. Con tu consentimiento,
+                            compartimos datos de navegación (como IP, identificadores del
+                            navegador y páginas vistas) con Meta Platforms y Google para fines de
+                            analytics y publicidad; esto implica una{' '}
+                            <strong>transferencia internacional</strong> de esos datos a dichos
+                            proveedores. Los datos que enviás por el formulario (nombre, correo
+                            electrónico y mensaje) no se comparten con esas plataformas. Fuera de
+                            ese consentimiento, no cedemos tus datos a terceros salvo obligación
+                            legal expresa o requerimiento de autoridad competente en el marco de la
+                            ley chilena.
                         </p>
 
                         <h2 className="font-display uppercase text-bz-negro text-bz-lg tracking-[-0.5px] mt-bz-sm">
@@ -157,7 +268,7 @@ export default function PrivacyPage() {
                         </p>
 
                         <p className="text-bz-muted text-bz-xs mt-bz-md">
-                            Última actualización: Agosto 2026
+                            Última actualización: Noviembre 2026
                         </p>
                     </div>
                 </Container>

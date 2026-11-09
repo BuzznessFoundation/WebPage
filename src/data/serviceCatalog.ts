@@ -250,6 +250,18 @@ export const auditServices: AuditService[] = [
 ]
 
 /**
+ * Tier de un servicio por slug, para etiquetar la vista directa (`?servicio=`).
+ * Los servicios (primary/implementation/specialist) exponen su `tier`; las
+ * auditorías devuelven `'audit'`. Devuelve undefined si el slug no existe.
+ */
+export function getServiceTier(slug: string): string | undefined {
+    const service = allServices.find((item) => item.slug === slug)
+    if (service) return service.tier
+    if (auditServices.some((item) => item.slug === slug)) return 'audit'
+    return undefined
+}
+
+/**
  * Servicios + auditorías como lista plana para el selector de `/contacto`.
  * Solo expone lo mínimo (slug/title) para pintar el chip y prefijar el mensaje.
  */

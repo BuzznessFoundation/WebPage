@@ -1,4 +1,4 @@
-import { trackLead } from '@/lib/analytics'
+import { trackWhatsApp } from '@/lib/analytics'
 import { NAV_ITEMS } from '@/data/navigation'
 
 const LEGAL_LINKS = [
@@ -85,7 +85,7 @@ export function Footer() {
                                     aria-label={social.label}
                                     onClick={
                                         social.label === 'WhatsApp'
-                                            ? () => trackLead('footer')
+                                            ? () => trackWhatsApp('footer')
                                             : undefined
                                     }
                                     className="w-[40px] h-[40px] flex items-center justify-center rounded-[6px] bg-bz-ambar hover:bg-bz-beige text-bz-negro hover:text-bz-negro transition-colors text-lg"

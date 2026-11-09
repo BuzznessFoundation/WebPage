@@ -74,14 +74,13 @@
  *
  * Cabeceras de seguridad (viven en `vercel.json`, no acá):
  * - `Content-Security-Policy` es la política de entrega del sitio. `script-src`
- *   ya no es `'self'` a secas: el snippet base de Meta Pixel vive inline en
- *   `index.html` y `fbevents.js` se sirve desde `connect.facebook.net`, así
- *   que ambos orígenes están autorizados (más `'unsafe-inline'` para ese
- *   snippet). Cuando entre GA4 se suman `googletagmanager.com`,
- *   `google-analytics.com` y `googleads.g.doubleclick.net`; sus píxeles de
- *   respaldo (`img-src`, `connect-src`) también están listados, si no el
- *   navegador bloquea el envío y Meta/SEoptimer reportan el píxel como no
- *   detectado. Nunca se agrega `'unsafe-eval'`.
+ *   no es `'self'` a secas: Meta Pixel y GA4 se cargan dinámicamente desde
+ *   `src/lib/analytics.ts` (solo tras consentimiento) y sus scripts vienen de
+ *   `connect.facebook.net` y `googletagmanager.com`; sus píxeles de respaldo
+ *   (`img-src`, `connect-src`) también están listados para que el navegador no
+ *   bloquee el envío. `'unsafe-inline'` sigue en `script-src` por el JSON-LD
+ *   inline que escribe el prerender (deuda: evaluar nonce/hash). Nunca se
+ *   agrega `'unsafe-eval'`.
  * - `style-src 'self' 'unsafe-inline'`: el hero escribe `style` inline en SVG y
  *   custom properties; Google Fonts y Font Awesome se sirven como hojas
  *   externas, por eso sus orígenes están en la lista.
@@ -548,6 +547,14 @@ async function main(): Promise<void> {
         const page = await context.newPage()
         page.setDefaultTimeout(NAV_TIMEOUT_MS)
         page.setDefaultNavigationTimeout(NAV_TIMEOUT_MS)
+
+        // Marca el contexto headless: la app no debe serializar overlays que
+        // dependen de una decisión del usuario (banner de consentimiento),
+        // porque el snapshot se genera sin localStorage y quedaría visible en
+        // el HTML estático para usuarios que ya consintieron.
+        await page.addInitScript(() => {
+            ;(window as Window & { __bzPrerender?: boolean }).__bzPrerender = true
+        })
 
         // El snapshot solo necesita el DOM, no los assets externos. Abortar
         // todo lo que no sea el servidor efímero evita depender de Google

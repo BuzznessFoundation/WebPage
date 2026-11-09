@@ -62,7 +62,7 @@ export const STATIC_SEO: SeoEntry[] = [
         path: '/privacidad',
         title: 'Política de privacidad — Buzzness',
         description:
-            'Cómo recopilamos y usamos tus datos en Buzzness. Sin cookies de tracking, sin analytics de terceros, sin compartir información con nadie.',
+            'Política de privacidad de Buzzness: qué datos recopilamos, cómo usamos analytics con consentimiento y cómo ejercer tus derechos.',
     },
     {
         path: '/terminos',
