@@ -286,28 +286,44 @@ export interface Faq {
 
 export const faqs: Faq[] = [
     {
-        question: '¿Trabajan con pymes que ya venden?',
-        answer: 'Sí. El foco son negocios con operación real que necesitan ordenar, medir o automatizar lo que ya hacen.',
+        question: '¿Cuánto cuesta una página web?',
+        answer: 'Desde $200.000 + IVA una página de 3 o 4 secciones con botón de WhatsApp, mapa y dominio con SSL. Ese es el piso: una tienda con catálogo, un sitio corporativo con integraciones o un marketplace suben según lo que haya que construir. El precio se cierra por escrito antes de empezar, no después.',
     },
     {
-        question: '¿Puedo empezar con algo chico?',
-        answer: 'Sí. La auditoría o un módulo acotado es la puerta de entrada; no exigimos un proyecto grande para empezar.',
+        question: '¿Ese precio es con IVA?',
+        answer: 'No. Todos los precios publicados son netos, en pesos chilenos, y el IVA va aparte. Si preferís ver el total, se multiplica por 1,19 y te lo dejamos en la propuesta.',
     },
     {
-        question: '¿El código y los datos son míos?',
-        answer: 'Sí. El código, los datos y las cuentas quedan a tu nombre. No trabajamos con permanencia forzada.',
+        question: '¿Por qué una app móvil cuesta desde $800.000 y otras agencias cobran varios millones?',
+        answer: 'Porque no es lo mismo. Ese precio es una app sin backend: pantallas, navegación y contenido ya definido, sin panel, sin base de datos propia y sin pagos dentro de la app. Cuando el proyecto necesita backend, usuarios, administrador o integración con tus sistemas, cambia de categoría y se cotiza aparte.',
     },
     {
-        question: '¿Cuánto demora?',
-        answer: 'Depende del alcance: una landing o automatización acotada parte en semanas; un sistema a medida se planifica por etapas con entregas parciales.',
+        question: '¿Qué puedo empezar con poco presupuesto?',
+        answer: 'El correo transaccional con dominio ($60.000 + IVA) o el copywriting de una landing ($80.000 + IVA). Si el problema es que no sabés qué está fallando, el diagnóstico técnico web es la forma más barata de averiguarlo antes de invertir en desarrollo.',
+    },
+    {
+        question: '¿La gestión de anuncios incluye las fotos, los videos y los textos?',
+        answer: 'No. El fee desde $120.000 + IVA/mes es gestión: campañas, segmentación, eventos, optimización y reporte. El contenido (piezas, fotos, video, textos) se cotiza aparte, y la inversión publicitaria va siempre a tu nombre y aparte del fee. Si querés saberlo en dinero real: se mide costo por conversación, no likes.',
     },
     {
         question: '¿Trabajan con WordPress, Shopify u Odoo?',
-        answer: 'Sí. Implementamos y conectamos esas herramientas cuando ya resuelven el problema; no las reemplazamos por moda.',
+        answer: 'Sí, cuando esas herramientas ya resuelven el problema. Conectamos, migramos e integramos lo que existe en vez de rehacerlo por moda. Lo que no hacemos es vender una plantilla como si fuera desarrollo a medida.',
+    },
+    {
+        question: '¿El código y los datos quedan míos?',
+        answer: 'Sí. El código, la base de datos, el dominio y las cuentas publicitarias quedan a tu nombre. No hay permanencia forzada ni licencia que te ate: si mañana querés seguir con otro proveedor, te llevás todo.',
     },
     {
         question: '¿Cobran mensualidad?',
-        answer: 'Solo cuando hay un servicio continuo (infraestructura, soporte o publicidad). Los proyectos se cotizan por entregable.',
+        answer: 'Solo cuando hay un servicio continuo: gestión de anuncios, infraestructura o soporte. Los proyectos se cobran por entregable, con el alcance y el plazo por escrito antes de partir.',
+    },
+    {
+        question: '¿Y las auditorías y los proyectos grandes?',
+        answer: 'Van a propuesta. La auditoría de datos o de ciberseguridad depende de cuántos sistemas y accesos haya, y el software a medida depende de los módulos. En esos casos el precio se arma después de una llamada de 20 minutos, no de una lista.',
+    },
+    {
+        question: '¿Cuánto demora?',
+        answer: 'Una landing o una automatización acotada parte en semanas. Un sistema a medida se planifica por etapas con entregas parciales, así ves avance antes de pagar la última cuota. El plazo se declara junto con el precio en la misma propuesta.',
     },
 ]
 
