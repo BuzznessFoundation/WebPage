@@ -66,7 +66,7 @@ const TOOL_ICONS: Record<string, string> = {
     'Panel web': 'fa-solid fa-window-maximize',
     Telemetría: 'fa-solid fa-satellite-dish',
     'A medida': 'fa-solid fa-pen-ruler',
-    'Tailscale': 'fa-solid fa-network-wired',
+    Tailscale: 'fa-solid fa-network-wired',
     Redes: 'fa-solid fa-network-wired',
     'Búsqueda vectorial': 'fa-solid fa-magnifying-glass',
     MCP: 'fa-solid fa-plug-circle-bolt',
@@ -147,19 +147,23 @@ function ProjectCard({ project }: { project: Project }) {
 }
 
 interface ProjectsProps {
-    limit?: number
+    // Selección editorial explícita por id (Home). Manda el orden del array:
+    // no se reordena por carril ni se filtra por status.
+    featuredIds?: string[]
     showCta?: boolean
 }
 
-export function Projects({ limit, showCta = true }: ProjectsProps) {
+export function Projects({ featuredIds, showCta = true }: ProjectsProps) {
+    const featured = featuredIds
+        ?.map((id) => projects.find((p) => p.id === id))
+        .filter((project): project is Project => project !== undefined)
+
     // Se arma por carril respetando el orden de LANES, no el orden del array,
     // para que el orden editorial no dependa de cómo se declaren los datos.
-    const grouped = LANES.map((lane) => ({
+    const visible = LANES.map((lane) => ({
         ...lane,
         items: projects.filter((p) => p.lane === lane.id),
     })).filter((group) => group.items.length > 0)
-
-    const visible = limit ? grouped.slice(0, limit) : grouped
 
     return (
         <section className="py-bz-2xl">
@@ -174,29 +178,39 @@ export function Projects({ limit, showCta = true }: ProjectsProps) {
                 </Reveal>
 
                 <div className="space-y-bz-2xl">
-                    {visible.map((group, index) => (
-                        <Reveal key={group.id} threshold={0.1}>
-                            <div
-                                className={cn(
-                                    'flex flex-wrap items-baseline justify-between gap-bz-xs',
-                                    index > 0 && 'border-t border-bz-negro/15 pt-bz-lg',
-                                )}
-                            >
-                                <h3 className="font-mono text-bz-label text-bz-negro uppercase tracking-[2px]">
-                                    {group.label}
-                                </h3>
-                                <p className="font-body text-bz-meta text-bz-grafito">
-                                    {group.description}
-                                </p>
-                            </div>
-
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-bz-cards-gap mt-bz-md">
-                                {group.items.map((project) => (
+                    {featured ? (
+                        <Reveal threshold={0.1}>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-bz-cards-gap">
+                                {featured.map((project) => (
                                     <ProjectCard key={project.id} project={project} />
                                 ))}
                             </div>
                         </Reveal>
-                    ))}
+                    ) : (
+                        visible.map((group, index) => (
+                            <Reveal key={group.id} threshold={0.1}>
+                                <div
+                                    className={cn(
+                                        'flex flex-wrap items-baseline justify-between gap-bz-xs',
+                                        index > 0 && 'border-t border-bz-negro/15 pt-bz-lg',
+                                    )}
+                                >
+                                    <h3 className="font-mono text-bz-label text-bz-negro uppercase tracking-[2px]">
+                                        {group.label}
+                                    </h3>
+                                    <p className="font-body text-bz-meta text-bz-grafito">
+                                        {group.description}
+                                    </p>
+                                </div>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-bz-cards-gap mt-bz-md">
+                                    {group.items.map((project) => (
+                                        <ProjectCard key={project.id} project={project} />
+                                    ))}
+                                </div>
+                            </Reveal>
+                        ))
+                    )}
                 </div>
 
                 {showCta && (

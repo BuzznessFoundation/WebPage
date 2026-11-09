@@ -1,72 +1,63 @@
 export interface SoftwareItem {
     name: string
     role: string
-    logo: string
+    icon: string
 }
 
-export interface SoftwareGroup {
-    category: string
-    items: SoftwareItem[]
-}
-
-export const softwareGroups: SoftwareGroup[] = [
+export const softwareItems: SoftwareItem[] = [
     {
-        category: 'Gestión y atención',
-        items: [
-            { name: 'Odoo', role: 'ERP y CRM', logo: '/icons/software/odoo.svg' },
-            {
-                name: 'Chatwoot',
-                role: 'Atención omnicanal',
-                logo: '/icons/software/chatwoot.svg',
-            },
-        ],
+        name: 'n8n',
+        role: 'Automatización de procesos',
+        icon: 'fa-solid fa-diagram-project',
     },
     {
-        category: 'Automatización',
-        items: [
-            { name: 'n8n', role: 'Workflows e integraciones', logo: '/icons/software/n8n.svg' },
-        ],
+        name: 'WordPress',
+        role: 'Sitios y contenido',
+        icon: 'fa-brands fa-wordpress',
     },
     {
-        category: 'Infraestructura',
-        items: [
-            { name: 'Docker', role: 'Contenedores', logo: '/icons/software/docker.svg' },
-            { name: 'PostgreSQL', role: 'Base de datos', logo: '/icons/software/postgresql.svg' },
-            { name: 'Redis', role: 'Caché y colas', logo: '/icons/software/redis.svg' },
-            { name: 'Synology', role: 'Almacenamiento NAS', logo: '/icons/software/synology.svg' },
-            { name: 'Grafana', role: 'Monitoreo y métricas', logo: '/icons/software/grafana.svg' },
-            { name: 'Cloudflare', role: 'Túneles y DNS', logo: '/icons/software/cloudflare.svg' },
-        ],
+        name: 'Shopify',
+        role: 'E-commerce',
+        icon: 'fa-brands fa-shopify',
     },
     {
-        category: 'Desarrollo',
-        items: [
-            { name: 'Python', role: 'Backend y datos', logo: '/icons/software/python.svg' },
-            { name: 'React', role: 'Interfaces de usuario', logo: '/icons/software/react.svg' },
-            { name: 'Node.js', role: 'APIs y servicios', logo: '/icons/software/nodedotjs.svg' },
-            { name: 'TypeScript', role: 'Código tipado', logo: '/icons/software/typescript.svg' },
-            {
-                name: 'Tailwind CSS',
-                role: 'Estilos utilitarios',
-                logo: '/icons/software/tailwindcss.svg',
-            },
-        ],
+        name: 'SII',
+        role: 'Cumplimiento SII y DTE',
+        icon: 'fa-solid fa-file-invoice',
     },
     {
-        category: 'Seguridad e identidad',
-        items: [
-            { name: 'Auth0', role: 'Autenticación', logo: '/icons/software/auth0.svg' },
-            { name: 'Keycloak', role: 'Identidad y acceso', logo: '/icons/software/keycloak.svg' },
-        ],
+        name: 'Odoo',
+        role: 'ERP y gestión',
+        icon: 'fa-solid fa-building',
     },
     {
-        category: 'Datos y control',
-        items: [
-            {
-                name: 'Metabase',
-                role: 'Analítica y reportes',
-                logo: '/icons/software/metabase.svg',
-            },
-        ],
+        name: 'Chatwoot',
+        role: 'CRM y conversaciones',
+        icon: 'fa-solid fa-comments',
+    },
+    {
+        name: 'Mercado Pago',
+        role: 'Pagos y cobros',
+        icon: 'fa-solid fa-credit-card',
+    },
+    {
+        name: 'HubSpot',
+        role: 'CRM y marketing',
+        icon: 'fa-brands fa-hubspot',
+    },
+    {
+        name: 'Power BI',
+        role: 'Analítica y tableros',
+        icon: 'fa-solid fa-chart-column',
+    },
+    {
+        name: 'Buk',
+        role: 'Personas y nómina',
+        icon: 'fa-solid fa-users',
+    },
+    {
+        name: 'Nubox',
+        role: 'Contabilidad y facturación',
+        icon: 'fa-solid fa-calculator',
     },
 ]

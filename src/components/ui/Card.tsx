@@ -16,17 +16,17 @@ const variantStyles: Record<CardVariant, string> = {
     negro: 'bg-bz-negro text-bz-beige border-bz-negro',
     // Nivel 1 — CTA / elemento más importante de la vista
     ambar: 'bg-bz-ambar text-bz-negro border-bz-negro',
-    // Nivel 3 claro con offset ámbar: la forma de atrás se lee como sombra
+    // Nivel 3 claro con offset negro: la forma de atrás se lee como sombra
     proyecto: 'bg-bz-crema text-bz-negro border-bz-negro',
 }
 
-// Color del bloque offset. Todas las variantes usan negro salvo `proyecto`,
-// donde el ámbar convierte el offset en una sombra legible sobre el beige.
+// Color del bloque offset. Todas las variantes usan negro, incluida `proyecto`:
+// el offset negro se lee como sombra sobre el beige.
 const offsetStyles: Record<CardVariant, string> = {
     crema: 'bg-bz-negro',
     negro: 'bg-bz-negro',
     ambar: 'bg-bz-negro',
-    proyecto: 'bg-bz-ambar',
+    proyecto: 'bg-bz-negro',
 }
 
 /**
